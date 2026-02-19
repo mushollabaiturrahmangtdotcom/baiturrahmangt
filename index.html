@@ -981,84 +981,113 @@
   var el = document.getElementById('current-date');
   if (el) el.textContent = tglStr;
 
-  /* ── Kalkulasi Waktu Sholat ── */
+  /* ── Kalkulasi Waktu Sholat (Jean Meeus) ── */
   var DEG = Math.PI / 180;
-  function sin(d) { return Math.sin(d*DEG); }
-  function cos(d) { return Math.cos(d*DEG); }
-  function tan(d) { return Math.tan(d*DEG); }
-  function asin(x) { return Math.asin(x)/DEG; }
-  function atan2(y,x) { return Math.atan2(y,x)/DEG; }
-  function fixH(h) { h=h%24; return h<0?h+24:h; }
+  function sin(d)  { return Math.sin(d * DEG); }
+  function cos(d)  { return Math.cos(d * DEG); }
+  function tan(d)  { return Math.tan(d * DEG); }
+  function asin(x) { return Math.asin(x) / DEG; }
+  function atan2(y,x) { return Math.atan2(y,x) / DEG; }
+  function fixH(h) { h = h % 24; return h < 0 ? h + 24 : h; }
 
-  function julianDay(y,m,d) {
-    if(m<=2){y--;m+=12;}
-    var A=Math.floor(y/100), B=2-A+Math.floor(A/4);
-    return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+  function julianDay(y, m, d) {
+    if (m <= 2) { y--; m += 12; }
+    var A = Math.floor(y/100), B = 2 - A + Math.floor(A/4);
+    return Math.floor(365.25*(y+4716)) + Math.floor(30.6001*(m+1)) + d + B - 1524.5;
   }
-  function sunPos(jd) {
-    var D=jd-2451545.0, g=(357.529+0.98560028*D)%360, q=(280.459+0.98564736*D)%360;
-    var L=q+1.915*sin(g)+0.020*sin(2*g), e=23.439-0.00000036*D;
-    var RA=atan2(cos(e)*sin(L),cos(L))/15;
-    return { dec: asin(sin(e)*sin(L)), eqT: q/15-(RA<0?RA+24:RA) };
+
+  function sunEquation(jd) {
+    var D  = jd - 2451545.0;
+    var g  = (357.529 + 0.98560028 * D) % 360;
+    var q  = (280.459 + 0.98564736 * D) % 360;
+    var L  = q + 1.915 * sin(g) + 0.020 * sin(2*g);
+    var e  = 23.439 - 0.00000036 * D;
+    var RA = atan2(cos(e) * sin(L), cos(L)) / 15;
+    if (RA < 0) RA += 24;
+    var dec = asin(sin(e) * sin(L));
+    var EqT = q/15 - RA;
+    return { dec: dec, eqT: EqT };
   }
-  function noon(jd,lng,tz) { var s=sunPos(jd); return 12-s.eqT-lng/15+tz; }
-  function angleTime(jd,lat,lng,tz,angle,after) {
-    var s=sunPos(jd), n=noon(jd,lng,tz);
-    var cosH=(-sin(angle)-sin(s.dec)*sin(lat))/(cos(s.dec)*cos(lat));
-    if(cosH>1||cosH<-1) return NaN;
-    var H=Math.acos(cosH)/DEG/15;
-    return after ? n+H : n-H;
+
+  function midDay(jd, lng, tz) {
+    return 12 - sunEquation(jd).eqT - lng/15 + tz;
   }
-  function asharTime(jd,lat,lng,tz) {
-    var s=sunPos(jd), n=noon(jd,lng,tz);
-    var alt=Math.abs(lat-s.dec), a=Math.atan(1/(1+tan(alt)))/DEG;
-    var cosH=(-sin(a)-sin(s.dec)*sin(lat))/(cos(s.dec)*cos(lat));
-    if(cosH>1||cosH<-1) return NaN;
-    return n+Math.acos(cosH)/DEG/15;
+
+  function timeForAngle(jd, lat, lng, tz, angle, isSetting) {
+    var s = sunEquation(jd);
+    var n = midDay(jd, lng, tz);
+    var cosH = (-sin(angle) - sin(s.dec)*sin(lat)) / (cos(s.dec)*cos(lat));
+    if (cosH > 1 || cosH < -1) return NaN;
+    var H = Math.acos(cosH) / DEG / 15;
+    return isSetting ? n + H : n - H;
   }
+
+  function asharTime(jd, lat, lng, tz) {
+    var s = sunEquation(jd);
+    var n = midDay(jd, lng, tz);
+    var alt = Math.abs(lat - s.dec);
+    var a = Math.atan(1 / (1 + tan(alt))) / DEG;
+    var cosH = (-sin(a) - sin(s.dec)*sin(lat)) / (cos(s.dec)*cos(lat));
+    if (cosH > 1 || cosH < -1) return NaN;
+    return n + Math.acos(cosH) / DEG / 15;
+  }
+
   function fmt(h) {
-    h=fixH(h); var hh=Math.floor(h), mm=Math.round((h-hh)*60);
-    if(mm===60){hh++;mm=0;} if(hh===24)hh=0;
+    h = fixH(h);
+    var hh = Math.floor(h);
+    var mm = Math.round((h - hh) * 60);
+    if (mm === 60) { hh++; mm = 0; }
+    if (hh === 24) hh = 0;
     return (hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;
   }
-  function toMin(h) { h=fixH(h); return Math.floor(h)*60+Math.round((h-Math.floor(h))*60); }
 
-  var LAT=-3.4724, LNG=115.9505, TZ=8;
-  var today=new Date(), Y=today.getFullYear(), M=today.getMonth()+1, D=today.getDate();
-  var jd=julianDay(Y,M,D);
+  function toMin(h) {
+    h = fixH(h);
+    var hh = Math.floor(h);
+    var mm = Math.round((h - hh) * 60);
+    if (mm === 60) { hh++; mm = 0; }
+    return hh * 60 + mm;
+  }
 
-  var subuh   = angleTime(jd,LAT,LNG,TZ,18,false);
-  var dzuhur  = noon(jd,LNG,TZ)+2/60;
-  var ashar   = asharTime(jd,LAT,LNG,TZ);
-  var maghrib = angleTime(jd,LAT,LNG,TZ,0.833,true);
-  var isya    = angleTime(jd,LAT,LNG,TZ,17,true);
+  /* Koordinat Batulicin, Metode MWL (Fajr 18°, Isha 17°), Syafi'i */
+  var LAT = -3.4724, LNG = 115.9505, TZ = 8;
+  var Y = now.getFullYear(), M = now.getMonth()+1, D = now.getDate();
+  var jd = julianDay(Y, M, D);
+
+  var subuh   = timeForAngle(jd, LAT, LNG, TZ, 18,    false);
+  var dzuhur  = midDay(jd, LNG, TZ) + 2/60;
+  var ashar   = asharTime(jd, LAT, LNG, TZ);
+  var maghrib = timeForAngle(jd, LAT, LNG, TZ, 0.833, true);
+  var isya    = timeForAngle(jd, LAT, LNG, TZ, 17,    true);
 
   var waktu = [
-    { icon:'🌅', arabic:'الصُّبْح',  name:'Subuh',   time:subuh,   label:'Fajar Shadiq' },
-    { icon:'☀️',  arabic:'الظُّهْر',  name:'Dzuhur',  time:dzuhur,  label:'Tengah Hari'  },
-    { icon:'🌤️', arabic:'الْعَصْر',  name:'Ashar',   time:ashar,   label:'Petang'       },
-    { icon:'🌇', arabic:'الْمَغْرِب',name:'Maghrib', time:maghrib, label:'Matahari Terbenam' },
-    { icon:'🌙', arabic:'الْعِشَاء', name:'Isya',    time:isya,    label:'Malam'        },
+    { icon:'🌅', arabic:'الصُّبْح',   name:'Subuh',   time: subuh,   label:'Fajar Shadiq'      },
+    { icon:'☀️',  arabic:'الظُّهْر',   name:'Dzuhur',  time: dzuhur,  label:'Tengah Hari'       },
+    { icon:'🌤️', arabic:'الْعَصْر',   name:'Ashar',   time: ashar,   label:'Petang'            },
+    { icon:'🌇', arabic:'الْمَغْرِب', name:'Maghrib', time: maghrib, label:'Matahari Terbenam' },
+    { icon:'🌙', arabic:'الْعِشَاء',  name:'Isya',    time: isya,    label:'Malam'             },
   ];
 
-  var nowMin = now.getHours()*60+now.getMinutes();
+  /* Tentukan waktu sholat berikutnya */
+  var nowMin = now.getHours()*60 + now.getMinutes();
   var nextIdx = -1;
-  for(var i=0;i<waktu.length;i++){
-    if(toMin(waktu[i].time) > nowMin){ nextIdx=i; break; }
+  for (var i = 0; i < waktu.length; i++) {
+    if (toMin(waktu[i].time) > nowMin) { nextIdx = i; break; }
   }
-  if(nextIdx===-1) nextIdx=0;
+  if (nextIdx === -1) nextIdx = 0; /* Setelah Isya → Subuh besok */
 
+  /* Render kartu */
   var grid = document.getElementById('jadwalCards');
-  if(grid) {
-    waktu.forEach(function(w,i){
+  if (grid) {
+    waktu.forEach(function(w, i) {
       var card = document.createElement('div');
-      card.className = 'jadwal-card' + (i===nextIdx ? ' aktif' : '');
+      card.className = 'jadwal-card' + (i === nextIdx ? ' aktif' : '');
       card.innerHTML =
-        '<span class="jc-icon">'+w.icon+'</span>'+
-        '<div class="jc-arabic">'+w.arabic+'</div>'+
-        '<div class="jc-name">'+w.name+'</div>'+
-        '<div class="jc-time">'+fmt(w.time)+'</div>'+
-        '<span class="jc-label">'+(i===nextIdx?'▶ Berikutnya':w.label)+'</span>';
+        '<span class="jc-icon">' + w.icon + '</span>' +
+        '<div class="jc-arabic">' + w.arabic + '</div>' +
+        '<div class="jc-name">' + w.name + '</div>' +
+        '<div class="jc-time">' + fmt(w.time) + '</div>' +
+        '<span class="jc-label">' + (i === nextIdx ? '▶ Berikutnya' : w.label) + '</span>';
       grid.appendChild(card);
     });
   }
@@ -1066,12 +1095,14 @@
   /* ── Scroll reveal ── */
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
-      if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+      if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
     });
   }, { threshold: 0.1 });
+
   document.querySelectorAll('.kegiatan-card, .info-card, .galeri-item, .stat-box, .jadwal-card').forEach(function(el) {
-    el.style.opacity='0'; el.style.transform='translateY(20px)';
-    el.style.transition='opacity 0.5s ease, transform 0.5s ease';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
 })();
