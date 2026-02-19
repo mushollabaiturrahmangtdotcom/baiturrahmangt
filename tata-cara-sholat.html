@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tata Cara Sholat — Musholla Baiturrahman</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --green-deep:#0d3b2e;--green-mid:#155f45;--green-bright:#1e8a5e;--green-light:#2db87a;--gold:#c9a84c;--gold-light:#e8c97a;--cream:#f9f5ee;--cream-dark:#ede8dc;--white:#ffffff;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#7a7a7a; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,59,46,0.97);backdrop-filter:blur(12px);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid rgba(201,168,76,0.3);}
+  .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-brand img{height:38px;width:auto;}
+  .nav-brand span{font-size:0.85rem;font-weight:600;color:var(--white);}
+  .nav-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.82rem;font-weight:500;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
+  .nav-back:hover{background:rgba(255,255,255,0.1);color:var(--gold-light);}
+
+  .page-hero{margin-top:64px;padding:40px 2rem;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));text-align:center;}
+  .page-hero h1{font-family:'Amiri',serif;font-size:2rem;color:var(--white);margin-bottom:6px;}
+  .page-hero p{font-size:0.85rem;color:rgba(255,255,255,0.7);max-width:480px;margin:0 auto;}
+  .page-hero .gold-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto;}
+
+  /* Tab sholat */
+  .sholat-tabs{display:flex;gap:8px;padding:20px 2rem 0;max-width:900px;margin:0 auto;flex-wrap:wrap;}
+  .tab-btn{padding:8px 18px;border-radius:20px;border:1.5px solid var(--cream-dark);background:var(--white);font-size:0.8rem;font-weight:600;color:var(--text-mid);cursor:pointer;transition:all 0.2s;}
+  .tab-btn:hover{border-color:var(--green-bright);color:var(--green-bright);}
+  .tab-btn.aktif{background:var(--green-deep);color:var(--white);border-color:var(--green-deep);}
+
+  /* Content */
+  .page-content{max-width:900px;margin:0 auto;padding:20px 2rem 60px;}
+
+  /* Niat box */
+  .niat-box{background:linear-gradient(135deg,var(--green-deep),var(--green-mid));border-radius:16px;padding:24px;margin-bottom:20px;text-align:center;border-top:3px solid var(--gold);}
+  .niat-label{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;}
+  .niat-arab{font-family:'Amiri',serif;font-size:1.4rem;line-height:2;color:var(--white);direction:rtl;}
+  .niat-latin{font-size:0.8rem;color:rgba(255,255,255,0.7);font-style:italic;margin-top:8px;}
+  .niat-arti{font-size:0.8rem;color:rgba(255,255,255,0.6);margin-top:6px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.15);}
+
+  /* Step */
+  .step-list{display:flex;flex-direction:column;gap:16px;}
+  .step-card{background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--cream-dark);transition:box-shadow 0.2s;}
+  .step-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.07);}
+  .step-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;}
+  .step-num{width:36px;height:36px;flex-shrink:0;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));border-radius:50%;display:grid;place-items:center;font-size:0.8rem;font-weight:700;color:var(--white);}
+  .step-title{flex:1;font-weight:600;font-size:0.9rem;color:var(--text-dark);}
+  .step-arrow{color:var(--text-light);transition:transform 0.2s;font-size:0.8rem;}
+  .step-card.open .step-arrow{transform:rotate(180deg);}
+  .step-body{display:none;padding:0 20px 20px 70px;}
+  .step-card.open .step-body{display:block;}
+  .step-arab{font-family:'Amiri',serif;font-size:1.3rem;line-height:2;color:var(--text-dark);direction:rtl;text-align:right;padding:12px 14px;background:rgba(13,59,46,0.04);border-radius:8px;margin-bottom:10px;border-right:3px solid var(--gold);}
+  .step-latin{font-size:0.82rem;color:var(--green-mid);font-style:italic;line-height:1.8;margin-bottom:8px;}
+  .step-arti{font-size:0.82rem;color:var(--text-mid);line-height:1.8;padding:10px 14px;background:rgba(30,138,94,0.05);border-left:3px solid var(--green-bright);border-radius:0 8px 8px 0;}
+  .step-desc{font-size:0.82rem;color:var(--text-mid);line-height:1.8;margin-bottom:10px;}
+
+  /* Doa setelah sholat */
+  .doa-section{margin-top:28px;}
+  .doa-title{font-family:'Amiri',serif;font-size:1.3rem;color:var(--green-deep);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream-dark);}
+  .doa-card{background:var(--white);border-radius:12px;padding:20px;border:1px solid var(--cream-dark);margin-bottom:12px;}
+  .doa-label{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .doa-arab{font-family:'Amiri',serif;font-size:1.3rem;line-height:2;color:var(--text-dark);direction:rtl;text-align:right;margin-bottom:8px;}
+  .doa-latin{font-size:0.8rem;color:var(--green-mid);font-style:italic;line-height:1.8;margin-bottom:6px;}
+  .doa-arti{font-size:0.8rem;color:var(--text-mid);line-height:1.8;padding:8px 12px;background:rgba(30,138,94,0.05);border-left:3px solid var(--green-bright);border-radius:0 6px 6px 0;}
+
+  @media(max-width:768px){nav .nav-brand span{display:none;} .step-body{padding:0 16px 16px 16px;} .page-content{padding:16px 1rem 40px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="musholla-baiturrahman.html" class="nav-brand"><img src="images/logo_nav.png" alt="Logo"><span>Musholla Baiturrahman</span></a>
+  <a href="musholla-baiturrahman.html" class="nav-back">← Kembali</a>
+</nav>
+
+<div class="page-hero">
+  <h1>🕌 Tata Cara Sholat</h1>
+  <div class="gold-line"></div>
+  <p>Panduan lengkap gerakan, bacaan, dan doa sholat fardhu sesuai sunnah Nabi Muhammad ﷺ</p>
+</div>
+
+<div class="sholat-tabs" id="sholatTabs"></div>
+<div class="page-content" id="pageContent"></div>
+
+<script>
+(function(){
+  var SHOLAT = [
+    {id:'subuh',nama:'Subuh',rakaat:2,niatArab:'أُصَلِّي فَرْضَ الصُّبْحِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى',niatLatin:'Ushalli fardhas shubhi rak\'ataini mustaqbilal qiblati adaa-an lillaahi ta\'aalaa.',niatArti:'Saya berniat sholat fardhu Subuh dua rakaat menghadap kiblat karena Allah Ta\'ala.'},
+    {id:'dzuhur',nama:'Dzuhur',rakaat:4,niatArab:'أُصَلِّي فَرْضَ الظُّهْرِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى',niatLatin:'Ushalli fardhadh dhuhri arba\'a raka\'aatin mustaqbilal qiblati adaa-an lillaahi ta\'aalaa.',niatArti:'Saya berniat sholat fardhu Dzuhur empat rakaat menghadap kiblat karena Allah Ta\'ala.'},
+    {id:'ashar',nama:'Ashar',rakaat:4,niatArab:'أُصَلِّي فَرْضَ الْعَصْرِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى',niatLatin:'Ushalli fardhal \'ashri arba\'a raka\'aatin mustaqbilal qiblati adaa-an lillaahi ta\'aalaa.',niatArti:'Saya berniat sholat fardhu Ashar empat rakaat menghadap kiblat karena Allah Ta\'ala.'},
+    {id:'maghrib',nama:'Maghrib',rakaat:3,niatArab:'أُصَلِّي فَرْضَ الْمَغْرِبِ ثَلَاثَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى',niatLatin:'Ushalli fardhal maghribi tsalaatsa raka\'aatin mustaqbilal qiblati adaa-an lillaahi ta\'aalaa.',niatArti:'Saya berniat sholat fardhu Maghrib tiga rakaat menghadap kiblat karena Allah Ta\'ala.'},
+    {id:'isya',nama:'Isya',rakaat:4,niatArab:'أُصَلِّي فَرْضَ الْعِشَاءِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى',niatLatin:'Ushalli fardhal \'isyaa-i arba\'a raka\'aatin mustaqbilal qiblati adaa-an lillaahi ta\'aalaa.',niatArti:'Saya berniat sholat fardhu Isya empat rakaat menghadap kiblat karena Allah Ta\'ala.'},
+  ];
+
+  var STEPS = [
+    {judul:'Niat', desc:'Niat dilakukan di dalam hati bersamaan dengan takbiratul ihram. Berikut lafadz niat (boleh diucapkan perlahan):',arab:'',latin:'',arti:'',special:'niat'},
+    {judul:'Takbiratul Ihram',desc:'Berdiri tegak menghadap kiblat, angkat kedua tangan sejajar telinga atau bahu sambil mengucapkan:',arab:'اللَّهُ أَكْبَرُ',latin:'Allahu Akbar',arti:'Allah Maha Besar'},
+    {judul:'Doa Iftitah',desc:'Membaca doa iftitah setelah takbiratul ihram (sunnah):',arab:'اللَّهُمَّ بَاعِدْ بَيْنِي وَبَيْنَ خَطَايَايَ كَمَا بَاعَدْتَ بَيْنَ الْمَشْرِقِ وَالْمَغْرِبِ، اللَّهُمَّ نَقِّنِي مِنْ خَطَايَايَ كَمَا يُنَقَّى الثَّوْبُ الْأَبْيَضُ مِنَ الدَّنَسِ، اللَّهُمَّ اغْسِلْنِي مِنْ خَطَايَايَ بِالْمَاءِ وَالثَّلْجِ وَالْبَرَدِ',latin:'Allahumma baa\'id bayni wa bayna khathayaaya kamaa baa\'adta baynal masyriqi wal maghrib. Allahumma naqqini min khathayaaya kama yunaqqats tsawbul abyadhu minad danas. Allahummaghsilni min khathayaaya bil maa-i wats tsalji wal barad.',arti:'Ya Allah, jauhkanlah antara aku dan kesalahanku sebagaimana Engkau menjauhkan antara timur dan barat. Ya Allah, bersihkanlah aku dari kesalahan-kesalahanku seperti dibersihkannya pakaian putih dari kotoran. Ya Allah, cucilah aku dari kesalahanku dengan air, salju, dan embun.'},
+    {judul:'Membaca Al-Fatihah',desc:'Wajib dibaca di setiap rakaat:',arab:'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',latin:'Bismillahir rahmaanir rahiim. Alhamdulillahi rabbil \'aalamiin. Arrahmaanir rahiim. Maaliki yawmid diin. Iyyaaka na\'budu wa iyyaaka nasta\'iin. Ihdinash shiraathal mustaqiim. Shiraathal ladziina an\'amta \'alayhim ghayril maghdhuubi \'alayhim wa ladh dhaallin.',arti:'Dengan nama Allah Yang Maha Pengasih, Maha Penyayang. Segala puji bagi Allah, Tuhan seluruh alam. Yang Maha Pengasih, Maha Penyayang. Pemilik hari pembalasan. Hanya kepada Engkaulah kami menyembah dan hanya kepada Engkaulah kami mohon pertolongan. Tunjukilah kami jalan yang lurus. Yaitu jalan orang-orang yang telah Engkau beri nikmat kepadanya; bukan (jalan) mereka yang dimurkai, dan bukan (pula jalan) mereka yang sesat.'},
+    {judul:'Membaca Surat/Ayat Al-Qur\'an',desc:'Membaca surat atau ayat Al-Qur\'an setelah Al-Fatihah (pada rakaat pertama dan kedua). Misalnya Surat Al-Ikhlas:',arab:'قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ',latin:'Qul huwallahu ahad. Allahus shamad. Lam yalid wa lam yuulad. Wa lam yakul lahu kufuwan ahad.',arti:'Katakanlah (Muhammad), "Dialah Allah, Yang Maha Esa. Allah tempat meminta segala sesuatu. (Allah) tidak beranak dan tidak pula diperanakkan. Dan tidak ada sesuatu yang setara dengan Dia."'},
+    {judul:'Rukuk',desc:'Membungkuk dengan punggung lurus sejajar, tangan memegang lutut. Membaca:',arab:'سُبْحَانَ رَبِّيَ الْعَظِيمِ',latin:'Subhaana rabbiyal \'adziim (3x)',arti:'Maha Suci Rabb-ku Yang Maha Agung (3x)'},
+    {judul:'I\'tidal (Bangkit dari Rukuk)',desc:'Berdiri tegak kembali sambil mengucapkan:',arab:'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ، رَبَّنَا وَلَكَ الْحَمْدُ',latin:'Sami\'allaahu liman hamidah. Rabbanaa wa lakal hamd.',arti:'Allah mendengar orang yang memuji-Nya. Ya Rabb kami, bagi-Mu segala pujian.'},
+    {judul:'Sujud',desc:'Sujud dengan 7 anggota badan menyentuh lantai. Membaca:',arab:'سُبْحَانَ رَبِّيَ الْأَعْلَى',latin:'Subhaana rabbiyal a\'laa (3x)',arti:'Maha Suci Rabb-ku Yang Maha Tinggi (3x)'},
+    {judul:'Duduk di Antara Dua Sujud',desc:'Duduk iftirasy antara dua sujud, membaca:',arab:'رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي',latin:'Rabbighfirlii, rabbighfirlii',arti:'Ya Rabb, ampunilah aku. Ya Rabb, ampunilah aku.'},
+    {judul:'Tasyahud Awal (Rakaat Kedua)',desc:'Duduk tasyahud pada rakaat kedua (untuk sholat 3 dan 4 rakaat):',arab:'التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',latin:'At-tahiyyaatu lillahi wash sholawaatu wath thayyibaat. As-salaamu \'alaika ayyuhan nabiyyu wa rahmatullahi wa barakaatuh. As-salaamu \'alainaa wa \'alaa \'ibaadillahish shaalihiin. Asyhadu allaa ilaaha illallah wa asyhadu anna muhammadan \'abduhu wa rasuuluh.',arti:'Segala penghormatan, sholawat, dan kebaikan hanya milik Allah. Salam, rahmat Allah, dan berkah-Nya semoga atas engkau wahai Nabi. Salam semoga atas kami dan atas hamba-hamba Allah yang sholeh. Aku bersaksi bahwa tiada Tuhan selain Allah dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya.'},
+    {judul:'Tasyahud Akhir & Sholawat',desc:'Pada rakaat terakhir, dilanjutkan membaca sholawat:',arab:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ',latin:'Allahumma sholli \'alaa muhammad wa \'alaa aali muhammad, kamaa shollayta \'alaa ibraahiim wa \'alaa aali ibraahiim, innaka hamiidun majiid. Allahumma baarik \'alaa muhammad wa \'alaa aali muhammad, kamaa baarakta \'alaa ibraahiim wa \'alaa aali ibraahiim, innaka hamiidun majiid.',arti:'Ya Allah, limpahkanlah sholawat kepada Muhammad dan keluarga Muhammad, sebagaimana Engkau limpahkan sholawat kepada Ibrahim dan keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia. Ya Allah, berkahilah Muhammad dan keluarga Muhammad, sebagaimana Engkau berkahi Ibrahim dan keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia.'},
+    {judul:'Salam',desc:'Mengakhiri sholat dengan salam ke kanan kemudian ke kiri:',arab:'السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ',latin:'As-salaamu \'alaikum wa rahmatullah',arti:'Semoga keselamatan dan rahmat Allah atas kalian.'},
+  ];
+
+  var DOA_SETELAH = [
+    {label:'Istighfar (3x)',arab:'أَسْتَغْفِرُ اللَّهَ',latin:'Astaghfirullah (3x)',arti:'Aku memohon ampun kepada Allah'},
+    {label:'Allahumma Antas Salam',arab:'اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ',latin:'Allahumma antas salaam wa minkas salaam, tabaarakta yaa dzal jalaali wal ikraam.',arti:'Ya Allah, Engkaulah As-Salaam (Yang Maha Sejahtera) dan dari-Mu lah kesejahteraan, Maha Berkah Engkau wahai Dzat yang memiliki keagungan dan kemuliaan.'},
+    {label:'Subhanallah, Alhamdulillah, Allahu Akbar (33x)',arab:'سُبْحَانَ اللَّهِ ۝ الْحَمْدُ لِلَّهِ ۝ اللَّهُ أَكْبَرُ',latin:'Subhanallah (33x) · Alhamdulillah (33x) · Allahu Akbar (33x)',arti:'Maha Suci Allah · Segala Puji bagi Allah · Allah Maha Besar'},
+    {label:'Doa Penutup',arab:'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',latin:'Laa ilaaha illallaahu wahdahu laa syariika lah, lahul mulku wa lahul hamdu wa huwa \'alaa kulli syay-in qadiir.',arti:'Tidak ada Tuhan yang berhak disembah selain Allah semata, tidak ada sekutu bagi-Nya. Bagi-Nya kerajaan dan bagi-Nya segala pujian, dan Dia Maha Kuasa atas segala sesuatu.'},
+  ];
+
+  /* Render tabs */
+  var tabsEl = document.getElementById('sholatTabs');
+  SHOLAT.forEach(function(s, i){
+    var btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i===0?' aktif':'');
+    btn.textContent = s.nama + ' (' + s.rakaat + ' Rakaat)';
+    btn.onclick = function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('aktif');});
+      btn.classList.add('aktif');
+      renderSholat(s);
+    };
+    tabsEl.appendChild(btn);
+  });
+
+  function renderSholat(s) {
+    var html = '<div class="niat-box"><div class="niat-label">✦ Niat Sholat '+s.nama+' ✦</div><div class="niat-arab">'+s.niatArab+'</div><div class="niat-latin">'+s.niatLatin+'</div><div class="niat-arti">'+s.niatArti+'</div></div>';
+    html += '<div class="step-list">';
+    STEPS.forEach(function(st, i){
+      var isNiat = st.special === 'niat';
+      if(isNiat) return; // niat sudah di atas
+      html += '<div class="step-card" id="step-'+i+'">';
+      html += '<div class="step-header" onclick="toggleStep('+i+')">';
+      html += '<div class="step-num">'+(i)+'</div>';
+      html += '<div class="step-title">'+st.judul+'</div>';
+      html += '<div class="step-arrow">▼</div>';
+      html += '</div><div class="step-body">';
+      if(st.desc) html += '<div class="step-desc">'+st.desc+'</div>';
+      if(st.arab) html += '<div class="step-arab">'+st.arab+'</div>';
+      if(st.latin) html += '<div class="step-latin">'+st.latin+'</div>';
+      if(st.arti) html += '<div class="step-arti">'+st.arti+'</div>';
+      html += '</div></div>';
+    });
+    html += '</div>';
+    html += '<div class="doa-section"><div class="doa-title">📿 Doa Setelah Sholat</div>';
+    DOA_SETELAH.forEach(function(d){
+      html += '<div class="doa-card"><div class="doa-label">'+d.label+'</div><div class="doa-arab">'+d.arab+'</div><div class="doa-latin">'+d.latin+'</div><div class="doa-arti">'+d.arti+'</div></div>';
+    });
+    html += '</div>';
+    document.getElementById('pageContent').innerHTML = html;
+  }
+
+  window.toggleStep = function(i){
+    var card = document.getElementById('step-'+i);
+    if(card) card.classList.toggle('open');
+  };
+
+  renderSholat(SHOLAT[0]);
+})();
+</script>
+</body>
+</html>

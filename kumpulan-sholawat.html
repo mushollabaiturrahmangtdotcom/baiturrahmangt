@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kumpulan Sholawat — Musholla Baiturrahman</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green-deep:#0d3b2e;--green-mid:#155f45;--green-bright:#1e8a5e;--gold:#c9a84c;--gold-light:#e8c97a;--cream:#f9f5ee;--cream-dark:#ede8dc;--white:#ffffff;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#7a7a7a;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text-dark);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,59,46,0.97);backdrop-filter:blur(12px);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid rgba(201,168,76,0.3);}
+  .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-brand img{height:38px;width:auto;}
+  .nav-brand span{font-size:0.85rem;font-weight:600;color:var(--white);}
+  .nav-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.82rem;font-weight:500;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
+  .nav-back:hover{background:rgba(255,255,255,0.1);color:var(--gold-light);}
+  .main-layout{display:flex;height:calc(100vh - 64px);margin-top:64px;}
+  .sidebar{width:280px;flex-shrink:0;background:var(--white);border-right:1px solid var(--cream-dark);display:flex;flex-direction:column;}
+  .sidebar-header{padding:16px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));flex-shrink:0;}
+  .sidebar-header h2{font-family:'Amiri',serif;font-size:1.2rem;color:var(--white);margin-bottom:4px;}
+  .sidebar-header p{font-size:0.72rem;color:rgba(255,255,255,0.6);}
+  .sholawat-list{flex:1;overflow-y:auto;padding:6px;}
+  .sholawat-list::-webkit-scrollbar{width:4px;}
+  .sholawat-list::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:2px;}
+  .sh-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;border:none;width:100%;text-align:left;background:transparent;transition:background 0.15s;}
+  .sh-item:hover{background:rgba(30,138,94,0.08);}
+  .sh-item.aktif{background:var(--green-deep);}
+  .sh-item.aktif .sh-num,.sh-item.aktif .sh-name,.sh-item.aktif .sh-info{color:var(--white)!important;}
+  .sh-item.aktif .sh-num{background:rgba(255,255,255,0.15);}
+  .sh-num{width:30px;height:30px;flex-shrink:0;background:rgba(30,138,94,0.1);border-radius:6px;display:grid;place-items:center;font-size:0.72rem;font-weight:700;color:var(--green-bright);}
+  .sh-text{flex:1;min-width:0;}
+  .sh-name{font-size:0.83rem;font-weight:600;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sh-info{font-size:0.68rem;color:var(--text-light);margin-top:1px;}
+  .content{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+  .content-header{padding:20px 28px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));flex-shrink:0;text-align:center;}
+  .ch-badge{display:inline-block;background:rgba(201,168,76,0.2);color:var(--gold-light);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);margin-bottom:8px;}
+  .ch-title{font-family:'Amiri',serif;font-size:1.5rem;color:var(--white);}
+  .ch-sub{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:4px;}
+  .content-body{flex:1;overflow-y:auto;padding:24px 28px;}
+  .content-body::-webkit-scrollbar{width:5px;}
+  .content-body::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:3px;}
+  .sholawat-arab{background:linear-gradient(135deg,var(--green-deep),var(--green-mid));border-radius:16px;padding:24px 28px;margin-bottom:20px;border-top:3px solid var(--gold);text-align:right;}
+  .sholawat-arab-text{font-family:'Amiri',serif;font-size:1.6rem;line-height:2.2;color:var(--white);direction:rtl;}
+  .section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-bright);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--cream-dark);}
+  .latin-box{font-size:0.88rem;color:var(--green-mid);font-style:italic;line-height:1.9;padding:14px 18px;background:rgba(30,138,94,0.05);border-radius:8px;margin-bottom:16px;}
+  .arti-box{font-size:0.88rem;color:var(--text-mid);line-height:1.9;padding:14px 18px;background:var(--white);border-left:3px solid var(--green-bright);border-radius:0 8px 8px 0;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+  .keutamaan-box{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:12px;padding:16px 20px;font-size:0.82rem;color:var(--text-mid);line-height:1.8;}
+  .keutamaan-box strong{color:var(--green-deep);}
+  .nav-arrows{display:flex;gap:10px;margin-top:20px;}
+  .nav-btn{flex:1;padding:10px;border:1.5px solid var(--cream-dark);border-radius:8px;background:var(--white);font-size:0.8rem;font-weight:600;color:var(--green-deep);cursor:pointer;transition:all 0.2s;text-align:center;}
+  .nav-btn:hover:not(:disabled){background:var(--green-deep);color:var(--white);border-color:var(--green-deep);}
+  .nav-btn:disabled{opacity:0.35;cursor:not-allowed;}
+  .placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:40px;}
+  .placeholder-icon{font-size:3rem;opacity:0.35;}
+  .placeholder h3{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-deep);}
+  .placeholder p{font-size:0.85rem;color:var(--text-light);line-height:1.7;max-width:340px;}
+  @media(max-width:768px){.sidebar{width:240px;}nav .nav-brand span{display:none;}}
+  @media(max-width:520px){.main-layout{flex-direction:column;}.sidebar{width:100%;height:200px;border-right:none;border-bottom:1px solid var(--cream-dark);}.sholawat-list{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;}.sh-item{min-width:140px;}.content-body{padding:16px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="musholla-baiturrahman.html" class="nav-brand"><img src="images/logo_nav.png" alt="Logo"><span>Musholla Baiturrahman</span></a>
+  <a href="musholla-baiturrahman.html" class="nav-back">← Kembali</a>
+</nav>
+<div class="main-layout">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>🌙 Kumpulan Sholawat</h2>
+      <p>Sholawat kepada Nabi Muhammad ﷺ</p>
+    </div>
+    <div class="sholawat-list" id="sholawatList"></div>
+  </div>
+  <div class="content" id="mainContent">
+    <div class="placeholder"><div class="placeholder-icon">🌙</div><h3>Kumpulan Sholawat</h3><p>Pilih sholawat dari daftar di sebelah kiri untuk mulai membaca.</p><div style="font-family:'Amiri',serif;font-size:1.3rem;color:var(--gold);margin-top:8px;">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ</div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var DATA = [
+    {
+      id:1, nama:'Sholawat Ibrahimiyah', kategori:'Wajib dalam Sholat',
+      arab:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ',
+      latin:'Allahumma sholli \'alaa muhammad wa \'alaa aali muhammad, kamaa shollayta \'alaa ibraahiim wa \'alaa aali ibraahiim, innaka hamiidun majiid. Allahumma baarik \'alaa muhammad wa \'alaa aali muhammad, kamaa baarakta \'alaa ibraahiim wa \'alaa aali ibraahiim, innaka hamiidun majiid.',
+      arti:'Ya Allah, limpahkanlah sholawat kepada Muhammad dan keluarga Muhammad, sebagaimana Engkau limpahkan sholawat kepada Ibrahim dan keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia. Ya Allah, berkahilah Muhammad dan keluarga Muhammad, sebagaimana Engkau berkahi Ibrahim dan keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia.',
+      keutamaan:'Sholawat Ibrahimiyah adalah sholawat yang diajarkan langsung oleh Nabi ﷺ dan dibaca dalam setiap sholat pada tasyahud akhir. Ini adalah sholawat yang paling utama.'
+    },
+    {
+      id:2, nama:'Sholawat Nariyah', kategori:'Sholawat Populer',
+      arab:'اللَّهُمَّ صَلِّ صَلَاةً كَامِلَةً وَسَلِّمْ سَلَامًا تَامًّا عَلَى سَيِّدِنَا مُحَمَّدٍ الَّذِي تَنْحَلُّ بِهِ الْعُقَدُ وَتَنْفَرِجُ بِهِ الْكُرَبُ وَتُقْضَى بِهِ الْحَوَائِجُ وَتُنَالُ بِهِ الرَّغَائِبُ وَحُسْنُ الْخَوَاتِمِ وَيُسْتَسْقَى الْغَمَامُ بِوَجْهِهِ الْكَرِيمِ وَعَلَى آلِهِ وَصَحْبِهِ فِي كُلِّ لَمْحَةٍ وَنَفَسٍ بِعَدَدِ كُلِّ مَعْلُومٍ لَكَ',
+      latin:'Allahumma sholli sholaatan kaamilatan wa sallim salaaman taamman \'alaa sayyidinaa muhammadin alladzii tanhallu bihil \'uqadu wa tanfariju bihil kurabu wa tuqdhaa bihil hawaa-iju wa tunaalu bihir raghaa-ibu wa husnil khawaatimi wa yustasqal ghamaamu biwajhihil kariimi wa \'alaa aalihi wa shahbihi fii kulli lamhatin wa nafasin bi\'adadi kulli ma\'luumin lak.',
+      arti:'Ya Allah, limpahkanlah sholawat yang sempurna dan salam yang lengkap kepada junjungan kami Muhammad, yang dengan sebabnya terurai segala ikatan, hilang segala kesusahan, terpenuhi segala hajat, tercapai segala keinginan dan khusnul khatimah, serta turun hujan dengan sebab wajahnya yang mulia. Dan (limpahkan pula sholawat) kepada keluarga dan para sahabatnya, setiap kedipan mata dan hembusan nafas sebanyak bilangan yang Engkau ketahui.',
+      keutamaan:'Sholawat Nariyah juga dikenal sebagai Sholawat Tafrijiyah (pembuka kesulitan). Banyak ulama menganjurkan membacanya secara rutin, khususnya sebanyak 11 kali setiap selesai sholat fardhu.'
+    },
+    {
+      id:3, nama:'Sholawat Badar', kategori:'Sholawat Populer',
+      arab:'صَلَاةُ اللهِ سَلَامُ اللهِ عَلَى طَهَ رَسُولِ اللهِ صَلَاةُ اللهِ سَلَامُ اللهِ عَلَى يَاسِيْنَ حَبِيبِ اللهِ تَوَسَّلْنَا بِبِسْمِ اللهِ وَبِالْهَادِي رَسُولِ اللهِ',
+      latin:'Shalaatullaahi salaamullaahi \'alaa thaaha rasuulillaah. Shalaatullaahi salaamullaahi \'alaa yaasiina habiibillaah. Tawassalnaa bibismillaahi wa bil haadi rasuulillaah.',
+      arti:'Sholawat Allah dan salam Allah atas Thoha (Muhammad) utusan Allah. Sholawat Allah dan salam Allah atas Yasin (Muhammad) kekasih Allah. Kami bertawasul dengan bismillah dan dengan petunjuk utusan Allah.',
+      keutamaan:'Sholawat Badar sering dibacakan pada momen-momen penting dalam tradisi Islam Nusantara, terutama saat peringatan Maulid Nabi dan majelis dzikir.'
+    },
+    {
+      id:4, nama:'Sholawat Munjiyat', kategori:'Sholawat Amalan',
+      arab:'اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ صَلَاةً تُنَجِّيْنَا بِهَا مِنْ جَمِيْعِ الْأَهْوَالِ وَالْآفَاتِ وَتَقْضِي لَنَا بِهَا جَمِيْعَ الْحَاجَاتِ وَتُطَهِّرُنَا بِهَا مِنْ جَمِيْعِ السَّيِّئَاتِ وَتَرْفَعُنَا بِهَا عِنْدَكَ أَعْلَى الدَّرَجَاتِ وَتُبَلِّغُنَا بِهَا أَقْصَى الْغَايَاتِ مِنْ جَمِيْعِ الْخَيْرَاتِ فِي الْحَيَاةِ وَبَعْدَ الْمَمَاتِ',
+      latin:'Allahumma sholli \'alaa sayyidinaa muhammadin sholaatan tunajjiinaa bihaa min jamii\'il ahwaali wal aafaati wa taqdhii lanaa bihaa jamii\'al haajaat wa tuthahhirunaa bihaa min jamii\'is sayyi-aati wa tarfa\'unaa bihaa \'indaka a\'lad darajati wa tuballighunaaa bihaa aqshal ghaayaati min jamii\'il khayraati fil hayaati wa ba\'dal mamaat.',
+      arti:'Ya Allah, limpahkanlah sholawat kepada junjungan kami Muhammad, sholawat yang dengannya Engkau selamatkan kami dari segala ketakutan dan bencana, Engkau penuhi segala hajat kami, Engkau bersihkan kami dari segala kejelekan, Engkau angkat derajat kami setinggi-tingginya di sisi-Mu, dan Engkau sampaikan kami kepada tujuan tertinggi dari segala kebaikan dalam kehidupan maupun setelah kematian.',
+      keutamaan:'Sholawat Munjiyat berarti sholawat penyelamat. Diajarkan para ulama sebagai amalan rutin untuk keselamatan dunia dan akhirat.'
+    },
+    {
+      id:5, nama:'Sholawat Thibbil Qulub', kategori:'Sholawat Amalan',
+      arab:'اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ طِبِّ الْقُلُوبِ وَدَوَائِهَا وَعَافِيَةِ الْأَبْدَانِ وَشِفَائِهَا وَنُورِ الْأَبْصَارِ وَضِيَائِهَا وَعَلَى آلِهِ وَصَحْبِهِ وَسَلِّمْ',
+      latin:'Allahumma sholli \'alaa sayyidinaa muhammadin thibbil quluubi wa dawaa-ihaa wa \'aafiyatil abdaani wa shifaa-ihaa wa nuuril abshaari wa dhiyaa-ihaa wa \'alaa aalihi wa shahbihi wa sallim.',
+      arti:'Ya Allah, limpahkanlah sholawat kepada junjungan kami Muhammad, obat hati dan penyembuhnya, sehat badan dan kesembuhannya, cahaya mata dan sinarnya, serta kepada keluarga dan para sahabatnya, dan limpahkanlah salam.',
+      keutamaan:'Sholawat Thibbil Qulub bermakna obat hati. Para ulama menganjurkan membacanya untuk ketenangan jiwa, kesehatan badan, dan keberkahan hidup.'
+    },
+    {
+      id:6, nama:'Sholawat Jibril', kategori:'Sholawat Ringkas',
+      arab:'صَلَّى اللَّهُ عَلَى مُحَمَّدٍ',
+      latin:'Shallallaahu \'alaa Muhammad.',
+      arti:'Semoga Allah limpahkan sholawat kepada Muhammad.',
+      keutamaan:'Sholawat ringkas yang diajarkan Malaikat Jibril. Sangat mudah dibaca kapan saja dan di mana saja. Nabi ﷺ bersabda: "Barangsiapa yang bersholawat kepadaku sekali, maka Allah akan bersholawat kepadanya sepuluh kali." (HR. Muslim)'
+    },
+    {
+      id:7, nama:'Sholawat Fatih', kategori:'Sholawat Populer',
+      arab:'اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ الْفَاتِحِ لِمَا أُغْلِقَ وَالْخَاتِمِ لِمَا سَبَقَ وَنَاصِرِ الْحَقِّ بِالْحَقِّ وَالْهَادِي إِلَى صِرَاطِكَ الْمُسْتَقِيمِ وَعَلَى آلِهِ حَقَّ قَدْرِهِ وَمِقْدَارِهِ الْعَظِيمِ',
+      latin:'Allahumma sholli \'alaa sayyidinaa muhammadil faatihi limaa ughlika wal khaatimi limaa sabaqa wa naashiril haqqi bil haqqi wal haadii ilaa shiraaatikal mustaqiimi wa \'alaa aalihi haqqa qadrihi wa miqdaarihil \'azhiim.',
+      arti:'Ya Allah, limpahkanlah sholawat kepada junjungan kami Muhammad yang membuka apa yang tertutup, yang menyempurnakan apa yang sebelumnya, yang menolong kebenaran dengan kebenaran, yang memberi petunjuk menuju jalan-Mu yang lurus, beserta keluarganya, sesuai dengan kadar dan kedudukannya yang agung.',
+      keutamaan:'Sholawat Fatih banyak dibaca oleh para ulama dan ahli tasawuf. Diyakini mengandung banyak keutamaan dan keistimewaan bagi yang rutin mengamalkannya.'
+    },
+    {
+      id:8, nama:'Sholawat Ma\'tsur (dari Hadis)', kategori:'Dari Sunnah',
+      arab:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَأَزْوَاجِهِ وَذُرِّيَّتِهِ، كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ، وَبَارِكْ عَلَى مُحَمَّدٍ وَأَزْوَاجِهِ وَذُرِّيَّتِهِ، كَمَا بَارَكْتَ عَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ',
+      latin:'Allahumma sholli \'alaa muhammadin wa azwaajihi wa dzurriyyatih, kamaa shollayta \'alaa aali ibraahiim, wa baarik \'alaa muhammadin wa azwaajihi wa dzurriyyatih, kamaa baarakta \'alaa aali ibraahiim, innaka hamiidun majiid.',
+      arti:'Ya Allah, limpahkanlah sholawat kepada Muhammad, istri-istri beliau, dan keturunan beliau, sebagaimana Engkau limpahkan sholawat kepada keluarga Ibrahim. Dan berkahilah Muhammad, istri-istri beliau, dan keturunan beliau, sebagaimana Engkau berkahi keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia.',
+      keutamaan:'Diriwayatkan oleh Imam Bukhari dan Muslim. Sholawat ini mencakup sholawat untuk Nabi ﷺ beserta seluruh keluarga dan keturunan beliau.'
+    },
+  ];
+
+  var listEl = document.getElementById('sholawatList');
+  listEl.innerHTML = DATA.map(function(s){
+    return '<button class="sh-item" id="shi-'+s.id+'" onclick="bukaSholawat('+s.id+')">' +
+      '<div class="sh-num">'+s.id+'</div>' +
+      '<div class="sh-text"><div class="sh-name">'+s.nama+'</div><div class="sh-info">'+s.kategori+'</div></div>' +
+      '</button>';
+  }).join('');
+
+  window.bukaSholawat = function(id){
+    var s = DATA.find(function(x){return x.id===id;});
+    if(!s) return;
+    document.querySelectorAll('.sh-item').forEach(function(b){b.classList.remove('aktif');});
+    var btn = document.getElementById('shi-'+id);
+    if(btn){btn.classList.add('aktif');btn.scrollIntoView({block:'nearest',behavior:'smooth'});}
+    var idx = DATA.findIndex(function(x){return x.id===id;});
+    var prevId = idx>0?DATA[idx-1].id:null;
+    var nextId = idx<DATA.length-1?DATA[idx+1].id:null;
+    document.getElementById('mainContent').innerHTML =
+      '<div class="content-header"><div class="ch-badge">✦ '+s.kategori+' ✦</div><div class="ch-title">'+s.nama+'</div><div class="ch-sub">Sholawat ke-'+s.id+' dari '+DATA.length+'</div></div>' +
+      '<div class="content-body">' +
+        '<div class="sholawat-arab"><div class="sholawat-arab-text">'+s.arab+'</div></div>' +
+        '<div class="section-label">Latin / Transliterasi</div>' +
+        '<div class="latin-box">'+s.latin+'</div>' +
+        '<div class="section-label">Terjemahan</div>' +
+        '<div class="arti-box">'+s.arti+'</div>' +
+        '<div class="section-label">Keutamaan</div>' +
+        '<div class="keutamaan-box"><strong>💡 </strong>'+s.keutamaan+'</div>' +
+        '<div class="nav-arrows">' +
+          '<button class="nav-btn" onclick="bukaSholawat('+prevId+')" '+(prevId?'':'disabled')+'>← Sebelumnya</button>' +
+          '<button class="nav-btn" onclick="bukaSholawat('+nextId+')" '+(nextId?'':'disabled')+'>Berikutnya →</button>' +
+        '</div>' +
+      '</div>';
+  };
+
+  bukaSholawat(1);
+})();
+</script>
+</body>
+</html>

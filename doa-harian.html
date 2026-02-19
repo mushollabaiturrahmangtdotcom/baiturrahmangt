@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doa Harian — Musholla Baiturrahman</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green-deep:#0d3b2e;--green-mid:#155f45;--green-bright:#1e8a5e;--gold:#c9a84c;--gold-light:#e8c97a;--cream:#f9f5ee;--cream-dark:#ede8dc;--white:#ffffff;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#7a7a7a;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text-dark);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,59,46,0.97);backdrop-filter:blur(12px);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid rgba(201,168,76,0.3);}
+  .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-brand img{height:38px;width:auto;}
+  .nav-brand span{font-size:0.85rem;font-weight:600;color:var(--white);}
+  .nav-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.82rem;font-weight:500;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
+  .nav-back:hover{background:rgba(255,255,255,0.1);color:var(--gold-light);}
+  .main-layout{display:flex;height:calc(100vh - 64px);margin-top:64px;}
+
+  /* Sidebar */
+  .sidebar{width:280px;flex-shrink:0;background:var(--white);border-right:1px solid var(--cream-dark);display:flex;flex-direction:column;}
+  .sidebar-header{padding:16px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));flex-shrink:0;}
+  .sidebar-header h2{font-family:'Amiri',serif;font-size:1.2rem;color:var(--white);margin-bottom:4px;}
+  .sidebar-header p{font-size:0.72rem;color:rgba(255,255,255,0.6);margin-bottom:10px;}
+  .search-box{width:100%;padding:9px 14px;border:none;border-radius:8px;font-size:0.82rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;background:rgba(255,255,255,0.15);color:var(--white);}
+  .search-box::placeholder{color:rgba(255,255,255,0.5);}
+  .search-box:focus{background:rgba(255,255,255,0.25);}
+  .doa-nav-list{flex:1;overflow-y:auto;padding:6px;}
+  .doa-nav-list::-webkit-scrollbar{width:4px;}
+  .doa-nav-list::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:2px;}
+
+  /* Kategori */
+  .kategori-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);padding:10px 10px 4px;}
+  .doa-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;border:none;width:100%;text-align:left;background:transparent;transition:background 0.15s;}
+  .doa-item:hover{background:rgba(30,138,94,0.08);}
+  .doa-item.aktif{background:var(--green-deep);}
+  .doa-item.aktif .di-icon,.doa-item.aktif .di-name{color:var(--white)!important;}
+  .di-icon{font-size:1rem;flex-shrink:0;}
+  .di-name{font-size:0.82rem;font-weight:500;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  /* Content */
+  .content{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+  .content-header{padding:20px 28px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));flex-shrink:0;text-align:center;}
+  .ch-badge{display:inline-block;background:rgba(201,168,76,0.2);color:var(--gold-light);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 12px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);margin-bottom:8px;}
+  .ch-title{font-family:'Amiri',serif;font-size:1.5rem;color:var(--white);}
+  .content-body{flex:1;overflow-y:auto;padding:24px 28px;}
+  .content-body::-webkit-scrollbar{width:5px;}
+  .content-body::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:3px;}
+  .doa-arab-box{background:linear-gradient(135deg,var(--green-deep),var(--green-mid));border-radius:16px;padding:24px 28px;margin-bottom:20px;border-top:3px solid var(--gold);}
+  .doa-arab-text{font-family:'Amiri',serif;font-size:1.6rem;line-height:2.2;color:var(--white);direction:rtl;text-align:right;}
+  .section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-bright);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--cream-dark);}
+  .latin-box{font-size:0.88rem;color:var(--green-mid);font-style:italic;line-height:1.9;padding:14px 18px;background:rgba(30,138,94,0.05);border-radius:8px;margin-bottom:16px;}
+  .arti-box{font-size:0.88rem;color:var(--text-mid);line-height:1.9;padding:14px 18px;background:var(--white);border-left:3px solid var(--green-bright);border-radius:0 8px 8px 0;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+  .sumber-box{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;background:rgba(30,138,94,0.1);color:var(--green-mid);}
+  .waktu-box{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:600;background:rgba(201,168,76,0.12);color:#8a6b1e;margin-left:8px;}
+  .placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:40px;}
+  .placeholder-icon{font-size:3rem;opacity:0.35;}
+  .placeholder h3{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-deep);}
+  .placeholder p{font-size:0.85rem;color:var(--text-light);line-height:1.7;max-width:340px;}
+  @media(max-width:768px){.sidebar{width:240px;}nav .nav-brand span{display:none;}.content-body{padding:16px;}}
+  @media(max-width:520px){.main-layout{flex-direction:column;}.sidebar{width:100%;height:220px;border-right:none;border-bottom:1px solid var(--cream-dark);}.doa-nav-list{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;flex-direction:row;}.doa-item{min-width:120px;flex-direction:column;align-items:flex-start;gap:2px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="musholla-baiturrahman.html" class="nav-brand"><img src="images/logo_nav.png" alt="Logo"><span>Musholla Baiturrahman</span></a>
+  <a href="musholla-baiturrahman.html" class="nav-back">← Kembali</a>
+</nav>
+<div class="main-layout">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>🤲 Doa Harian</h2>
+      <p>Doa-doa dari Al-Qur'an dan Sunnah</p>
+      <input class="search-box" id="searchBox" type="text" placeholder="🔍 Cari doa..." oninput="filterDoa(this.value)">
+    </div>
+    <div class="doa-nav-list" id="doaNavList"></div>
+  </div>
+  <div class="content" id="mainContent">
+    <div class="placeholder"><div class="placeholder-icon">🤲</div><h3>Doa Harian</h3><p>Kumpulan doa dari Al-Qur'an dan Hadis Shahih untuk diamalkan setiap hari.</p><div style="font-family:'Amiri',serif;font-size:1.2rem;color:var(--gold);margin-top:8px;">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً</div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var DATA = [
+    {id:1,kat:'Pagi & Malam',icon:'🌅',nama:'Doa Bangun Tidur',arab:'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ',latin:'Alhamdulillahil ladzii ahyaanaa ba\'da maa amaatanaa wa ilayhin nusyuur.',arti:'Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami, dan kepada-Nya lah kami kembali.',sumber:'HR. Bukhari',waktu:'Setelah bangun tidur'},
+    {id:2,kat:'Pagi & Malam',icon:'🌙',nama:'Doa Sebelum Tidur',arab:'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',latin:'Bismikallahumma amuutu wa ahyaa.',arti:'Dengan nama-Mu ya Allah, aku mati dan hidup.',sumber:'HR. Bukhari',waktu:'Sebelum tidur'},
+    {id:3,kat:'Pagi & Malam',icon:'🌤️',nama:'Dzikir Pagi',arab:'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',latin:'Ashbahnaa wa ashbahal mulku lillaah, wal hamdu lillaah, laa ilaaha illallaahu wahdahu laa syariika lah, lahul mulku wa lahul hamdu wa huwa \'alaa kulli syay-in qadiir.',arti:'Kami memasuki pagi dan kerajaan milik Allah, dan segala puji bagi Allah. Tidak ada Tuhan yang berhak disembah kecuali Allah semata, tidak ada sekutu bagi-Nya. Milik-Nya lah kerajaan dan bagi-Nya lah segala puji, dan Dia Maha Kuasa atas segala sesuatu.',sumber:'HR. Muslim',waktu:'Pagi hari'},
+    {id:4,kat:'Pagi & Malam',icon:'🌃',nama:'Dzikir Petang',arab:'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',latin:'Amsaynaa wa amsal mulku lillaah, wal hamdu lillaah, laa ilaaha illallaahu wahdahu laa syariika lah, lahul mulku wa lahul hamdu wa huwa \'alaa kulli syay-in qadiir.',arti:'Kami memasuki sore dan kerajaan milik Allah, dan segala puji bagi Allah. Tidak ada Tuhan yang berhak disembah kecuali Allah semata, tidak ada sekutu bagi-Nya. Milik-Nya kerajaan dan bagi-Nya segala puji, Dia Maha Kuasa atas segala sesuatu.',sumber:'HR. Muslim',waktu:'Sore hari'},
+    {id:5,kat:'Aktivitas Sehari-hari',icon:'🍽️',nama:'Doa Sebelum Makan',arab:'بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ',latin:'Bismillaahi wa \'alaa barakatillaah.',arti:'Dengan nama Allah dan atas berkah Allah.',sumber:'HR. Abu Dawud',waktu:'Sebelum makan'},
+    {id:6,kat:'Aktivitas Sehari-hari',icon:'🙏',nama:'Doa Sesudah Makan',arab:'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ',latin:'Alhamdulillahil ladzii ath\'amanaa wa saqaanaa wa ja\'alanaa muslimiiin.',arti:'Segala puji bagi Allah yang telah memberi kami makan dan minum, serta menjadikan kami orang-orang Muslim.',sumber:'HR. Abu Dawud & Tirmidzi',waktu:'Setelah makan'},
+    {id:7,kat:'Aktivitas Sehari-hari',icon:'🚪',nama:'Doa Keluar Rumah',arab:'بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ',latin:'Bismillaah, tawakkaltu \'alallaah, wa laa hawla wa laa quwwata illaa billaah.',arti:'Dengan nama Allah, aku bertawakkal kepada Allah, dan tidak ada daya dan kekuatan kecuali dengan (pertolongan) Allah.',sumber:'HR. Abu Dawud & Tirmidzi',waktu:'Saat keluar rumah'},
+    {id:8,kat:'Aktivitas Sehari-hari',icon:'🏠',nama:'Doa Masuk Rumah',arab:'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ الْمَوْلِجِ وَخَيْرَ الْمَخْرَجِ، بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا',latin:'Allahumma innii as-aluka khayral mawliji wa khayral makhraji, bismillaahi walajnaa wa bismillaahi kharajnaa wa \'alallaahi rabbinaa tawakkalnaa.',arti:'Ya Allah, sesungguhnya aku memohon kepada-Mu kebaikan tempat masuk dan kebaikan tempat keluar. Dengan nama Allah kami masuk, dengan nama Allah kami keluar, dan kepada Allah Rabb kami, kami bertawakkal.',sumber:'HR. Abu Dawud',waktu:'Saat masuk rumah'},
+    {id:9,kat:'Aktivitas Sehari-hari',icon:'🕌',nama:'Doa Masuk Masjid',arab:'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ',latin:'Allahummaftah lii abwaaba rahmatik.',arti:'Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu.',sumber:'HR. Muslim',waktu:'Saat masuk masjid'},
+    {id:10,kat:'Aktivitas Sehari-hari',icon:'🚶',nama:'Doa Keluar Masjid',arab:'اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ',latin:'Allahumma innii as-aluka min fadhlika.',arti:'Ya Allah, sesungguhnya aku memohon kepada-Mu sebagian dari karunia-Mu.',sumber:'HR. Muslim',waktu:'Saat keluar masjid'},
+    {id:11,kat:'Aktivitas Sehari-hari',icon:'🚽',nama:'Doa Masuk Kamar Mandi',arab:'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ',latin:'Allahumma innii a\'uudzubika minal khubutsi wal khabaa-its.',arti:'Ya Allah, sesungguhnya aku berlindung kepada-Mu dari setan laki-laki dan setan perempuan.',sumber:'HR. Bukhari & Muslim',waktu:'Sebelum masuk kamar mandi'},
+    {id:12,kat:'Aktivitas Sehari-hari',icon:'✅',nama:'Doa Keluar Kamar Mandi',arab:'غُفْرَانَكَ',latin:'Ghufraanaka.',arti:'(Aku memohon) ampunan-Mu (ya Allah).',sumber:'HR. Abu Dawud & Tirmidzi',waktu:'Setelah keluar kamar mandi'},
+    {id:13,kat:'Perjalanan & Kendaraan',icon:'🚗',nama:'Doa Naik Kendaraan',arab:'بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ',latin:'Bismillaah, alhamdulillaah, subhaanal ladzii sakhkhara lanaa haadzaa wa maa kunnaa lahu muqriniiin, wa innaa ilaa rabbinaa lamunqalibuun.',arti:'Dengan nama Allah, segala puji bagi Allah, Maha Suci (Allah) yang telah menundukkan kendaraan ini untuk kami, padahal kami sebelumnya tidak mampu menguasainya, dan sesungguhnya kami akan kembali kepada Rabb kami.',sumber:'HR. Muslim',waktu:'Saat naik kendaraan'},
+    {id:14,kat:'Perjalanan & Kendaraan',icon:'✈️',nama:'Doa Bepergian',arab:'اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى، وَمِنَ الْعَمَلِ مَا تَرْضَى',latin:'Allahumma innaa nas-aluka fii safarinaa haadzal birra wat taqwaa, wa minal \'amali maa tardha.',arti:'Ya Allah, sesungguhnya kami memohon kepada-Mu dalam perjalanan ini kebaikan dan ketakwaan, serta dari amal perbuatan apa yang Engkau ridhai.',sumber:'HR. Muslim',waktu:'Saat bepergian'},
+    {id:15,kat:'Keluarga & Kesehatan',icon:'👶',nama:'Doa untuk Anak',arab:'أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ، مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ، وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ',latin:'U\'iidzukumaa bikalimaatillaahit taammati, min kulli syaythaanin wa haammah, wa min kulli \'aynin laammah.',arti:'Aku memohonkan perlindungan kepada kalian berdua dengan kalimat-kalimat Allah yang sempurna, dari setiap setan dan yang menggangu, dan dari setiap mata (\'ain) yang jahat.',sumber:'HR. Bukhari',waktu:'Untuk anak-anak'},
+    {id:16,kat:'Keluarga & Kesehatan',icon:'🤒',nama:'Doa Orang Sakit',arab:'اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا',latin:'Allahumma rabban naas, adz-hibil ba-sa, isyfi antasy syaafii, laa syifaa-a illaa syifaa-uka, syifaa-an laa yughaadiru saqamaa.',arti:'Ya Allah, Rabb manusia, hilangkanlah penyakit ini, sembuhkanlah, Engkaulah Maha Penyembuh, tidak ada kesembuhan kecuali kesembuhan dari-Mu, kesembuhan yang tidak meninggalkan penyakit.',sumber:'HR. Bukhari & Muslim',waktu:'Saat sakit atau menjenguk orang sakit'},
+    {id:17,kat:'Keluarga & Kesehatan',icon:'💑',nama:'Doa Pengantin Baru',arab:'بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ',latin:'Baarakallaahu laka wa baaraka \'alayka wa jama\'a baynakumaa fii khayr.',arti:'Semoga Allah memberkahimu, dan semoga Allah melimpahkan berkah kepadamu, dan semoga Allah mengumpulkan kalian berdua dalam kebaikan.',sumber:'HR. Abu Dawud & Tirmidzi',waktu:'Ucapan untuk pengantin baru'},
+    {id:18,kat:'Ibadah & Dzikir',icon:'🌙',nama:'Doa Qunut (Subuh)',arab:'اللَّهُمَّ اهْدِنَا فِيمَنْ هَدَيْتَ، وَعَافِنَا فِيمَنْ عَافَيْتَ، وَتَوَلَّنَا فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لَنَا فِيمَا أَعْطَيْتَ، وَقِنَا شَرَّ مَا قَضَيْتَ',latin:'Allaahummahdinaa fiiman hadayt, wa \'aafinaa fiiman \'aafayt, wa tawallana fiiman tawallayt, wa baarik lanaa fiimaa a\'thayt, wa qinaa syarra maa qadhayt.',arti:'Ya Allah, berilah kami petunjuk seperti orang-orang yang telah Engkau beri petunjuk. Berilah kami keselamatan seperti orang-orang yang telah Engkau selamatkan. Peliharalah kami seperti orang-orang yang telah Engkau pelihara. Berkahilah kami dalam apa yang telah Engkau berikan. Lindungi kami dari keburukan yang telah Engkau tentukan.',sumber:'HR. Abu Dawud & Tirmidzi',waktu:'Qunut Sholat Subuh'},
+    {id:19,kat:'Ibadah & Dzikir',icon:'📿',nama:'Sayyidul Istighfar',arab:'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ',latin:'Allahumma anta rabbii laa ilaaha illaa ant, khalaqtanii wa ana \'abduk, wa ana \'alaa \'ahdika wa wa\'dika mastatha\'t, a\'uudzubika min syarri maa shana\'t, abuu-u laka bini\'matika \'alayya wa abuu-u bidzambii, faghfir lii fa-innahu laa yaghfirudz dzunuuba illaa ant.',arti:'Ya Allah, Engkau adalah Rabb-ku, tidak ada Tuhan yang berhak disembah kecuali Engkau. Engkau telah menciptakanku dan aku adalah hamba-Mu. Aku berada di atas perjanjian dan janji-Mu semampuku. Aku berlindung kepada-Mu dari kejelekan perbuatanku. Aku mengakui nikmat-Mu kepadaku dan aku mengakui dosaku. Maka ampunilah aku, sesungguhnya tidak ada yang mengampuni dosa-dosa kecuali Engkau.',sumber:'HR. Bukhari',waktu:'Pagi & Sore'},
+    {id:20,kat:'Ibadah & Dzikir',icon:'🌟',nama:'Doa Kebaikan Dunia Akhirat',arab:'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',latin:'Rabbanaa aatinaa fid dunyaa hasanatan wa fil aakhirati hasanatan wa qinaa \'adzaabannaar.',arti:'Ya Rabb kami, berikanlah kami kebaikan di dunia dan kebaikan di akhirat, dan jagalah kami dari azab neraka.',sumber:'QS. Al-Baqarah: 201',waktu:'Kapan saja'},
+  ];
+
+  var ALL = DATA.slice();
+
+  function groupByKat(list){
+    var groups = {};
+    list.forEach(function(d){
+      if(!groups[d.kat]) groups[d.kat]=[];
+      groups[d.kat].push(d);
+    });
+    return groups;
+  }
+
+  function renderNav(list){
+    var el = document.getElementById('doaNavList');
+    var groups = groupByKat(list);
+    var html = '';
+    Object.keys(groups).forEach(function(kat){
+      html += '<div class="kategori-label">'+kat+'</div>';
+      groups[kat].forEach(function(d){
+        html += '<button class="doa-item" id="di-'+d.id+'" onclick="bukaDoa('+d.id+')">' +
+          '<span class="di-icon">'+d.icon+'</span>' +
+          '<span class="di-name">'+d.nama+'</span>' +
+          '</button>';
+      });
+    });
+    el.innerHTML = html || '<div style="padding:16px;text-align:center;color:var(--text-light);font-size:0.8rem;">Tidak ditemukan.</div>';
+  }
+
+  renderNav(ALL);
+
+  window.filterDoa = function(q){
+    q = q.toLowerCase().trim();
+    var filtered = DATA.filter(function(d){ return d.nama.toLowerCase().includes(q) || d.kat.toLowerCase().includes(q) || d.arti.toLowerCase().includes(q); });
+    ALL = filtered;
+    renderNav(filtered);
+  };
+
+  window.bukaDoa = function(id){
+    var d = DATA.find(function(x){return x.id===id;});
+    if(!d) return;
+    document.querySelectorAll('.doa-item').forEach(function(b){b.classList.remove('aktif');});
+    var btn = document.getElementById('di-'+id);
+    if(btn){btn.classList.add('aktif');btn.scrollIntoView({block:'nearest',behavior:'smooth'});}
+    document.getElementById('mainContent').innerHTML =
+      '<div class="content-header"><div class="ch-badge">'+d.icon+' '+d.kat+'</div><div class="ch-title">'+d.nama+'</div></div>' +
+      '<div class="content-body">' +
+        '<div class="doa-arab-box"><div class="doa-arab-text">'+d.arab+'</div></div>' +
+        '<div class="section-label">Latin / Transliterasi</div>' +
+        '<div class="latin-box">'+d.latin+'</div>' +
+        '<div class="section-label">Terjemahan</div>' +
+        '<div class="arti-box">'+d.arti+'</div>' +
+        '<div style="margin-top:4px;">' +
+          '<span class="sumber-box">📚 '+d.sumber+'</span>' +
+          '<span class="waktu-box">⏰ '+d.waktu+'</span>' +
+        '</div>' +
+      '</div>';
+  };
+
+  bukaDoa(1);
+})();
+</script>
+</body>
+</html>
