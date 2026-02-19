@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Qur'an — Musholla Baiturrahman</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #0d3b2e;
+    --green-mid: #155f45;
+    --green-bright: #1e8a5e;
+    --green-light: #2db87a;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f9f5ee;
+    --cream-dark: #ede8dc;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-light: #7a7a7a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,59,46,0.97);
+    backdrop-filter: blur(12px);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    flex-shrink: 0;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-brand img { height: 38px; width: auto; }
+  .nav-brand span {
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--white); letter-spacing: 0.02em;
+  }
+  .nav-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,0.8); text-decoration: none;
+    font-size: 0.82rem; font-weight: 500;
+    padding: 7px 14px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s;
+  }
+  .nav-back:hover { background: rgba(255,255,255,0.1); color: var(--gold-light); }
+
+  /* ─── LAYOUT UTAMA ─── */
+  .main-layout {
+    display: flex;
+    height: calc(100vh - 64px);
+    margin-top: 64px;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-right: 1px solid var(--cream-dark);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .sidebar-header {
+    padding: 16px;
+    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+    flex-shrink: 0;
+  }
+  .sidebar-header h2 {
+    font-family: 'Amiri', serif;
+    font-size: 1.2rem; color: var(--white); margin-bottom: 10px;
+  }
+  .search-box {
+    width: 100%; padding: 9px 14px;
+    border: none; border-radius: 8px;
+    font-size: 0.82rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    outline: none;
+    background: rgba(255,255,255,0.15);
+    color: var(--white);
+  }
+  .search-box::placeholder { color: rgba(255,255,255,0.5); }
+  .search-box:focus { background: rgba(255,255,255,0.25); }
+
+  .surah-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px;
+  }
+  .surah-list::-webkit-scrollbar { width: 4px; }
+  .surah-list::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 2px; }
+
+  .surah-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: 8px;
+    cursor: pointer; border: none; width: 100%;
+    text-align: left; background: transparent;
+    transition: background 0.15s;
+  }
+  .surah-item:hover { background: rgba(30,138,94,0.08); }
+  .surah-item.aktif {
+    background: var(--green-deep);
+  }
+  .surah-item.aktif .si-num,
+  .surah-item.aktif .si-name,
+  .surah-item.aktif .si-info { color: var(--white) !important; }
+  .surah-item.aktif .si-arabic { color: var(--gold-light) !important; }
+  .si-num {
+    width: 30px; height: 30px; flex-shrink: 0;
+    background: rgba(30,138,94,0.1);
+    border-radius: 6px; display: grid; place-items: center;
+    font-size: 0.72rem; font-weight: 700; color: var(--green-bright);
+  }
+  .surah-item.aktif .si-num { background: rgba(255,255,255,0.15); color: var(--white); }
+  .si-text { flex: 1; min-width: 0; }
+  .si-name { font-size: 0.83rem; font-weight: 600; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .si-info { font-size: 0.68rem; color: var(--text-light); margin-top: 1px; }
+  .si-arabic { font-family: 'Amiri', serif; font-size: 1.05rem; color: var(--green-bright); flex-shrink: 0; }
+
+  .sidebar-empty {
+    padding: 20px; text-align: center;
+    color: var(--text-light); font-size: 0.8rem;
+  }
+
+  /* ─── KONTEN ─── */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  /* Placeholder awal */
+  .placeholder {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px; text-align: center; padding: 40px;
+  }
+  .placeholder-icon { font-size: 3.5rem; opacity: 0.35; }
+  .placeholder h3 {
+    font-family: 'Amiri', serif;
+    font-size: 1.5rem; color: var(--green-deep);
+  }
+  .placeholder p { font-size: 0.85rem; color: var(--text-light); line-height: 1.7; max-width: 340px; }
+  .placeholder .basmallah {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem; color: var(--gold);
+    margin-top: 8px; direction: rtl;
+  }
+
+  /* Header surah */
+  .surah-header {
+    padding: 20px 28px 16px;
+    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .sh-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.8rem; color: var(--gold-light);
+    direction: rtl; margin-bottom: 4px;
+  }
+  .sh-name {
+    font-family: 'Amiri', serif;
+    font-size: 1.3rem; color: var(--white);
+  }
+  .sh-meta {
+    font-size: 0.75rem; color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+  }
+  .sh-divider {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 10px auto 0;
+  }
+
+  /* Audio bar */
+  .audio-bar {
+    padding: 10px 24px;
+    background: var(--white);
+    border-bottom: 1px solid var(--cream-dark);
+    display: flex; align-items: center; gap: 10px;
+    flex-shrink: 0;
+  }
+  .audio-label {
+    font-size: 0.72rem; color: var(--text-light);
+    white-space: nowrap; font-weight: 600;
+  }
+  .audio-bar audio {
+    flex: 1; height: 34px;
+    accent-color: var(--green-bright);
+  }
+
+  /* Ayat */
+  .ayat-container {
+    flex: 1; overflow-y: auto;
+    padding: 20px 28px;
+  }
+  .ayat-container::-webkit-scrollbar { width: 5px; }
+  .ayat-container::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 3px; }
+
+  .ayat-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .ayat-item:last-child { border-bottom: none; }
+
+  .ayat-arab {
+    font-family: 'Amiri', serif;
+    font-size: 1.7rem; line-height: 2.4;
+    color: var(--text-dark);
+    direction: rtl; text-align: right;
+    margin-bottom: 10px;
+  }
+  .ayat-nomor {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px;
+    background: var(--green-deep);
+    color: var(--white); border-radius: 50%;
+    font-size: 0.68rem; font-weight: 700;
+    margin-left: 8px; vertical-align: middle;
+  }
+  .ayat-latin {
+    font-size: 0.83rem; color: var(--green-mid);
+    line-height: 1.8; margin-bottom: 8px;
+    font-style: italic;
+  }
+  .ayat-terjemah {
+    font-size: 0.83rem; color: var(--text-mid);
+    line-height: 1.8;
+    padding: 10px 14px;
+    background: rgba(30,138,94,0.06);
+    border-left: 3px solid var(--green-bright);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* Loading */
+  .loading {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px; color: var(--text-light); font-size: 0.85rem;
+  }
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--cream-dark);
+    border-top-color: var(--green-bright);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Error */
+  .error-box {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px; color: #c0392b; text-align: center; padding: 40px;
+    font-size: 0.85rem;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .sidebar { width: 240px; }
+    .ayat-arab { font-size: 1.4rem; }
+    nav .nav-brand span { display: none; }
+  }
+  @media (max-width: 520px) {
+    .main-layout { flex-direction: column; }
+    .sidebar {
+      width: 100%; height: 220px;
+      border-right: none;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .surah-list { display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; flex-direction: row; padding: 6px; }
+    .surah-item { min-width: 140px; flex-direction: column; align-items: flex-start; gap: 2px; }
+    .ayat-arab { font-size: 1.3rem; line-height: 2.1; }
+    .ayat-container { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="musholla-baiturrahman.html" class="nav-brand">
+    <img src="images/logo_nav.png" alt="Logo">
+    <span>Musholla Baiturrahman</span>
+  </a>
+  <a href="musholla-baiturrahman.html" class="nav-back">← Kembali ke Beranda</a>
+</nav>
+
+<!-- LAYOUT UTAMA -->
+<div class="main-layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>📖 Daftar Surah</h2>
+      <input class="search-box" id="searchBox" type="text"
+             placeholder="🔍 Cari nama surah..."
+             oninput="filterSurah(this.value)">
+    </div>
+    <div class="surah-list" id="surahList">
+      <div class="sidebar-empty">Memuat daftar surah...</div>
+    </div>
+  </div>
+
+  <!-- KONTEN -->
+  <div class="content" id="mainContent">
+    <div class="placeholder">
+      <div class="placeholder-icon">📖</div>
+      <h3>Baca Al-Qur'an</h3>
+      <p>Pilih surah dari daftar di sebelah kiri untuk mulai membaca Al-Qur'an lengkap dengan teks Arab, latin, dan terjemahan Bahasa Indonesia.</p>
+      <div class="basmallah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+
+  var SURAH_ALL = [];
+  var AKTIF_NUM = null;
+  var RECITER   = 'ar.alafasy'; /* Mishary Rashid Alafasy */
+
+  /* ── Muat Daftar Surah ── */
+  fetch('https://api.alquran.cloud/v1/surah')
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      SURAH_ALL = res.data;
+      renderList(SURAH_ALL);
+    })
+    .catch(function() {
+      document.getElementById('surahList').innerHTML =
+        '<div class="sidebar-empty" style="color:#c0392b;">Gagal memuat.<br>Periksa koneksi internet.</div>';
+    });
+
+  /* ── Render Daftar ── */
+  function renderList(list) {
+    var el = document.getElementById('surahList');
+    if (!list.length) {
+      el.innerHTML = '<div class="sidebar-empty">Surah tidak ditemukan.</div>';
+      return;
+    }
+    el.innerHTML = list.map(function(s) {
+      return '<button class="surah-item" id="si-' + s.number + '" onclick="bukaSurah(' + s.number + ')">' +
+        '<div class="si-num">' + s.number + '</div>' +
+        '<div class="si-text">' +
+          '<div class="si-name">' + s.englishName + '</div>' +
+          '<div class="si-info">' + s.englishNameTranslation + ' · ' + s.numberOfAyahs + ' ayat</div>' +
+        '</div>' +
+        '<div class="si-arabic">' + s.name + '</div>' +
+      '</button>';
+    }).join('');
+  }
+
+  /* ── Filter Surah ── */
+  window.filterSurah = function(q) {
+    q = q.toLowerCase().trim();
+    var filtered = SURAH_ALL.filter(function(s) {
+      return s.englishName.toLowerCase().includes(q) ||
+             s.englishNameTranslation.toLowerCase().includes(q) ||
+             String(s.number).includes(q);
+    });
+    renderList(filtered);
+  };
+
+  /* ── Buka Surah ── */
+  window.bukaSurah = function(nomor) {
+    AKTIF_NUM = nomor;
+
+    /* Tandai aktif */
+    document.querySelectorAll('.surah-item').forEach(function(b) { b.classList.remove('aktif'); });
+    var btn = document.getElementById('si-' + nomor);
+    if (btn) { btn.classList.add('aktif'); btn.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+
+    /* Loading */
+    var content = document.getElementById('mainContent');
+    content.innerHTML = '<div class="loading"><div class="spinner"></div><span>Memuat surah ' + nomor + '...</span></div>';
+
+    /* Ambil Arab + Terjemahan ID + Latin sekaligus */
+    fetch('https://api.alquran.cloud/v1/surah/' + nomor + '/editions/quran-uthmani,id.indonesian,en.transliteration')
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        var arab     = res.data[0];
+        var terjemah = res.data[1];
+        var latin    = res.data[2];
+        renderSurah(arab, terjemah, latin);
+      })
+      .catch(function() {
+        content.innerHTML = '<div class="error-box"><span style="font-size:2rem">⚠️</span><p>Gagal memuat surah.<br>Periksa koneksi internet Anda.</p></div>';
+      });
+  };
+
+  /* ── Render Surah ── */
+  function renderSurah(arab, terjemah, latin) {
+    var content = document.getElementById('mainContent');
+    var s       = arab;
+    var audioUrl = 'https://cdn.islamic.network/quran/audio-surah/128/' + RECITER + '/' + s.number + '.mp3';
+
+    var html =
+      '<div class="surah-header">' +
+        '<div class="sh-arabic">' + s.name + '</div>' +
+        '<div class="sh-name">' + s.englishName + ' &mdash; ' + s.englishNameTranslation + '</div>' +
+        '<div class="sh-meta">' +
+          (s.revelationType === 'Meccan' ? 'Makkiyah' : 'Madaniyah') +
+          ' &nbsp;·&nbsp; ' + s.numberOfAyahs + ' Ayat' +
+        '</div>' +
+        '<div class="sh-divider"></div>' +
+      '</div>' +
+      '<div class="audio-bar">' +
+        '<span class="audio-label">🎧 Murottal Mishary Alafasy:</span>' +
+        '<audio controls src="' + audioUrl + '" preload="none"></audio>' +
+      '</div>' +
+      '<div class="ayat-container">';
+
+    s.ayahs.forEach(function(ayah, i) {
+      var latinText    = latin.ayahs[i]    ? latin.ayahs[i].text    : '';
+      var terjemahText = terjemah.ayahs[i] ? terjemah.ayahs[i].text : '';
+
+      html +=
+        '<div class="ayat-item">' +
+          '<div class="ayat-arab">' +
+            '<span class="ayat-nomor">' + ayah.numberInSurah + '</span>' +
+            ' ' + ayah.text +
+          '</div>' +
+          (latinText ?
+            '<div class="ayat-latin">' + latinText + '</div>' : '') +
+          (terjemahText ?
+            '<div class="ayat-terjemah">' + terjemahText + '</div>' : '') +
+        '</div>';
+    });
+
+    html += '</div>';
+    content.innerHTML = html;
+  }
+
+})();
+</script>
+</body>
+</html>
