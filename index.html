@@ -176,66 +176,105 @@
   }
 
   /* ─── JADWAL SHOLAT ─── */
-  #jadwal { background: var(--white); }
-  .muslimpro-wrapper {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 320px;
-  }
-  /* Override agar widget menyesuaikan tema */
-  .muslimpro-wrapper > div,
-  .muslimpro-wrapper table {
-    border-radius: 12px !important;
-    overflow: hidden !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.10) !important;
-  }
-  .jadwal-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 16px; margin-top: 2rem;
-  }
-  .prayer-card {
-    background: var(--cream);
-    border-radius: 12px;
-    padding: 20px 16px;
-    text-align: center;
-    border: 1px solid var(--cream-dark);
-    transition: transform 0.2s, border-color 0.2s;
-    position: relative; overflow: hidden;
-  }
-  .prayer-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--green-mid), var(--green-bright));
-    opacity: 0; transition: opacity 0.2s;
-  }
-  .prayer-card:hover { transform: translateY(-4px); border-color: var(--green-light); }
-  .prayer-card:hover::before { opacity: 1; }
-  .prayer-card.active {
-    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
-    border-color: transparent;
-  }
-  .prayer-card.active::before { opacity: 1; }
-  .prayer-card.active .prayer-name,
-  .prayer-card.active .prayer-time { color: var(--white); }
-  .prayer-card.active .prayer-arabic { color: var(--gold-light); }
-  .prayer-icon { font-size: 1.4rem; margin-bottom: 8px; }
-  .prayer-arabic { font-family: 'Amiri', serif; font-size: 1rem; color: var(--green-bright); margin-bottom: 4px; }
-  .prayer-name { font-weight: 600; font-size: 0.85rem; color: var(--green-deep); }
-  .prayer-time { font-size: 1.4rem; font-weight: 700; color: var(--green-deep); margin-top: 6px; font-variant-numeric: tabular-nums; }
-  .jadwal-info {
-    margin-top: 1.5rem; padding: 14px 20px;
-    background: rgba(30,138,94,0.08);
-    border-left: 3px solid var(--green-bright);
-    border-radius: 0 8px 8px 0;
-    font-size: 0.82rem; color: var(--text-mid);
-  }
-  .jadwal-info strong { color: var(--green-deep); }
-  #current-date { font-weight: 600; color: var(--green-bright); }
+#jadwal { background: var(--white); }
+.jadwal-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 2rem;
+}
+.jadwal-card {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 28px 16px 22px;
+  text-align: center;
+  border: 1.5px solid var(--cream-dark);
+  transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+.jadwal-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green-mid), var(--green-bright));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.jadwal-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(13,59,46,0.12);
+}
+.jadwal-card:hover::after { opacity: 1; }
+.jadwal-card.aktif {
+  background: linear-gradient(145deg, var(--green-deep), var(--green-mid));
+  border-color: transparent;
+  box-shadow: 0 12px 36px rgba(13,59,46,0.25);
+}
+.jadwal-card.aktif::after {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  opacity: 1;
+}
+.jadwal-card.aktif .jc-arabic,
+.jadwal-card.aktif .jc-name { color: rgba(255,255,255,0.9); }
+.jadwal-card.aktif .jc-time { color: var(--gold-light); }
+.jadwal-card.aktif .jc-label {
+  background: rgba(201,168,76,0.2);
+  color: var(--gold-light);
+}
+.jc-icon { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+.jc-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.1rem;
+  color: var(--green-bright);
+  margin-bottom: 4px;
+  direction: rtl;
+}
+.jc-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+.jc-time {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.jc-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(30,138,94,0.1);
+  color: var(--green-bright);
+}
+.jadwal-info {
+  margin-top: 1.5rem; padding: 14px 20px;
+  background: rgba(30,138,94,0.08);
+  border-left: 3px solid var(--green-bright);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.82rem; color: var(--text-mid);
+}
+.jadwal-info strong { color: var(--green-deep); }
+#current-date { font-weight: 600; color: var(--green-bright); }
 
+@media (max-width: 768px) {
+  .jadwal-cards { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 480px) {
+  .jadwal-cards { grid-template-columns: repeat(2, 1fr); }
+}
+  
   /* ─── PROFIL ─── */
   #profil { background: var(--cream); }
   .profil-layout {
@@ -540,22 +579,18 @@
     <div class="section-divider"></div>
     <p class="section-desc">Jadwal sholat untuk wilayah Batulicin, Kabupaten Tanah Bumbu, Kalimantan Selatan.</p>
 
-    <!-- Widget resmi Muslim Pro — City ID: 1649674 (Batulicin, Tanah Bumbu) -->
-    <div class="muslimpro-wrapper">
-      <script type="text/javascript"
-        src="https://app.muslimpro.com/muslimprowidget.js?cityid=1649674&language=id&width=380&timeformat=24&header_background_color=0d3b2e&header_text_color=e8c97a&text_color=1a1a1a&row_background_color1=f9f5ee&row_background_color2=ede8dc"
-        async>
-      </script>
+    <div class="jadwal-cards" id="jadwalCards">
+      <!-- diisi oleh JavaScript -->
     </div>
 
-    <div class="jadwal-info" id="jadwal-info-bar">
+    <div class="jadwal-info">
       <strong>📍 Lokasi:</strong> Batulicin, Tanah Bumbu, Kalimantan Selatan &nbsp;|&nbsp;
       Tanggal: <span id="current-date"></span> &nbsp;|&nbsp;
-      Sumber: <a href="https://www.muslimpro.com" target="_blank" style="color:var(--green-bright);text-decoration:none;font-weight:600;">Muslim Pro</a>
-      (City ID: <strong>1649674</strong>)
+      Metode: MWL · Syafi'i
     </div>
   </div>
 </section>
+  
 
 <!-- PROFIL -->
 <section id="profil">
@@ -938,7 +973,7 @@
 
 <script>
 (function() {
-  // ── Tanggal ──
+  /* ── Tanggal ── */
   var DAYS   = ['Ahad','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
   var MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
   var now    = new Date();
@@ -946,20 +981,97 @@
   var el = document.getElementById('current-date');
   if (el) el.textContent = tglStr;
 
-  // ── Scroll reveal ──
+  /* ── Kalkulasi Waktu Sholat ── */
+  var DEG = Math.PI / 180;
+  function sin(d) { return Math.sin(d*DEG); }
+  function cos(d) { return Math.cos(d*DEG); }
+  function tan(d) { return Math.tan(d*DEG); }
+  function asin(x) { return Math.asin(x)/DEG; }
+  function atan2(y,x) { return Math.atan2(y,x)/DEG; }
+  function fixH(h) { h=h%24; return h<0?h+24:h; }
+
+  function julianDay(y,m,d) {
+    if(m<=2){y--;m+=12;}
+    var A=Math.floor(y/100), B=2-A+Math.floor(A/4);
+    return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+  }
+  function sunPos(jd) {
+    var D=jd-2451545.0, g=(357.529+0.98560028*D)%360, q=(280.459+0.98564736*D)%360;
+    var L=q+1.915*sin(g)+0.020*sin(2*g), e=23.439-0.00000036*D;
+    var RA=atan2(cos(e)*sin(L),cos(L))/15;
+    return { dec: asin(sin(e)*sin(L)), eqT: q/15-(RA<0?RA+24:RA) };
+  }
+  function noon(jd,lng,tz) { var s=sunPos(jd); return 12-s.eqT-lng/15+tz; }
+  function angleTime(jd,lat,lng,tz,angle,after) {
+    var s=sunPos(jd), n=noon(jd,lng,tz);
+    var cosH=(-sin(angle)-sin(s.dec)*sin(lat))/(cos(s.dec)*cos(lat));
+    if(cosH>1||cosH<-1) return NaN;
+    var H=Math.acos(cosH)/DEG/15;
+    return after ? n+H : n-H;
+  }
+  function asharTime(jd,lat,lng,tz) {
+    var s=sunPos(jd), n=noon(jd,lng,tz);
+    var alt=Math.abs(lat-s.dec), a=Math.atan(1/(1+tan(alt)))/DEG;
+    var cosH=(-sin(a)-sin(s.dec)*sin(lat))/(cos(s.dec)*cos(lat));
+    if(cosH>1||cosH<-1) return NaN;
+    return n+Math.acos(cosH)/DEG/15;
+  }
+  function fmt(h) {
+    h=fixH(h); var hh=Math.floor(h), mm=Math.round((h-hh)*60);
+    if(mm===60){hh++;mm=0;} if(hh===24)hh=0;
+    return (hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;
+  }
+  function toMin(h) { h=fixH(h); return Math.floor(h)*60+Math.round((h-Math.floor(h))*60); }
+
+  var LAT=-3.4724, LNG=115.9505, TZ=8;
+  var today=new Date(), Y=today.getFullYear(), M=today.getMonth()+1, D=today.getDate();
+  var jd=julianDay(Y,M,D);
+
+  var subuh   = angleTime(jd,LAT,LNG,TZ,18,false);
+  var dzuhur  = noon(jd,LNG,TZ)+2/60;
+  var ashar   = asharTime(jd,LAT,LNG,TZ);
+  var maghrib = angleTime(jd,LAT,LNG,TZ,0.833,true);
+  var isya    = angleTime(jd,LAT,LNG,TZ,17,true);
+
+  var waktu = [
+    { icon:'🌅', arabic:'الصُّبْح',  name:'Subuh',   time:subuh,   label:'Fajar Shadiq' },
+    { icon:'☀️',  arabic:'الظُّهْر',  name:'Dzuhur',  time:dzuhur,  label:'Tengah Hari'  },
+    { icon:'🌤️', arabic:'الْعَصْر',  name:'Ashar',   time:ashar,   label:'Petang'       },
+    { icon:'🌇', arabic:'الْمَغْرِب',name:'Maghrib', time:maghrib, label:'Matahari Terbenam' },
+    { icon:'🌙', arabic:'الْعِشَاء', name:'Isya',    time:isya,    label:'Malam'        },
+  ];
+
+  var nowMin = now.getHours()*60+now.getMinutes();
+  var nextIdx = -1;
+  for(var i=0;i<waktu.length;i++){
+    if(toMin(waktu[i].time) > nowMin){ nextIdx=i; break; }
+  }
+  if(nextIdx===-1) nextIdx=0;
+
+  var grid = document.getElementById('jadwalCards');
+  if(grid) {
+    waktu.forEach(function(w,i){
+      var card = document.createElement('div');
+      card.className = 'jadwal-card' + (i===nextIdx ? ' aktif' : '');
+      card.innerHTML =
+        '<span class="jc-icon">'+w.icon+'</span>'+
+        '<div class="jc-arabic">'+w.arabic+'</div>'+
+        '<div class="jc-name">'+w.name+'</div>'+
+        '<div class="jc-time">'+fmt(w.time)+'</div>'+
+        '<span class="jc-label">'+(i===nextIdx?'▶ Berikutnya':w.label)+'</span>';
+      grid.appendChild(card);
+    });
+  }
+
+  /* ── Scroll reveal ── */
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
+      if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
     });
   }, { threshold: 0.1 });
-
-  document.querySelectorAll('.kegiatan-card, .info-card, .galeri-item, .stat-box').forEach(function(el) {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  document.querySelectorAll('.kegiatan-card, .info-card, .galeri-item, .stat-box, .jadwal-card').forEach(function(el) {
+    el.style.opacity='0'; el.style.transform='translateY(20px)';
+    el.style.transition='opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
 })();
