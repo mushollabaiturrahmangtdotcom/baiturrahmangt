@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kisah-Kisah Islam — Musholla Baiturrahman</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-deep:#0d3b2e;--green-mid:#155f45;--green-bright:#1e8a5e;--green-light:#2db87a;
+  --gold:#c9a84c;--gold-light:#e8c97a;--cream:#f9f5ee;--cream-dark:#ede8dc;
+  --white:#ffffff;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#7a7a7a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,59,46,0.97);backdrop-filter:blur(12px);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid rgba(201,168,76,0.3);}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-brand img{height:38px;}
+.nav-brand span{font-size:0.85rem;font-weight:600;color:#fff;}
+.nav-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.82rem;font-weight:500;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
+.nav-back:hover{background:rgba(255,255,255,0.1);color:var(--gold-light);}
+/* HERO */
+.hero{margin-top:64px;background:linear-gradient(135deg,var(--green-deep) 0%,#1a5c40 50%,#0a2e24 100%);padding:52px 2rem 44px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px;}
+.hero h1{font-family:'Amiri',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;margin-bottom:10px;line-height:1.2;}
+.hero h1 span{color:var(--gold-light);}
+.hero p{font-size:0.9rem;color:rgba(255,255,255,0.65);max-width:500px;margin:0 auto 24px;line-height:1.7;}
+.hero-stats{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-num{font-size:1.6rem;font-weight:800;color:var(--gold-light);line-height:1;}
+.stat-label{font-size:0.68rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.06em;margin-top:3px;}
+/* LAYOUT */
+.main-wrap{display:flex;min-height:calc(100vh - 64px - 200px);}
+/* SIDEBAR */
+.sidebar{width:260px;flex-shrink:0;background:var(--white);border-right:1px solid var(--cream-dark);position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;}
+.sidebar::-webkit-scrollbar{width:4px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:2px;}
+.sidebar-section{padding:12px 10px 4px;}
+.sidebar-section-title{font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);padding:0 8px;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.sidebar-section-title::after{content:'';flex:1;height:1px;background:var(--cream-dark);}
+.sidebar-btn{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;border:none;width:100%;text-align:left;background:transparent;transition:all 0.15s;}
+.sidebar-btn:hover{background:rgba(30,138,94,0.08);}
+.sidebar-btn.aktif{background:var(--green-deep);}
+.sidebar-btn.aktif .sb-name,.sidebar-btn.aktif .sb-sub{color:#fff!important;}
+.sidebar-btn.aktif .sb-icon{background:rgba(255,255,255,0.15);}
+.sb-icon{width:32px;height:32px;flex-shrink:0;border-radius:8px;background:var(--cream);display:grid;place-items:center;font-size:1rem;transition:background 0.15s;}
+.sb-text{flex:1;min-width:0;}
+.sb-name{font-size:0.8rem;font-weight:600;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-sub{font-size:0.65rem;color:var(--text-light);margin-top:1px;}
+/* CONTENT */
+.content{flex:1;padding:28px 32px;max-width:none;}
+/* DETAIL VIEW */
+.detail-view{display:none;}
+.detail-view.show{display:block;}
+.detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--green-bright);font-size:0.82rem;font-weight:600;cursor:pointer;padding:8px 0;margin-bottom:20px;background:none;border:none;}
+.detail-back:hover{color:var(--green-deep);}
+.detail-header{background:linear-gradient(135deg,var(--green-deep),var(--green-mid));border-radius:16px;padding:28px 28px 24px;margin-bottom:24px;position:relative;overflow:hidden;}
+.detail-header::after{content:attr(data-icon);position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:4rem;opacity:0.15;}
+.dh-badge{display:inline-block;padding:3px 12px;border-radius:12px;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(201,168,76,0.2);color:var(--gold-light);margin-bottom:10px;}
+.dh-nama{font-family:'Amiri',serif;font-size:clamp(1.3rem,3vw,2rem);color:#fff;margin-bottom:4px;line-height:1.2;}
+.dh-gelar{font-size:0.8rem;color:rgba(255,255,255,0.6);font-style:italic;margin-bottom:10px;}
+.dh-ringkasan{font-size:0.85rem;color:rgba(255,255,255,0.75);line-height:1.7;}
+.detail-body{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
+.kisah-box{background:var(--white);border-radius:14px;padding:24px;border:1px solid var(--cream-dark);}
+.kisah-box h3{font-size:0.75rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-bright);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.kisah-box h3::after{content:'';flex:1;height:1px;background:var(--cream-dark);}
+.kisah-text{font-size:0.875rem;color:var(--text-mid);line-height:1.85;white-space:pre-line;}
+.hikmah-box{background:linear-gradient(135deg,rgba(201,168,76,0.06),rgba(201,168,76,0.02));border-radius:14px;padding:20px;border:1px solid rgba(201,168,76,0.2);}
+.hikmah-box h3{font-size:0.73rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.hikmah-box h3::after{content:'';flex:1;height:1px;background:rgba(201,168,76,0.2);}
+.hikmah-list{list-style:none;}
+.hikmah-list li{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(201,168,76,0.1);font-size:0.82rem;color:var(--text-mid);line-height:1.6;}
+.hikmah-list li:last-child{border-bottom:none;}
+.hikmah-list li::before{content:'✦';color:var(--gold);flex-shrink:0;margin-top:1px;}
+/* GRID VIEW */
+.grid-view{display:none;}
+.grid-view.show{display:block;}
+.grid-section-title{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-deep);margin-bottom:4px;}
+.grid-section-sub{font-size:0.82rem;color:var(--text-light);margin-bottom:20px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:40px;}
+.grid-card{background:var(--white);border-radius:14px;padding:20px 18px;border:1.5px solid var(--cream-dark);cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+.grid-card:hover{border-color:var(--green-bright);transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.1);}
+.grid-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-color,var(--green-bright));}
+.gc-icon{font-size:1.8rem;margin-bottom:10px;}
+.gc-nama{font-size:0.9rem;font-weight:700;color:var(--text-dark);margin-bottom:2px;}
+.gc-gelar{font-size:0.68rem;color:var(--text-light);font-style:italic;margin-bottom:10px;}
+.gc-ringkasan{font-size:0.76rem;color:var(--text-mid);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.gc-footer{margin-top:12px;padding-top:10px;border-top:1px solid var(--cream-dark);display:flex;align-items:center;justify-content:space-between;}
+.gc-baca{font-size:0.72rem;font-weight:700;color:var(--green-bright);}
+.gc-arrow{font-size:0.8rem;color:var(--green-bright);}
+/* SEARCH */
+.search-wrap{position:relative;margin-bottom:24px;}
+.search-input{width:100%;padding:11px 16px 11px 40px;border-radius:10px;border:1.5px solid var(--cream-dark);background:var(--white);font-size:0.85rem;font-family:inherit;color:var(--text-dark);outline:none;transition:border-color 0.2s;}
+.search-input:focus{border-color:var(--green-bright);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:0.9rem;color:var(--text-light);}
+/* KATEGORI TABS */
+.kat-tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
+.kat-tab{padding:8px 18px;border-radius:20px;border:1.5px solid var(--cream-dark);background:var(--white);font-size:0.8rem;font-weight:600;color:var(--text-mid);cursor:pointer;transition:all 0.2s;}
+.kat-tab:hover{border-color:var(--green-bright);color:var(--green-bright);}
+.kat-tab.aktif{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
+/* PLACEHOLDER */
+.placeholder-content{text-align:center;padding:60px 20px;color:var(--text-light);}
+.placeholder-content .big-icon{font-size:3.5rem;margin-bottom:16px;opacity:0.4;}
+.placeholder-content h3{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-deep);margin-bottom:8px;}
+.placeholder-content p{font-size:0.85rem;line-height:1.7;max-width:340px;margin:0 auto;}
+/* RESPONSIVE */
+@media(max-width:960px){.detail-body{grid-template-columns:1fr;}.hikmah-box{order:-1;}}
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .content{padding:20px 16px;}
+  nav .nav-brand span{display:none;}
+  .hero{padding:36px 16px 32px;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="musholla-baiturrahman.html" class="nav-brand">
+    <img src="images/logo_nav.png" alt="Logo">
+    <span>Musholla Baiturrahman</span>
+  </a>
+  <a href="musholla-baiturrahman.html" class="nav-back">← Kembali</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">📖 Kisah-Kisah Islam</div>
+  <h1>Teladan dari <span>Orang-Orang Pilihan</span></h1>
+  <p>Kisah para Nabi, Sahabat, dan Orang Sholeh yang penuh hikmah dan pelajaran berharga untuk kehidupan kita.</p>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num" id="stat-nabi">8</div><div class="stat-label">Kisah Nabi</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-sahabat">7</div><div class="stat-label">Kisah Sahabat</div></div>
+    <div class="stat-item"><div class="stat-num" id="stat-sholeh">6</div><div class="stat-label">Kisah Orang Sholeh</div></div>
+    <div class="stat-item"><div class="stat-num">21</div><div class="stat-label">Total Kisah</div></div>
+  </div>
+</div>
+
+<div class="main-wrap">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <!-- dynamically built -->
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <!-- SEARCH + TABS -->
+    <div id="topControls">
+      <div class="search-wrap"><span class="search-icon">🔍</span><input class="search-input" id="searchInput" placeholder="Cari nama atau kisah..." oninput="doSearch(this.value)"></div>
+      <div class="kat-tabs">
+        <button class="kat-tab aktif" onclick="setKat('semua',this)">📚 Semua</button>
+        <button class="kat-tab" onclick="setKat('nabi',this)">🌙 Kisah Para Nabi</button>
+        <button class="kat-tab" onclick="setKat('sahabat',this)">⭐ Kisah Sahabat</button>
+        <button class="kat-tab" onclick="setKat('sholeh',this)">🌿 Orang Sholeh</button>
+      </div>
+    </div>
+
+    <!-- GRID VIEW -->
+    <div class="grid-view show" id="gridView"></div>
+
+    <!-- DETAIL VIEW -->
+    <div class="detail-view" id="detailView">
+      <button class="detail-back" onclick="backToGrid()">← Kembali ke Daftar</button>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var KISAH_DATA = {
+  nabi: [
+    {
+      id:'nabi-adam', nama:'Nabi Adam AS', gelar:'Bapak Manusia', periode:'Awal Penciptaan',
+      icon:'🌿', warna:'#2d6a4f',
+      ringkasan:'Manusia pertama yang diciptakan Allah dari tanah. Ditempatkan di surga bersama Hawa, lalu diturunkan ke bumi setelah tergoda iblis.',
+      kisah:`Allah menciptakan Adam dari tanah liat yang diambil dari berbagai penjuru bumi, lalu meniupkan ruh ke dalamnya. Adam menjadi manusia pertama dan diajarkan nama-nama seluruh benda oleh Allah. Para malaikat diperintahkan bersujud kepada Adam sebagai penghormatan, dan semuanya taat — kecuali Iblis yang menolak dengan sombong karena merasa lebih mulia, sebab ia terbuat dari api.
+
+Adam kemudian dipertemukan dengan istrinya, Hawa, yang diciptakan dari tulang rusuknya. Keduanya ditempatkan di surga dan diperbolehkan menikmati semua yang ada di sana, kecuali mendekati satu pohon terlarang. Namun Iblis yang dengki membisikkan rayuan kepada mereka berdua, sehingga keduanya tergoda dan memakan buah pohon tersebut.
+
+Allah menurunkan Adam dan Hawa ke bumi sebagai hukuman, namun juga sebagai awal dari misi kekhalifahan manusia di muka bumi. Setelah bertahun-tahun berpisah, Adam dan Hawa dipertemukan kembali di Jabal Rahmah (Bukit Kasih Sayang) di dekat Arafah. Adam bertaubat dengan sungguh-sungguh, dan Allah mengampuni dosanya. Dari keturunan Adam dan Hawa inilah seluruh manusia di muka bumi berasal.',
+
+Nabi Adam mengajarkan kepada keturunannya tentang keesaan Allah, cara beribadah, dan nilai-nilai kehidupan. Beliau wafat dalam usia yang sangat panjang, dan dikuburkan — menurut riwayat — di sekitar Jabal Abi Qubais di Mekkah.`,
+      hikmah:['Kesombongan adalah akar dari kejatuhan (pelajaran dari Iblis)','Taubat yang sungguh-sungguh selalu diterima Allah','Manusia diciptakan sebagai khalifah di bumi dengan tanggung jawab besar','Ujian dan cobaan adalah bagian dari kehidupan di dunia']
+    },
+    {
+      id:'nabi-nuh', nama:'Nabi Nuh AS', gelar:'Bapak Para Nabi Kedua', periode:'±3000 SM',
+      icon:'⛵', warna:'#1e6091',
+      ringkasan:'Nabi yang berdakwah selama 950 tahun dan membangun bahtera besar untuk menyelamatkan orang-orang beriman dari banjir besar.',
+      kisah:`Nabi Nuh diutus Allah kepada kaumnya yang telah jauh menyimpang dari ajaran tauhid dan tenggelam dalam penyembahan berhala. Beliau berdakwah dengan sabar dan gigih selama 950 tahun penuh, siang dan malam, terang-terangan maupun sembunyi-sembunyi. Namun hampir tidak ada yang mau beriman — kecuali sebagian kecil dari orang-orang miskin dan lemah.
+
+Yang paling menyakitkan, istri dan salah satu putranya sendiri (Kan'an) menolak beriman dan bahkan ikut mengejek dakwah Nuh. Kaum Nuh semakin berani melakukan kemungkaran dan menentang perintah Allah.
+
+Ketika Allah memerintahkan Nuh untuk membuat bahtera besar di tengah daratan yang jauh dari laut, kaum Nuh semakin mengejek dan menertawakannya. Namun Nuh tetap mengerjakan perintah Allah dengan tekun. Setelah bahtera selesai, Allah memerintahkan Nuh membawa sepasang dari setiap jenis hewan beserta orang-orang beriman ke dalam bahtera.
+
+Banjir besar pun datang — air memancar dari perut bumi dan turun dari langit dalam jumlah dahsyat. Seluruh permukaan bumi terendam, dan semua yang tidak ada di bahtera binasa. Putra Nuh, Kan'an, tewas tenggelam meski Nuh berseru memintanya naik ke bahtera. Bahtera berlayar selama berbulan-bulan hingga akhirnya berlabuh di Bukit Judi.
+
+Setelah air surut, Allah memerintahkan Nuh dan orang-orang beriman untuk turun dengan penuh berkah. Dari merekalah peradaban manusia dimulai kembali.`,
+      hikmah:['Kesabaran dalam berdakwah adalah kunci, meski hasil tak segera terlihat','Hidayah adalah hak prerogatif Allah — bahkan keluarga dekat pun bisa tidak beriman','Keimanan lebih berharga dari hubungan darah','Perintah Allah harus dilaksanakan meski tampak tidak masuk akal di mata manusia']
+    },
+    {
+      id:'nabi-ibrahim', nama:'Nabi Ibrahim AS', gelar:'Khalilullah (Kekasih Allah)', periode:'±2000 SM',
+      icon:'🔥', warna:'#e76f51',
+      ringkasan:'Nabi pemberani yang menghancurkan berhala, selamat dari api yang didinginkan Allah, dan menjadi bapak para nabi melalui keturunannya.',
+      kisah:`Ibrahim lahir di Ur, Mesopotamia (Iraq kini), dalam lingkungan yang sarat penyembahan berhala — bahkan ayahnya, Azar, adalah pembuat dan penjual berhala. Sejak kecil, akal Ibrahim yang jernih bertanya-tanya: mengapa orang menyembah patung yang tidak bisa berbuat apa-apa?
+
+Dengan renungan mendalam, Ibrahim menemukan kebenaran tauhid. Ia mencoba mengajak ayahnya, namun ditolak. Lalu ia mendebat kaumnya dengan argumentasi yang tajam dan logis. Suatu hari ketika semua orang pergi ke pesta, Ibrahim masuk ke kuil berhala dan menghancurkan semua patung kecuali yang terbesar, lalu menggantungkan kapak di leher patung terbesar itu.
+
+Ketika ditanya siapa yang melakukan ini, Ibrahim menjawab sinis bahwa yang bertanggung jawab adalah patung terbesar itu — tanyakan saja padanya. Raja Namrud murka dan memerintahkan Ibrahim dibakar hidup-hidup di atas tumpukan kayu yang sangat besar. Seluruh negeri mengumpulkan kayu bakar. Ibrahim diikat dan dilempar ke dalam api yang menyala-nyala. Namun Allah berfirman: "Wahai api, jadilah dingin dan selamatkan Ibrahim!" — Api pun padam, dan Ibrahim keluar tanpa satu helai pun rambutnya terbakar.
+
+Ibrahim kemudian berhijrah ke berbagai tempat, termasuk Mesir dan Palestina. Dalam usia tua, Allah menganugerahinya dua putra: Ismail dari Hajar, dan Ishaq dari Sarah. Allah lalu memerintahkan Ibrahim membawa Hajar dan bayi Ismail ke lembah tandus Makkah. Di sanalah Hajar berlari-lari mencari air (kisah Sa'i), dan mata air Zamzam memancar.
+
+Ujian terbesar datang ketika Allah memerintahkan Ibrahim menyembelih putra tercintanya, Ismail. Dengan penuh ketaatan, keduanya bersedia menjalankan perintah — dan saat Ibrahim hampir menyembelih, Allah menggantinya dengan seekor domba besar. Inilah asal-usul ibadah kurban (Idul Adha).
+
+Ibrahim dan Ismail kemudian bersama-sama membangun Ka'bah — rumah suci pertama untuk menyembah Allah di muka bumi.`,
+      hikmah:['Keberanian berpegang pada kebenaran meski sendirian adalah ciri orang beriman sejati','Logika dan akal yang sehat akan menemukan kebenaran','Pengorbanan tertinggi adalah bukti cinta kepada Allah','Keluarga yang dibangun atas dasar iman akan mendapat keberkahan Allah']
+    },
+    {
+      id:'nabi-ismail', nama:'Nabi Ismail AS', gelar:'Dzabihullah (Yang Disembelih Allah)', periode:'±1900 SM',
+      icon:'🐏', warna:'#8d6e63',
+      ringkasan:'Putra Ibrahim yang rela disembelih demi ketaatan kepada Allah, dan bersama ayahnya membangun Ka\'bah di Makkah.',
+      kisah:`Ismail adalah putra pertama Ibrahim dari istrinya Hajar, seorang wanita dari Mesir. Sejak bayi, Ismail dibawa Ibrahim ke lembah Bakkah (Makkah) yang saat itu merupakan padang tandus tak berpenghuni. Ibrahim meninggalkan Hajar dan bayi Ismail di sana atas perintah Allah, hanya dengan bekal sedikit kurma dan air.
+
+Ketika air habis, Hajar berlari-lari tujuh kali antara bukit Shafa dan Marwah mencari air. Tiba-tiba, dari bawah kaki bayi Ismail yang meronta-ronta, memancar mata air Zamzam yang tidak pernah kering hingga hari ini.
+
+Ismail tumbuh menjadi pemuda yang kuat dan pemberani. Saat ia mulai beranjak dewasa, Ibrahim bermimpi diperintahkan Allah untuk menyembelihnya. Ibrahim menceritakan mimpinya kepada Ismail, dan dengan ketaatan yang luar biasa Ismail menjawab: "Wahai ayahku, laksanakanlah apa yang diperintahkan Allah kepadamu. Insya Allah engkau akan mendapatiku termasuk orang-orang yang sabar."
+
+Ketika Ibrahim siap melaksanakan perintah dan Ismail berbaring dengan ikhlas, Allah berseru menghentikannya dan menggantinya dengan seekor domba yang besar. Inilah asal-usul penyembelihan kurban yang dirayakan setiap Idul Adha.
+
+Ismail kemudian menjadi nenek moyang bangsa Arab. Bersama ayahnya Ibrahim, ia membangun Ka'bah dan menyeru manusia untuk beribadah di sana. Ismail juga merupakan nenek moyang Nabi Muhammad SAW dari jalur Adnan.`,
+      hikmah:['Ketaatan kepada Allah dan orang tua adalah akhlak tertinggi','Keikhlasan dalam beribadah adalah kunci diterimanya amal','Dari sebuah pengorbanan lahir berkah yang tak terbatas','Kesabaran dalam menjalani ujian Allah adalah tanda keimanan yang kuat']
+    },
+    {
+      id:'nabi-yusuf', nama:'Nabi Yusuf AS', gelar:'As-Shiddiq (Yang Jujur)', periode:'±1700 SM',
+      icon:'👑', warna:'#6a4c93',
+      ringkasan:'Nabi yang dikhianati saudara-saudaranya, dijual sebagai budak, dipenjara, namun akhirnya menjadi penguasa Mesir dan memaafkan semua yang menzaliminya.',
+      kisah:`Yusuf adalah putra kesayangan Nabi Ya'qub, dan kecintaan ayahnya ini memicu kecemburuan saudara-saudaranya yang berjumlah sebelas orang. Sejak kecil, Yusuf dikaruniai ketampanan dan kecerdasan yang luar biasa, serta kemampuan menafsirkan mimpi.
+
+Suatu hari Yusuf bermimpi melihat sebelas bintang, matahari, dan bulan bersujud kepadanya. Mimpi ini memperbesar rasa iri saudara-saudaranya. Mereka berkomplot untuk menyingkirkan Yusuf — awalnya ada yang mengusulkan membunuhnya, namun akhirnya mereka melemparnya ke dalam sumur tua yang gelap.
+
+Para pedagang yang lewat menemukan Yusuf dan menjualnya sebagai budak di Mesir kepada seorang pejabat bernama Qithfir (Potifar). Di rumah Qithfir, Yusuf tumbuh menjadi pemuda tampan dan cerdas. Namun istri Qithfir (Zulaikha) tergoda oleh ketampanan Yusuf dan berusaha merayu bahkan memaksanya. Yusuf menolak dengan tegas dan berlari, namun Zulaikha merobek baju Yusuf dari belakang dan memfitnanya di hadapan suaminya.
+
+Yusuf dipenjara — meski bukti justru menunjukkan ia tidak bersalah. Di penjara, Yusuf menafsirkan mimpi dua narapidana, dan salah satunya kemudian menghadap raja. Ketika raja bermimpi aneh, orang itu teringat Yusuf. Yusuf menafsirkan mimpi raja tentang tujuh sapi gemuk dan tujuh kurus sebagai tujuh tahun subur diikuti tujuh tahun kekeringan.
+
+Raja terkesan dan membebaskan Yusuf, bahkan mengangkatnya sebagai menteri keuangan Mesir. Yusuf mengelola penyimpanan pangan dengan sangat cerdas. Ketika masa kekeringan tiba dan menyebar ke Palestina, saudara-saudara Yusuf datang ke Mesir meminta gandum — tanpa mengenali Yusuf. Setelah beberapa episode penuh ketegangan dan ujian, Yusuf akhirnya menyingkap identitasnya.
+
+Bukan murka yang ditunjukkan Yusuf, melainkan maaf yang tulus: "Pada hari ini tidak ada cercaan terhadap kamu, mudah-mudahan Allah mengampuni kamu." Keluarga Yusuf pun akhirnya bersatu kembali di Mesir.`,
+      hikmah:['Kesabaran dalam menghadapi kezaliman akan berbuah kemenangan','Menjaga kehormatan dan kesucian diri adalah ciri orang bertakwa','Memaafkan orang yang menzalimi kita adalah puncak kemuliaan akhlak','Rencana Allah selalu lebih baik dari rencana manusia','Mimpi orang sholeh bisa menjadi petunjuk Allah']
+    },
+    {
+      id:'nabi-musa', nama:'Nabi Musa AS', gelar:'Kalimullah (Yang Diajak Bicara Allah)', periode:'±1300 SM',
+      icon:'⚡', warna:'#0077b6',
+      ringkasan:'Nabi yang menerima Taurat langsung dari Allah, memimpin Bani Israel keluar dari perbudakan Firaun melalui berbagai mukjizat yang dahsyat.',
+      kisah:`Musa lahir di masa Firaun memerintahkan pembunuhan setiap bayi laki-laki Bani Israel karena takut akan kehilangan kekuasaan. Allah mengilhamkan ibu Musa untuk menghanyutkan bayi Musa dalam sebuah peti di Sungai Nil. Peti itu terdampar di istana Firaun, dan Firaun justru mengangkat Musa sebagai anak angkat — sementara Firaun sendiri yang ia takuti.
+
+Ibu Musa dipanggil menjadi ibu susu Musa tanpa diketahui identitasnya, sehingga Musa tumbuh besar di istana Firaun sambil tetap menyusu dari ibunya sendiri.
+
+Setelah dewasa, Musa tidak sengaja membunuh seorang Mesir yang sedang menganiaya orang Israel, lalu melarikan diri ke Madyan. Di sana ia menikah dengan putri seorang lelaki tua yang saleh (Nabi Syu'aib menurut sebagian riwayat) dan bekerja menggembalakan kambing selama bertahun-tahun.
+
+Suatu malam dalam perjalanan, Musa melihat cahaya besar di Bukit Sinai (Thur Sina). Ia mendekatinya dan di sana Allah berbicara langsung kepadanya — sebuah keistimewaan yang menjadikan Musa bergelar Kalimullah. Allah memerintahkan Musa kembali ke Mesir untuk membebaskan Bani Israel dari perbudakan Firaun.
+
+Musa dianugerahi mukjizat: tongkat yang bisa berubah menjadi ular besar dan tangan yang memancarkan cahaya putih. Musa mengajak saudaranya, Harun, untuk mendampinginya.
+
+Di hadapan Firaun yang congkak, Musa menyampaikan perintah Allah. Firaun menolak dengan keras dan mengumpulkan para penyihir terhebatnya. Namun tongkat Musa yang menjelma ular besar menelan semua ular para penyihir — dan para penyihir pun langsung beriman kepada Allah, meski harus menerima hukuman mati dari Firaun.
+
+Allah mengirimkan sembilan tanda (banjir, belalang, kutu, katak, darah) untuk menekan Firaun, namun ia tetap sombong. Akhirnya Allah memerintahkan Musa membawa Bani Israel keluar di malam hari. Firaun mengejar dengan seluruh pasukannya. Di tepi Laut Merah, Musa memukul tongkatnya ke air — laut pun terbelah membentuk jalan. Bani Israel menyeberang dengan selamat, namun ketika Firaun dan pasukannya mengikuti, laut kembali menutup dan menenggelamkan mereka semua. Allah menyelamatkan jasad Firaun sebagai pelajaran bagi generasi mendatang.
+
+Musa kemudian menerima Taurat (kitab suci) langsung dari Allah di Bukit Sinai dalam 40 malam. Ia memimpin Bani Israel yang sering membangkang selama 40 tahun di padang pasir Sinai.`,
+      hikmah:['Rencana Allah tidak bisa digagalkan oleh kekuatan manusia manapun','Kesombongan adalah penghancur diri sendiri (pelajaran Firaun)','Kepercayaan kepada Allah di saat sempit adalah sumber kekuatan','Pemimpin yang amanah tetap sabar menghadapi kaum yang membangkang','Setiap manusia punya misi dari Allah yang harus dijalankan']
+    },
+    {
+      id:'nabi-isa', nama:'Nabi Isa AS', gelar:'Ruhullah / Al-Masih', periode:'±1 SM – 30 M',
+      icon:'✨', warna:'#48cae4',
+      ringkasan:'Nabi yang lahir tanpa ayah dari perawan Maryam, dikaruniai mukjizat menyembuhkan orang sakit dan menghidupkan orang mati, dan akan kembali di akhir zaman.',
+      kisah:`Kelahiran Isa adalah mukjizat yang luar biasa. Maryam binti Imran, seorang perawan yang taat dan menjaga kesucian dirinya dengan sungguh-sungguh, didatangi Malaikat Jibril yang menjelma sebagai manusia. Jibril menyampaikan kabar bahwa Maryam akan mengandung dan melahirkan seorang putra yang suci.
+
+Maryam bertanya heran: "Bagaimana aku bisa punya anak sementara tidak ada seorang laki-laki pun yang menyentuhku?" Jibril menjawab bahwa demikianlah kehendak Allah — Allah tinggal berfirman "Kun!" (Jadilah!) maka jadilah. Maryam mengandung dan pergi mengasingkan diri ke tempat terpencil. Di bawah sebatang pohon kurma, ia melahirkan bayi Isa seorang diri dalam kesakitan.
+
+Ketika Maryam membawa bayinya pulang dan dituduh berbuat tidak senonoh, Allah mengilhamkannya untuk menunjuk bayinya. Bayi Isa yang masih dalam buaian tiba-tiba berbicara: "Sesungguhnya aku adalah hamba Allah. Dia memberiku Kitab dan menjadikanku seorang Nabi."
+
+Isa tumbuh menjadi nabi yang dikaruniai mukjizat luar biasa: menyembuhkan orang buta dan berpenyakit kusta, menghidupkan orang mati atas izin Allah, membuat burung dari tanah liat lalu meniupkan ruh ke dalamnya hingga terbang, dan mengetahui apa yang disimpan orang di rumah mereka.
+
+Isa berdakwah kepada Bani Israel yang telah menyimpang, mengajak mereka kembali ke ajaran tauhid sejati. Ia memiliki 12 murid setia (Hawariyun). Namun para pemimpin agama Yahudi yang merasa terancam berkomplot untuk membunuhnya. Allah menyelamatkan Isa dengan mengangkatnya ke langit, sementara orang yang menyalibkan mengira itu adalah Isa padahal Allah menyerupakan wajah orang lain dengan Isa.
+
+Dalam ajaran Islam, Isa masih hidup di sisi Allah dan akan turun kembali ke bumi menjelang Hari Kiamat untuk meluruskan ajaran yang telah diselewengkan.`,
+      hikmah:['Allah Maha Kuasa atas segala sesuatu — tidak ada yang mustahil bagi-Nya','Kesucian dan ketaqwaan mengangkat derajat seseorang di sisi Allah','Kebenaran tidak selalu diterima, bahkan oleh orang-orang yang seharusnya paling mengetahui','Setiap nabi membawa pesan yang sama: Sembahlah Allah semata']
+    },
+    {
+      id:'nabi-muhammad', nama:'Nabi Muhammad SAW', gelar:'Khatamul Anbiya (Penutup Para Nabi)', periode:'570 – 632 M',
+      icon:'🌙', warna:'#c9a84c',
+      ringkasan:'Nabi terakhir dan rasul penutup, pembawa risalah Islam yang sempurna, memiliki akhlak yang mulia dan diutus sebagai rahmat bagi seluruh alam.',
+      kisah:`Muhammad lahir pada tanggal 12 Rabiul Awal di Makkah, dari keluarga mulia Bani Hasyim, Quraisy. Ayahnya, Abdullah, wafat sebelum beliau lahir. Ibunya, Aminah, wafat saat Muhammad berusia 6 tahun. Ia dibesarkan oleh kakeknya, Abdul Muthallib, yang kemudian juga wafat saat Muhammad berusia 8 tahun. Selanjutnya, pamannya Abu Thalib mengasuhnya dengan penuh kasih.
+
+Sejak kecil, Muhammad dikenal dengan sifat jujur dan dapat dipercaya hingga dijuluki "Al-Amin" (Yang Terpercaya) oleh masyarakat Makkah. Beliau tidak pernah menyembah berhala di tengah masyarakat yang kental dengan kemusyrikan.
+
+Pada usia 25 tahun, Muhammad menikah dengan Khadijah binti Khuwailid, seorang janda kaya berusia 40 tahun yang mengagumi kejujuran dan akhlaknya. Pernikahan ini penuh cinta dan saling menghormati.
+
+Pada usia 40 tahun, saat menyendiri di Gua Hira di Bukit Nur, Malaikat Jibril datang dan menyampaikan wahyu pertama: "Iqra! Bismi Rabbikal ladzii khalaq..." (Bacalah! Dengan nama Tuhanmu yang menciptakan...). Muhammad ketakutan dan berlari pulang ke Khadijah yang menenangkannya. Inilah awal dari turunnya Al-Qur'an selama 23 tahun.
+
+Tiga tahun pertama, dakwah dilakukan secara diam-diam. Para pengikut awal berasal dari kalangan dekat: Khadijah (istri), Ali bin Abi Thalib (sepupu), Abu Bakar (sahabat), dan Zaid bin Haritsah (budak yang dibebaskan). Ketika Allah memerintahkan dakwah terang-terangan, Makkah bergolak. Kaum Quraisy menolak dengan keras, terutama Abu Lahab dan Abu Jahal.
+
+Para pengikut yang lemah disiksa dengan kejam. Bilal digantung batu besar di dada di terik matahari. Keluarga Yasir dibunuh. Nabi sendiri dilempari kotoran dan duri. Namun beliau tidak pernah membalas dengan kekerasan.
+
+Setelah wafatnya Khadijah dan Abu Thalib (Tahun Duka), kaum Quraisy semakin berani menyakiti Nabi. Suatu tahun Nabi pergi ke Thaif berharap mendapat perlindungan, namun justru diusir dan dilempari batu hingga kakinya berdarah. Di saat itulah, dalam kesendirian dan luka, Nabi memanjatkan doa yang sangat mengharukan: "Ya Allah, kepada-Mu aku mengadukan kelemahanku, kekurangan kemampuanku... Jika Engkau tidak murka kepadaku, aku tidak peduli..."
+
+Malam Isra Mi'raj kemudian menjadi puncak spiritual: Nabi dibawa Jibril dari Masjidil Haram ke Masjidil Aqsha, lalu naik ke langit bertemu para nabi terdahulu, dan menerima perintah shalat 5 waktu langsung dari Allah.
+
+Pada tahun 622 M, Nabi berhijrah ke Madinah — sebuah titik balik yang menjadi awal penanggalan Islam. Di Madinah, Nabi membangun masyarakat Islam yang pertama: mempersaudarakan Muhajirin dan Anshar, membuat Piagam Madinah (konstitusi pertama di dunia), dan membangun masjid sebagai pusat peradaban.
+
+Serangkaian perang terjadi: Badar (313 melawan 1000, kaum Muslim menang), Uhud (kaum Muslim terluka karena beberapa sahabat meninggalkan pos), Khandaq (Perang Parit), dan akhirnya Fathu Makkah (Penaklukan Makkah) tahun 630 M — Nabi memasuki Makkah yang ia tinggalkan 8 tahun lalu dengan penuh kemenangan tanpa pertumpahan darah yang berarti, dan memaafkan semua musuhnya.
+
+Pada Haji Wada (Haji Perpisahan) tahun 632 M, Nabi menyampaikan khutbah yang menggetarkan di hadapan lebih dari 100.000 jamaah haji. Tiga bulan kemudian, di usia 63 tahun, Nabi wafat di pangkuan Aisyah. Seluruh umat Islam berduka mendalam.`,
+      hikmah:['Akhlak yang mulia adalah warisan terbesar seorang insan','Kesabaran tanpa batas dalam menghadapi cobaan adalah sunnah nabi','Membangun masyarakat yang adil dimulai dari persaudaraan dan saling percaya','Memaafkan musuh di puncak kemenangan adalah puncak keagungan akhlak','Islam adalah agama rahmat — bukan kekerasan']
+    },
+  ],
+
+  sahabat: [
+    {
+      id:'abubakar', nama:'Abu Bakar Ash-Shiddiq RA', gelar:'Al-Shiddiq (Yang Membenarkan)', wafat:'634 M',
+      icon:'🌟', warna:'#2d6a4f',
+      ringkasan:'Sahabat terdekat Rasulullah, orang pertama yang membenarkan Isra Mi\'raj, dan Khalifah pertama Islam.',
+      kisah:`Abu Bakar bernama asli Abdullah bin Abi Quhafah, lahir dua tahun setelah Rasulullah. Ia adalah sahabat terdekat dan kepercayaan Rasulullah sejak sebelum Islam. Begitu mendengar pengakuan kenabian Muhammad dari istrinya yang lebih dulu memeluk Islam, Abu Bakar langsung menerimanya tanpa keraguan — menjadikannya orang pertama di kalangan laki-laki dewasa yang masuk Islam.
+
+Ketika Rasulullah menceritakan peristiwa Isra Mi'raj yang membuat banyak orang tertawa dan kafir, Abu Bakar langsung membenarkan tanpa bertanya-tanya. "Jika dia yang mengatakannya, maka aku membenarkannya," kata Abu Bakar. Dari sinilah ia mendapat gelar "Ash-Shiddiq" (Yang Membenarkan).
+
+Abu Bakar menggunakan seluruh kekayaannya untuk membebaskan budak-budak yang disiksa karena masuk Islam: Bilal bin Rabah, Amir bin Fuhairah, Ummu Ubais, dan banyak lagi. Ketika ditanya oleh ayahnya mengapa tidak membeli budak yang kuat untuk bekerja, Abu Bakar menjawab, "Aku membelinya semata karena Allah."
+
+Saat Nabi hijrah ke Madinah, Abu Bakar dipilih sebagai satu-satunya teman perjalanan. Keduanya bersembunyi di Gua Tsur selama tiga hari ketika pasukan Quraisy mengepung. Ketika Abu Bakar khawatir dan berkata ular berbisa ada di kaki mereka, Nabi menenangkan: "Jangan bersedih, sesungguhnya Allah bersama kita."
+
+Setelah Rasulullah wafat, Abu Bakar menjadi khalifah pertama. Tantangan langsung menghampiri: banyak suku Arab yang murtad, menolak membayar zakat, dan beberapa orang mengklaim kenabian palsu (Musailamah Al-Kadzdzab). Abu Bakar dengan tegas memerangi semua ini — sebuah keputusan yang awalnya ditentang beberapa sahabat termasuk Umar, namun terbukti benar. Ia juga memerintahkan pengumpulan Al-Qur'an menjadi satu mushaf.
+
+Abu Bakar memerintah hanya dua tahun dua bulan, namun penuh capaian penting. Ia wafat dalam keadaan sakit di usia 63 tahun — sama dengan usia Rasulullah saat wafat.`,
+      hikmah:['Keyakinan tanpa keraguan adalah ciri iman yang sejati','Harta yang paling baik adalah yang diinfakkan di jalan Allah','Pemimpin yang tegas dalam kebenaran lebih baik dari yang populer','Persahabatan sejati dibangun atas dasar iman dan takwa']
+    },
+    {
+      id:'umar', nama:'Umar bin Khattab RA', gelar:'Al-Faruq (Pembeda Haq dan Bathil)', wafat:'644 M',
+      icon:'⚖️', warna:'#1e6091',
+      ringkasan:'Khalifah kedua yang terkenal dengan keadilan dan ketegasannya, yang bahkan Setan pun takut berpapasan dengannya.',
+      kisah:`Umar bin Khattab adalah salah satu orang yang paling ditakuti di Makkah sebelum masuk Islam. Bertubuh besar, bertemperamen keras, dan sangat fanatik terhadap agama nenek moyang. Ia bahkan berencana membunuh Rasulullah.
+
+Dalam perjalanan menuju rumah Rasulullah dengan pedang terhunus, Umar diberi tahu bahwa adik perempuannya, Fatimah, telah masuk Islam. Umar membalik arah dan pergi ke rumah Fatimah. Ia melihat adiknya dan suaminya sedang membaca lembaran Al-Qur'an. Dalam amarah, ia menampar Fatimah hingga berdarah. Namun Fatimah dengan tegar berkata: "Darahku dan kematianku lebih aku pilih daripada meninggalkan Islam."
+
+Teguran itu menghentikan Umar. Ia meminta lembaran itu dan membaca ayat-ayat awal Surat Thaha. Hatinya bergetar, air matanya menetes. Umar langsung pergi ke tempat Rasulullah dan mengucap dua kalimat syahadat. Rasulullah bersabda: "Allahumma a'izzal Islam bi Umar" (Ya Allah, muliakan Islam dengan Umar).
+
+Sebagai khalifah kedua, Umar memerintah selama 10 tahun dengan gaya yang sangat berbeda dari Abu Bakar — lebih lugas dan langsung. Di bawah kepemimpinannya, Islam meluas ke Persia, Irak, Suriah, Palestina, dan Mesir. Yerusalem dibebaskan secara damai, dan Umar menolak shalat di dalam Gereja Makam Suci agar tidak menjadi preseden penyerobotan tempat ibadah.
+
+Umar dikenal dengan keadilan yang luar biasa. Ia tidak segan menghukum pejabatnya sendiri, bahkan anaknya. Ia berjalan malam menyamar untuk mengetahui kondisi rakyat. Suatu malam ia menemukan seorang ibu yang merebus batu agar anaknya tidak menangis karena lapar. Umar menangis dan langsung memikul karung gandum dari gudang negara di punggungnya sendiri untuk diberikan kepada keluarga itu.
+
+Umar wafat karena ditikam oleh seorang budak Persia bernama Abu Lu'lu'ah saat memimpin shalat Subuh. Ia bertahan selama beberapa hari lalu meninggal. Ia dimakamkan di samping Rasulullah dan Abu Bakar atas izin Aisyah.`,
+      hikmah:['Hidayah bisa datang kepada siapa pun, bahkan musuh Islam yang paling keras','Pemimpin yang adil adalah pemimpin yang merasakan penderitaan rakyatnya','Ketegasan dalam kebenaran adalah bentuk kasih sayang yang nyata','Kesederhanaan pemimpin adalah tanda kemuliaan jiwanya']
+    },
+    {
+      id:'utsman', nama:'Utsman bin Affan RA', gelar:'Dzun Nurain (Pemilik Dua Cahaya)', wafat:'656 M',
+      icon:'📖', warna:'#6a4c93',
+      ringkasan:'Khalifah ketiga yang dermawan luar biasa, menikahi dua putri Rasulullah, dan yang menyempurnakan pengumpulan Al-Qur\'an dalam satu mushaf standar.',
+      kisah:`Utsman bin Affan adalah seorang pedagang kaya Makkah yang berasal dari klan Umayyah. Ia masuk Islam atas ajakan Abu Bakar dan menjadi salah satu sahabat paling awal dan paling setia.
+
+Keistimewaan Utsman adalah kedermawanannya yang luar biasa. Saat kaum Muslim sedang kesulitan air di Madinah karena sumber air utama dikuasai seorang Yahudi yang menjualnya mahal, Nabi bersabda bahwa siapa yang membeli sumur itu dan membuatnya bebas untuk umum akan masuk surga. Utsman membelinya dengan harga sangat mahal dan mewakafkannya untuk seluruh kaum Muslim.
+
+Saat persiapan Perang Tabuk dan banyak sahabat yang kekurangan perbekalan, Nabi bersabda bahwa siapa yang membiayai pasukan akan mendapat ampunan. Utsman menyumbang 300 unta lengkap dengan muatannya, 200 kuda, dan 1000 dinar emas. Nabi mengangkat tangan berdoa: "Ya Allah, ridhailah Utsman karena aku telah meridhainya."
+
+Utsman dikaruniai keistimewaan menikah dengan dua putri Rasulullah: pertama Ruqayyah, dan setelah Ruqayyah wafat, ia menikahi Ummu Kulthum. Karena inilah ia dijuluki "Dzun Nurain" (Pemilik Dua Cahaya).
+
+Sebagai khalifah ketiga, pencapaian terbesar Utsman adalah penyatuan mushaf Al-Qur'an. Ketika Islam telah menyebar luas dan perbedaan bacaan mulai muncul, Utsman memerintahkan pembentukan panitia untuk menyusun mushaf standar berdasarkan mushaf yang telah dikumpulkan Abu Bakar. Salinan mushaf standar ini dikirim ke seluruh wilayah Islam, dan mushaf-mushaf lain yang berbeda diperintahkan dibakar. Mushaf Utsmani inilah yang kita baca hingga hari ini.
+
+Di akhir pemerintahannya, Utsman menghadapi banyak fitnah dan pemberontakan yang sebagian dipicu oleh orang-orang yang tidak senang. Sekelompok pemberontak mengepung rumah Utsman. Para sahabat menawarkan bantuan, namun Utsman menolak agar tidak terjadi pertumpahan darah. Utsman wafat dibunuh oleh para pemberontak saat sedang membaca Al-Qur'an — darah beliau menetes di atas mushaf pada ayat "Maka Allah akan memelihara kamu dari mereka."`,
+      hikmah:['Kedermawanan di jalan Allah adalah investasi terbaik','Ilmu yang diamalkan dan disebarkan adalah warisan abadi','Pemimpin yang menghindari pertumpahan darah menunjukkan keluhuran budinya','Mati dalam keadaan ibadah adalah akhir yang mulia']
+    },
+    {
+      id:'ali', nama:'Ali bin Abi Thalib RA', gelar:'Babul Ilm (Pintu Ilmu)', wafat:'661 M',
+      icon:'⚔️', warna:'#e76f51',
+      ringkasan:'Sepupu dan menantu Rasulullah, orang pertama yang masuk Islam dari kalangan anak-anak, khalifah keempat yang terkenal dengan kecerdasan dan keberaniannya.',
+      kisah:`Ali bin Abi Thalib adalah sepupu Rasulullah, putra Abu Thalib yang mengasuh Nabi sejak kecil. Sejak kecil Ali tumbuh bersama Rasulullah dan Khadijah di rumah mereka. Ketika Nabi menerima wahyu pertama dan mulai mengajak keluarga dekat, Ali — yang saat itu baru berusia sekitar 10 tahun — adalah anak pertama yang menyatakan imannya.
+
+Ali tumbuh menjadi pemuda yang cerdas, pemberani, dan hafal banyak ilmu dari Rasulullah. Rasulullah bersabda: "Aku adalah kota ilmu dan Ali adalah pintunya." Ali juga dikenal sebagai pejuang yang berani dan mahir — menjadi panglima dalam banyak pertempuran.
+
+Malam Hijrah adalah momen heroik Ali: Rasulullah memintanya tidur di tempat tidur beliau untuk mengelabui kaum Quraisy yang berencana membunuh Nabi. Dengan tenang dan penuh keberanian, Ali menyanggupinya — tidur berselimut jubah hijau Nabi sambil mengetahui hidupnya mungkin terancam.
+
+Ali menikahi Fatimah Az-Zahra, putri kesayangan Rasulullah. Dari pernikahan ini lahirlah Hasan dan Husain — cucu-cucu Rasulullah yang sangat beliau cintai. Kehidupan Ali dan Fatimah sangat sederhana dan penuh dengan ibadah, meskipun berbagai kesulitan hidup menghampiri mereka.
+
+Setelah wafatnya Rasulullah, Ali terlibat dalam proses suksesi yang penuh dinamika. Ia menjadi khalifah keempat setelah Utsman terbunuh. Masa pemerintahannya penuh dengan gejolak internal — Perang Jamal dan Perang Shiffin — yang merupakan ujian bagi persatuan umat Islam.
+
+Ali dikenal dengan kecerdasan hukumnya yang luar biasa. Banyak kasus sulit yang dipecahkan dengan bijaksana olehnya. Ia juga seorang penyair dan orator yang handal. Kumpulan kata-kata hikmahnya terkumpul dalam "Nahjul Balaghah."
+
+Ali wafat dibunuh oleh Ibnu Muljam dengan pedang beracun saat sedang shalat Subuh di Masjid Kufah. Sebelum meninggal, Ali berpesan agar Ibnu Muljam tidak dibalas dengan kekerasan berlebihan.`,
+      hikmah:['Keberanian sejati adalah kesediaan berkorban untuk melindungi orang yang kita cintai','Ilmu yang diamalkan adalah cahaya yang menerangi jalan','Kepemimpinan yang adil adalah amanah yang berat','Kesederhanaan hidup tidak menghalangi kemuliaan jiwa']
+    },
+    {
+      id:'bilal', nama:'Bilal bin Rabah RA', gelar:'Sayyidul Muadzdzinin (Pemimpin Para Muadzin)', wafat:'640 M',
+      icon:'📯', warna:'#e9c46a',
+      ringkasan:'Budak Habasyah yang disiksa karena imannya, namun tetap teguh hingga menjadi muadzin pertama Islam dan simbol kesetaraan dalam Islam.',
+      kisah:`Bilal bin Rabah berasal dari Habasyah (Ethiopia), seorang budak milik Umayyah bin Khalaf, seorang pemimpin Quraisy. Ketika Islam datang ke Makkah, Bilal adalah salah satu yang pertama menerima cahaya iman. Imannya tidak bisa disembunyikan karena terpancar dari wajah dan perilakunya.
+
+Ketika majikannya mengetahui bahwa Bilal telah masuk Islam, siksaan dimulai. Umayyah menyuruh orang-orangnya mengeluarkan Bilal di tengah terik matahari padang pasir Makkah. Bilal dibaringkan di atas pasir panas membara, dadanya ditekan dengan batu besar yang sangat berat. Dalam kondisi tersiksa yang luar biasa itu, Bilal hanya mengulang satu kata: "Ahad... Ahad..." (Allah Maha Esa... Allah Maha Esa...).
+
+Suatu hari Abu Bakar melewati tempat penyiksaan itu. Hatinya tergerak, dan ia langsung menawar Bilal kepada Umayyah — yang melepasnya dengan harga tinggi karena mengira Abu Bakar membutuhkannya. Abu Bakar membeli dan langsung membebaskan Bilal. "Engkau bebas karena Allah," kata Abu Bakar.
+
+Bilal menjadi salah satu sahabat yang paling dekat dengan Rasulullah. Ketika Masjid Nabawi selesai dibangun di Madinah dan diperlukan seseorang untuk mengumandangkan adzan — panggilan shalat — Rasulullah memilih Bilal. Suara Bilal yang merdu mengalun memenuhi seantero Madinah.
+
+Bilal sangat mencintai Rasulullah dengan cinta yang mendalam. Setelah Rasulullah wafat, Bilal tidak bisa lagi mengumandangkan adzan karena selalu menangis tersedu-sedu saat menyebut nama Rasulullah. Ia memilih berhenti menjadi muadzin dan pergi ke Syam untuk berjihad.
+
+Sebelum wafat, dalam kondisi kritis, Bilal tersenyum dan berkata: "Alangkah indahnya... esok aku akan bertemu orang-orang yang aku cintai: Muhammad dan sahabat-sahabatnya!"`,
+      hikmah:['Keimanan yang kuat tidak bisa dihancurkan oleh siksaan fisik apapun','Islam menghapus perbedaan ras dan status sosial — yang mulia adalah yang bertakwa','Cinta kepada Allah dan Rasul-Nya adalah sumber kekuatan jiwa','Pengorbanan untuk kebenaran tidak pernah sia-sia']
+    },
+    {
+      id:'khadijah', nama:'Khadijah binti Khuwailid RA', gelar:'Ummul Mukminin (Ibu Orang-Orang Beriman)', wafat:'619 M',
+      icon:'💎', warna:'#9b59b6',
+      ringkasan:'Istri pertama dan pendukung utama Rasulullah, wanita pertama yang masuk Islam, yang mengorbankan seluruh kekayaannya untuk perjuangan Islam.',
+      kisah:`Khadijah binti Khuwailid adalah wanita terhormat dan pebisnis sukses dari Makkah. Ia dikenal dengan julukan "Ath-Thahirah" (Yang Suci) karena kemuliaannya. Dua kali menikah dan dua kali menjanda, Khadijah tidak tertarik menikah lagi hingga mendengar tentang kejujuran dan kemuliaan akhlak Muhammad muda.
+
+Khadijah mempekerjakan Muhammad untuk membawa dagangannya ke Syam. Laporan yang kembali sangat positif, dan yang lebih penting, hati Khadijah bergetar melihat kemuliaan Muhammad. Ia melamar Muhammad melalui perantara, dan Muhammad yang saat itu berusia 25 tahun menerima lamaran wanita berusia 40 tahun itu.
+
+Pernikahan mereka adalah pernikahan paling bahagia dan bermakna dalam sejarah Islam. Dari pernikahan ini lahir enam anak: dua putra (yang keduanya wafat di masa kecil) dan empat putri: Zainab, Ruqayyah, Ummu Kulthum, dan Fatimah Az-Zahra.
+
+Ketika Muhammad menerima wahyu pertama di Gua Hira dan pulang ke rumah dalam keadaan gemetar dan ketakutan, Khadijah adalah pelabuhan pertamanya. Dengan tenang ia menyelimuti suaminya yang gemetar, menenangkannya, dan berkata kata-kata yang abadi: "Demi Allah, Allah tidak akan pernah menghinakanmu. Engkau selalu menyambung silaturahmi, membantu orang yang lemah, memuliakan tamu, dan menolong orang yang tertimpa musibah."
+
+Khadijah adalah orang pertama yang masuk Islam — bahkan sebelum siapapun. Ia langsung membenarkan dan mendukung suaminya dengan sepenuh hati. Kekayaannya yang sangat besar diinfakkan semuanya untuk perjuangan Islam: membebaskan budak, memberi makan yang lapar, mendukung dakwah.
+
+Ketika kaum Quraisy mengepung dan memboikot keluarga Bani Hasyim di Syi'b Abi Thalib selama tiga tahun, kondisi Khadijah yang telah lanjut usia semakin melemah. Beberapa bulan setelah pemboikotan berakhir, Khadijah wafat. Rasulullah sangat berduka, dan tahun itu dikenal sebagai "Tahun Duka".
+
+Rasulullah senantiasa mengenang Khadijah dengan penuh cinta bahkan setelah beliau menikah dengan Aisyah. Ketika seseorang mengirimkan hadiah dan Rasulullah teringat bahwa wanita itu adalah teman lama Khadijah, beliau menerima dengan sangat gembira dan mendoakannya dengan penuh kasih.`,
+      hikmah:['Dukungan keluarga adalah pondasi penting dalam menjalankan amanah','Wanita yang kuat dan cerdas adalah aset terbesar dalam perjuangan','Kekayaan yang diinfakkan di jalan Allah adalah investasi surga','Cinta sejati adalah yang menemani dalam susah dan senang']
+    },
+    {
+      id:'aisyah', nama:'Aisyah binti Abu Bakar RA', gelar:'Ummul Mukminin / Humaira', wafat:'678 M',
+      icon:'📚', warna:'#48cae4',
+      ringkasan:'Istri Rasulullah yang paling banyak meriwayatkan hadis, ulama wanita terbesar Islam, dan menjadi sumber ilmu pengetahuan Islam.',
+      kisah:`Aisyah adalah putri Abu Bakar Ash-Shiddiq, sahabat terdekat Rasulullah. Kecerdasannya tampak sejak kecil — ia tumbuh di lingkungan yang sarat dengan diskusi agama dan keilmuan. Rasulullah sangat menyayanginya dan memanggilnya dengan nama manja "Humaira" (Si Pipinya Kemerah-merahan).
+
+Aisyah dikenal sebagai wanita paling cerdas di zamannya. Ia memiliki kemampuan hafalan yang luar biasa dan kemampuan analisis yang tajam. Banyak ulama — termasuk sahabat-sahabat besar — yang datang bertanya kepadanya tentang hadis dan hukum Islam. Ia meriwayatkan lebih dari 2.000 hadis.
+
+Salah satu peran terpenting Aisyah adalah menjadi jembatan ilmu dari kehidupan pribadi Rasulullah. Banyak hal tentang ibadah sehari-hari Nabi — cara berwudhu, cara shalat, kebiasaan tidur dan bangun, pola makan, dan lainnya — kita ketahui melalui riwayat Aisyah.
+
+Aisyah juga seorang yang berani dan bersemangat dalam menegakkan kebenaran. Ia tidak segan mengoreksi sahabat-sahabat lain jika ada periwayatan yang ia anggap tidak tepat. Umar bin Khattab pernah dikoreksi oleh Aisyah, dan Umar menerimanya dengan lapang dada.
+
+Ujian terbesar Aisyah adalah peristiwa "Haditsul Ifk" (Berita Bohong) — fitnah yang menyebutkan bahwa Aisyah berselingkuh dengan Shafwan bin Mu'atthal. Sebulan penuh Aisyah berduka dan tidak ada kejelasan. Akhirnya Allah menurunkan wahyu dalam Surat An-Nur yang membebaskan Aisyah dari segala tuduhan dan menyebut para pemfitnah sebagai pendusta.
+
+Setelah Rasulullah wafat, Aisyah mengabdikan sisa hidupnya untuk mengajarkan Islam. Rumahnya di samping Masjid Nabawi menjadi pusat ilmu. Ia mengajar laki-laki dan perempuan, dan menjadi salah satu fondasi ilmu hadis yang kita miliki hingga hari ini.`,
+      hikmah:['Kecerdasan adalah karunia Allah yang harus diasah dan dimanfaatkan','Wanita dapat menjadi ulama dan pemimpin intelektual dalam Islam','Kebenaran akan selalu terungkap meskipun sempat tertutup oleh fitnah','Ilmu yang disebarkan adalah amal jariyah yang tidak pernah putus']
+    },
+  ],
+
+  sholeh: [
+    {
+      id:'uwais-qarni', nama:'Uwais Al-Qarni', gelar:'Pemimpin Para Tabi\'in', wafat:'657 M',
+      icon:'❤️', warna:'#e63946',
+      ringkasan:'Orang sholeh dari Yaman yang tidak pernah bertemu Nabi namun sangat dicintai Nabi, karena baktinya yang luar biasa kepada ibunya.',
+      kisah:`Uwais Al-Qarni adalah seorang tabi'in (generasi yang hidup setelah sahabat Nabi) dari Yaman yang memiliki kedudukan spiritual sangat tinggi di sisi Allah. Yang menakjubkan adalah: ia tidak pernah sekalipun bertemu Nabi Muhammad SAW secara langsung, namun Nabi justru menyebutnya dan memerintahkan sahabat untuk mencari dan meminta doanya.
+
+Rasulullah pernah bersabda kepada Umar bin Khattab dan Ali bin Abi Thalib: "Akan datang kepada kalian seseorang dari Yaman bernama Uwais. Ia tidak memiliki keluarga di sini kecuali seorang ibu yang ia layani dengan sangat baik. Jika ia bersumpah atas nama Allah, Allah pasti mengabulkannya. Mintalah ia berdoa untukmu memohon ampunan."
+
+Uwais sangat ingin bertemu Rasulullah. Ia mendapat izin ibunya untuk pergi ke Madinah dan sudah sampai di pintu rumah Nabi. Namun Nabi sedang tidak ada di rumah, sementara ibunya membutuhkannya segera. Dengan berat hati, Uwais menitipkan salam untuk Rasulullah kepada seorang sahabat dan kembali ke Yaman untuk merawat ibunya.
+
+Rasulullah tersentuh mendengar kisah ini dan bersabda: "Dia adalah wali Allah. Jika kalian bertemu dengannya, mintalah doanya."
+
+Setelah Rasulullah wafat, Umar dan Ali mencari Uwais ketika menunaikan haji. Mereka menemukannya di tengah sekelompok orang miskin. Umar — seorang khalifah yang berkuasa — dengan rendah hati mendatangi Uwais dan meminta doa darinya. Uwais yang kaget menolak karena merasa tidak layak, namun akhirnya berdoa untuk Umar.
+
+Uwais juga dikenal karena tanda kecilnya: Nabi menyebutkan bahwa Uwais mempunyai bekas putih (vitiligo) yang hampir seluruhnya sembuh karena doanya, kecuali sebesar koin yang sengaja ia sisakan sebagai pengingat. Ketika Umar dan Ali memeriksa bahu Uwais dan menemukan tanda itu, mereka yakin dialah Uwais Al-Qarni.`,
+      hikmah:['Bakti kepada orang tua adalah amal yang paling dicintai Allah','Kedekataan dengan Allah bisa dicapai tanpa ketenaran dan popularitas','Doa orang yang ikhlas dan taat kepada Allah adalah doa yang mustajab','Nilai seseorang di sisi Allah tidak ditentukan oleh popularitasnya di mata manusia']
+    },
+    {
+      id:'hasan-basri', nama:'Hasan Al-Bashri', gelar:'Imam Tabi\'in', wafat:'728 M',
+      icon:'🌊', warna:'#0077b6',
+      ringkasan:'Ulama tabi\'in terbesar yang dikenal dengan hikmahnya yang dalam, kezuhudannya, dan kemampuannya menyentuh hati manusia.',
+      kisah:`Hasan Al-Bashri lahir di Madinah pada tahun 21 H, putra seorang budak yang dibebaskan oleh sahabat Nabi. Semasa kecil ia diasuh di rumah Ummu Salamah, istri Rasulullah, yang sangat berpengaruh dalam membentuk kepribadiannya. Ia bertemu dengan banyak sahabat Rasulullah dan belajar langsung dari mereka.
+
+Hasan Al-Bashri tumbuh menjadi ulama dan zahid (orang yang zuhud pada dunia) yang paling terkemuka di zamannya. Namanya harum dari Bashrah hingga seluruh penjuru dunia Islam. Ia dikenal karena lisannya yang fasih, ilmunya yang luas, dan kata-katanya yang selalu menyentuh hati dan menggugah kesadaran.
+
+Suatu kali ia bertemu seseorang yang sedang menangis tersedu-sedu. Hasan bertanya penyebabnya. Orang itu menjawab ia menangis karena takut neraka. Hasan Al-Bashri kemudian menangis lebih keras. Ketika ditanya mengapa ia menangis lebih keras, ia menjawab: "Karena orang yang seharusnya lebih takut dari kamu justru menangis lebih sedikit darimu."
+
+Salah satu nasihatnya yang terkenal: "Sesungguhnya urusan akhirat itu bagaikan bayangan yang terus bergerak mendekat, sementara dunia ini bagaikan awan yang segera berlalu. Maka janganlah tertipu oleh dunia yang fana ini."
+
+Murid-muridnya sangat banyak dan sebagian menjadi ulama besar. Meski keilmuannya sangat tinggi, Hasan Al-Bashri tetap rendah hati dan senantiasa menangis mengingat dosa dan kematian. Ia sering berkata: "Wahai manusia, renungkanlah akhirat, karena dunia ini hanyalah persinggahan."
+
+Ketika sakaratul maut menghampiri, wajah Hasan Al-Bashri berseri-seri. Para muridnya bertanya mengapa. Ia menjawab: "Aku sedang memikirkan pertemuan dengan Allah."`,
+      hikmah:['Ilmu yang benar akan menghasilkan rasa takut kepada Allah','Zuhud bukan berarti miskin, tapi tidak bergantung pada dunia','Kata-kata yang keluar dari hati yang ikhlas akan masuk ke hati orang lain','Mengingat mati adalah obat terbaik dari penyakit cinta dunia']
+    },
+    {
+      id:'rabia-adawiyah', nama:'Rabi\'ah Al-Adawiyah', gelar:'Ratu Para Sufi', wafat:'801 M',
+      icon:'🌹', warna:'#c77dff',
+      ringkasan:'Wanita sufi terbesar dalam sejarah Islam, yang mengajarkan konsep cinta murni kepada Allah tanpa pamrih surga maupun takut neraka.',
+      kisah:`Rabi'ah Al-Adawiyah lahir di Bashrah (Iraq) sebagai putri keempat dari keluarga miskin. Sejak kecil hidupnya penuh dengan cobaan: orang tuanya meninggal di masa kelaparan, dan ia sempat dijual sebagai budak. Namun di tengah penderitaan itu, hatinya justru semakin dekat kepada Allah.
+
+Majikannya suatu malam melihat cahaya di atas kepala Rabi'ah saat ia sedang shalat. Terkejut dan takut, ia langsung membebaskan Rabi'ah. Rabi'ah pergi ke padang pasir dan menghabiskan bertahun-tahun dalam ibadah dan kontemplasi.
+
+Rabi'ah menolak semua lamaran pernikahan, termasuk dari ulama-ulama besar, karena ia ingin mencurahkan seluruh hatinya untuk cinta kepada Allah. Ia berkata: "Hatiku sudah penuh dengan Sang Kekasih (Allah), maka tidak ada tempat lagi untuk yang lain."
+
+Ia dikenal dengan doa-doanya yang indah dan konsep cinta yang unik. Suatu kali ia terlihat berlari sambil membawa api di satu tangan dan air di tangan lain. Orang-orang bertanya apa yang ia lakukan. Ia menjawab: "Aku ingin membakar surga dengan api ini dan memadamkan neraka dengan air ini, agar manusia tidak lagi menyembah Allah karena takut neraka atau berharap surga. Aku ingin mereka menyembah Allah semata-mata karena cinta kepada-Nya."
+
+Doa-doanya sangat indah dan puitis. Salah satunya yang terkenal: "Ya Allah, jika aku menyembah-Mu karena takut neraka, bakarlah aku dengan neraka-Mu. Jika aku menyembah-Mu karena berharap surga, haramkan surga untukku. Namun jika aku menyembah-Mu hanya karena Engkau, maka janganlah Engkau sembunyikan keindahan Wajah-Mu dariku."
+
+Rabi'ah meninggal dalam usia tua dalam keadaan sujud kepada Allah.`,
+      hikmah:['Cinta kepada Allah adalah motivasi ibadah yang paling murni dan paling tinggi','Wanita pun dapat mencapai derajat spiritual yang sangat tinggi','Cobaan hidup bisa menjadi tangga menuju kedekatan dengan Allah','Ibadah yang tulus adalah ibadah yang bersih dari pamrih apapun']
+    },
+    {
+      id:'imam-ghazali', nama:'Imam Al-Ghazali', gelar:'Hujjatul Islam (Bukti Kebenaran Islam)', wafat:'1111 M',
+      icon:'📜', warna:'#2d6a4f',
+      ringkasan:'Ulama dan filosof terbesar Islam yang meninggalkan kemasyhuran dan jabatan tinggi untuk mencari kebenaran sejati, dan menulis karya masterpiece Ihya Ulumuddin.',
+      kisah:`Abu Hamid Muhammad Al-Ghazali lahir di Tus, Khurasan (Iran). Sejak kecil ia menunjukkan kecerdasan luar biasa dalam ilmu agama. Ia belajar kepada ulama-ulama terkemuka dan pada usia muda sudah menjadi ulama yang diakui.
+
+Puncak karir duniawinya terjadi ketika ia diangkat menjadi professor di Nizhamiyah Baghdad — universitas paling bergengsi di dunia Islam saat itu — pada usia 33 tahun. Ribuan mahasiswa belajar kepadanya, dan ia menjadi sangat dihormati dan terkenal.
+
+Namun di tengah puncak ketenaran itulah, Al-Ghazali mengalami krisis spiritual yang dalam. Ia mulai mempertanyakan: apakah ia mengajar karena Allah atau karena ketenaran dan kekayaan? Apakah ilmunya betul-betul membawa manfaat bagi akhiratnya? Pertanyaan-pertanyaan ini membuatnya lumpuh selama berbulan-bulan — ia tidak bisa berbicara meskipun ingin.
+
+Akhirnya Al-Ghazali membuat keputusan yang mengejutkan dunia: ia meninggalkan jabatan bergengsinya, meninggalkan Baghdad, dan mengembara selama sekitar 10 tahun. Ia pergi ke Damaskus, Jerusalem, Hebron, Madinah, dan Mekkah — menghabiskan hari-harinya dalam uzlah (menyendiri), ibadah, dan merenungkan hakikat kehidupan.
+
+Dari perjalanan spiritual itulah lahir mahakarya yang mengubah peradaban Islam: "Ihya Ulumuddin" (Menghidupkan Kembali Ilmu-Ilmu Agama). Kitab ini terdiri dari 4 jilid besar yang membahas ibadah, adat, perkara-perkara yang mencelakakan dan menyelamatkan jiwa. Hingga hari ini, Ihya Ulumuddin dianggap sebagai salah satu kitab terpenting dalam sejarah Islam.
+
+Al-Ghazali kembali ke Tus dan mendirikan sebuah madrasah kecil. Ia menghabiskan sisa hidupnya dalam kesederhanaan — mengajar, menulis, dan beribadah. Ketika meninggal, di atas meja dekat tempat tidurnya terdapat sebuah kitab yang sedang ia pelajari.`,
+      hikmah:['Ilmu tanpa amal hanyalah beban, bukan cahaya','Keberanian meninggalkan kemewahan dunia untuk kebenaran adalah tanda jiwa yang besar','Krisis spiritual adalah kesempatan untuk menemukan kebenaran yang lebih dalam','Karya yang lahir dari ketulusan akan abadi melampaui zamannya']
+    },
+    {
+      id:'ibnu-taimiyah', nama:'Ibnu Taimiyah', gelar:'Syaikhul Islam', wafat:'1328 M',
+      icon:'⚖️', warna:'#e76f51',
+      ringkasan:'Ulama pemberani dari Damaskus yang memenjarakan dirinya dengan menolak kompromi dengan kebatilan, namun tetap mengajar dari balik jeruji penjara.',
+      kisah:`Ahmad bin Abdul Halim bin Taimiyah lahir di Harran, Turki, dari keluarga ulama besar. Ketika pasukan Mongol menyerang, keluarganya mengungsi ke Damaskus. Sejak kecil Ibnu Taimiyah menunjukkan kecerdasan yang luar biasa — pada usia 17 tahun ia sudah memberikan fatwa, dan pada usia 22 tahun ia sudah menjadi guru besar.
+
+Di tengah kondisi umat Islam yang terpecah-pecah dan lemah di bawah ancaman Mongol, Ibnu Taimiyah tampil sebagai suara yang lantang dan berani. Ia melawan berbagai bid'ah dan penyimpangan yang ia anggap merusak kemurnian Islam, dan mengajak kembali kepada Al-Qur'an dan Sunnah.
+
+Keberaniannya yang luar biasa tampak ketika pasukan Mongol mengancam Damaskus. Sementara para ulama lain dan bahkan para pejabat sudah melarikan diri, Ibnu Taimiyah tinggal bersama rakyat biasa, mengobarkan semangat mereka, dan bahkan pergi langsung ke kamp pemimpin Mongol untuk meminta pembebasan para tawanan.
+
+Karena ketegasannya dalam membela pendapat yang dianggap kontroversial oleh sebagian pihak, Ibnu Taimiyah berkali-kali dipenjara. Ia dipenjara di Mesir, kemudian di Damaskus. Namun penjara tidak menghentikan aktivitasnya — ia terus mengajar murid-muridnya dari balik jeruji, dan menghasilkan karya-karya ilmiah yang sangat produktif.
+
+Di akhir hidupnya, ia dipenjara di benteng Damaskus dan dilarang menggunakan tinta dan kertas. Ketika tinta dan kertas diambil, ia menggunakan arang untuk terus menulis. Ibnu Taimiyah wafat dalam penjara itu, namun pemakamannya dihadiri oleh ribuan orang yang menangis dan mendoakannya.
+
+Muridnya yang paling terkenal adalah Ibnu Qayyim Al-Jauziyah yang juga menjadi ulama besar.`,
+      hikmah:['Keberanian dalam menegakkan kebenaran tidak boleh tergoyahkan oleh ancaman','Ilmu dan semangat bisa tetap produktif bahkan dalam kondisi terburuk sekalipun','Seorang ulama adalah pelayan masyarakat, bukan pelayan penguasa','Warisan ilmu yang benar akan terus bermanfaat melampaui hidup penulisnya']
+    },
+    {
+      id:'ibnu-qayyim', nama:'Ibnu Qayyim Al-Jauziyah', gelar:'Imam Ahli Sunnah', wafat:'1350 M',
+      icon:'💡', warna:'#457b9d',
+      ringkasan:'Murid setia Ibnu Taimiyah yang menemaninya bahkan di penjara, dan menghasilkan karya-karya Islam tentang jiwa, hati, dan suluk yang tak ternilai.',
+      kisah:`Muhammad bin Abi Bakr, dikenal sebagai Ibnu Qayyim Al-Jauziyah, lahir di Damaskus dan sejak muda belajar kepada Ibnu Taimiyah yang menjadi gurunya selama kurang lebih 17 tahun hingga sang guru wafat. Hubungan mereka bukan sekadar guru-murid, tapi lebih kepada seorang ayah dan anak dalam keilmuan.
+
+Ketika Ibnu Taimiyah dipenjara, Ibnu Qayyim memilih menemaninya di penjara meski ia bisa saja meminta dibebaskan. Dari pengalaman penjara itulah lahir salah satu karyanya yang paling agung: "Madarijus Salikin" — sebuah analisis mendalam tentang perjalanan jiwa menuju Allah.
+
+Ibnu Qayyim adalah penulis yang sangat produktif dan mendalam. Karya-karyanya mencakup berbagai bidang: ilmu jiwa Islam (Ighasatul Lahfan, Raudhatul Muhibbin), hukum Islam, tafsir Al-Qur'an, pengobatan Nabawi (At-Thibbun Nabawi), dan akhlak.
+
+Salah satu konsep terpentingnya adalah tentang penyakit hati dan obatnya. Ia menganalisis dengan sangat mendalam tentang berbagai penyakit jiwa seperti hasad (dengki), kibr (sombong), dan cinta dunia — serta bagaimana menyembuhnya dengan ibadah, dzikir, dan muhasabah diri.
+
+Ibnu Qayyim juga dikenal karena kecintaannya yang besar kepada Qur'an dan dzikir. Ia menulis buku "Al-Wabilush Shayyib" tentang keutamaan dzikir, dan "Al-Kafiyatus Syafiyah" — sebuah puisi akidah yang sangat panjang dan mendalam.
+
+Salah satu kata hikmahnya: "Hati yang sehat adalah hati yang bebas dari penyakit syubhat dan syahwat. Hati yang sakit adalah hati yang dikuasai oleh cinta pada selain Allah. Hati yang mati adalah hati yang tidak mengenal Tuhannya sama sekali."`,
+      hikmah:['Kesetiaan kepada guru dan kebenaran adalah tanda murid yang sejati','Karya yang lahir dari penderitaan seringkali menjadi yang paling berharga','Penyakit hati lebih berbahaya dari penyakit tubuh','Ilmu tentang jiwa dan hati adalah kunci perbaikan diri']
+    },
+  ]
+};
+
+var curKat = 'semua';
+var curSearch = '';
+
+/* Build sidebar */
+function buildSidebar(){
+  var sb = document.getElementById('sidebar');
+  var cats = [
+    {key:'nabi',label:'Kisah Para Nabi',icon:'🌙'},
+    {key:'sahabat',label:'Kisah Sahabat',icon:'⭐'},
+    {key:'sholeh',label:'Orang Sholeh',icon:'🌿'}
+  ];
+  var html = '';
+  cats.forEach(function(cat){
+    var items = KISAH_DATA[cat.key];
+    html += '<div class="sidebar-section">';
+    html += '<div class="sidebar-section-title">'+cat.icon+' '+cat.label+'</div>';
+    items.forEach(function(item){
+      var id = cat.key+'-'+item.id;
+      html += '<button class="sidebar-btn" id="sb-'+item.id+'" onclick="bukaKisah(\''+cat.key+'\',\''+item.id+'\')">';
+      html += '<div class="sb-icon">'+item.icon+'</div>';
+      html += '<div class="sb-text"><div class="sb-name">'+item.nama+'</div>';
+      html += '<div class="sb-sub">'+(item.gelar||item.wafat||'')+'</div></div>';
+      html += '</button>';
+    });
+    html += '</div>';
+  });
+  sb.innerHTML = html;
+}
+
+/* Build grid */
+function buildGrid(){
+  var gv = document.getElementById('gridView');
+  var cats = [
+    {key:'nabi',label:'Kisah Para Nabi',sub:'Kisah-kisah para Nabi dari Adam AS hingga Muhammad SAW'},
+    {key:'sahabat',label:'Kisah Para Sahabat',sub:'Teladan dari para sahabat Rasulullah yang mulia'},
+    {key:'sholeh',label:'Kisah Orang-Orang Sholeh',sub:'Inspirasi dari para ulama dan wali Allah sepanjang sejarah'}
+  ];
+  var searchTerm = curSearch.toLowerCase();
+  var html = '';
+  var total = 0;
+  cats.forEach(function(cat){
+    if(curKat !== 'semua' && curKat !== cat.key) return;
+    var items = KISAH_DATA[cat.key].filter(function(item){
+      if(!searchTerm) return true;
+      return item.nama.toLowerCase().includes(searchTerm) ||
+             item.ringkasan.toLowerCase().includes(searchTerm) ||
+             (item.gelar && item.gelar.toLowerCase().includes(searchTerm));
+    });
+    if(items.length === 0) return;
+    total += items.length;
+    html += '<div class="grid-section-title">'+cat.label+'</div>';
+    html += '<div class="grid-section-sub">'+cat.sub+'</div>';
+    html += '<div class="grid">';
+    items.forEach(function(item){
+      html += '<div class="grid-card" style="--card-color:'+item.warna+'" onclick="bukaKisah(\''+cat.key+'\',\''+item.id+'\')">';
+      html += '<div class="gc-icon">'+item.icon+'</div>';
+      html += '<div class="gc-nama">'+item.nama+'</div>';
+      html += '<div class="gc-gelar">'+(item.gelar||item.wafat||'')+'</div>';
+      html += '<div class="gc-ringkasan">'+item.ringkasan+'</div>';
+      html += '<div class="gc-footer"><span class="gc-baca">Baca Kisah Lengkap</span><span class="gc-arrow">→</span></div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  if(total === 0){
+    html = '<div class="placeholder-content"><div class="big-icon">🔍</div><h3>Tidak Ditemukan</h3><p>Tidak ada kisah yang sesuai dengan pencarian "<strong>'+curSearch+'</strong>". Coba kata kunci lain.</p></div>';
+  }
+  gv.innerHTML = html;
+}
+
+/* Buka detail kisah */
+window.bukaKisah = function(kat, id){
+  var item = KISAH_DATA[kat].find(function(x){ return x.id === id; });
+  if(!item) return;
+
+  /* Update sidebar active */
+  document.querySelectorAll('.sidebar-btn').forEach(function(b){ b.classList.remove('aktif'); });
+  var sbBtn = document.getElementById('sb-'+id);
+  if(sbBtn){ sbBtn.classList.add('aktif'); sbBtn.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+
+  var katLabel = {nabi:'Kisah Para Nabi',sahabat:'Kisah Sahabat',sholeh:'Kisah Orang Sholeh'};
+  var hikmahHtml = '';
+  if(item.hikmah && item.hikmah.length){
+    item.hikmah.forEach(function(h){
+      hikmahHtml += '<li>'+h+'</li>';
+    });
+  }
+
+  var extraInfo = '';
+  if(item.periode) extraInfo = '📅 '+item.periode;
+  else if(item.wafat) extraInfo = '🕯️ Wafat '+item.wafat;
+
+  document.getElementById('detailContent').innerHTML =
+    '<div class="detail-header" data-icon="'+item.icon+'">' +
+      '<div class="dh-badge">'+katLabel[kat]+(extraInfo?' · '+extraInfo:'')+'</div>' +
+      '<div class="dh-nama">'+item.nama+'</div>' +
+      '<div class="dh-gelar">'+item.gelar+'</div>' +
+      '<div class="dh-ringkasan">'+item.ringkasan+'</div>' +
+    '</div>' +
+    '<div class="detail-body">' +
+      '<div class="kisah-box"><h3>📖 Kisah Lengkap</h3><div class="kisah-text">'+item.kisah+'</div></div>' +
+      '<div class="hikmah-box"><h3>✦ Hikmah & Pelajaran</h3><ul class="hikmah-list">'+hikmahHtml+'</ul></div>' +
+    '</div>';
+
+  document.getElementById('gridView').classList.remove('show');
+  document.getElementById('topControls').style.display = 'none';
+  document.getElementById('detailView').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+/* Kembali ke grid */
+window.backToGrid = function(){
+  document.getElementById('detailView').classList.remove('show');
+  document.getElementById('gridView').classList.add('show');
+  document.getElementById('topControls').style.display = '';
+  document.querySelectorAll('.sidebar-btn').forEach(function(b){ b.classList.remove('aktif'); });
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+/* Kategori filter */
+window.setKat = function(kat, btn){
+  curKat = kat;
+  document.querySelectorAll('.kat-tab').forEach(function(b){ b.classList.remove('aktif'); });
+  btn.classList.add('aktif');
+  backToGrid();
+  buildGrid();
+};
+
+/* Search */
+window.doSearch = function(val){
+  curSearch = val;
+  if(document.getElementById('detailView').classList.contains('show')) backToGrid();
+  buildGrid();
+};
+
+/* INIT */
+buildSidebar();
+buildGrid();
+
+})();
+</script>
+</body>
+</html>
