@@ -540,25 +540,27 @@
     .footer-top { gap: 32px; }
     .pengumuman-box { flex-direction: column; }
   }
-  /* ─── DROPDOWN FITUR ─── */
+/* ─── DROPDOWN FITUR ─── */
 .nav-dropdown { position: relative; }
 .nav-dropdown-toggle { cursor: pointer; user-select: none; }
 .nav-dropdown-menu {
   display: none;
-  position: absolute; top: calc(100% + 14px); right: 0;
+  position: absolute; top: 100%; right: 0;
   background: var(--white);
   border-radius: 10px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.15);
   border: 1px solid var(--cream-dark);
-  min-width: 180px;
+  min-width: 200px;
   list-style: none;
   overflow: hidden;
   z-index: 200;
+  padding-top: 8px;    /* celah agar tidak langsung hilang */
+  margin-top: -8px;    /* tarik ke atas menutupi celah */
 }
 .nav-dropdown:hover .nav-dropdown-menu { display: block; }
 .nav-dropdown-menu li a {
   display: flex; align-items: center; gap: 8px;
-  padding: 12px 16px;
+  padding: 11px 16px;
   color: var(--text-dark) !important;
   font-size: 0.83rem; font-weight: 500;
   text-decoration: none;
