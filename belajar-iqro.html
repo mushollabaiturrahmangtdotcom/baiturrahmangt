@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belajar Iqro — Musholla Baiturrahman</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green-deep:#0d3b2e;--green-mid:#155f45;--green-bright:#1e8a5e;--green-light:#2db87a;--gold:#c9a84c;--gold-light:#e8c97a;--cream:#f9f5ee;--cream-dark:#ede8dc;--white:#ffffff;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#7a7a7a;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text-dark);height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,59,46,0.97);backdrop-filter:blur(12px);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:1px solid rgba(201,168,76,0.3);}
+  .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-brand img{height:38px;width:auto;}
+  .nav-brand span{font-size:0.85rem;font-weight:600;color:var(--white);}
+  .nav-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.82rem;font-weight:500;padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;}
+  .nav-back:hover{background:rgba(255,255,255,0.1);color:var(--gold-light);}
+  .main-layout{display:flex;height:calc(100vh - 64px);margin-top:64px;}
+  .sidebar{width:260px;flex-shrink:0;background:var(--white);border-right:1px solid var(--cream-dark);display:flex;flex-direction:column;}
+  .sidebar-header{padding:16px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));flex-shrink:0;}
+  .sidebar-header h2{font-family:'Amiri',serif;font-size:1.2rem;color:var(--white);margin-bottom:4px;}
+  .sidebar-header p{font-size:0.72rem;color:rgba(255,255,255,0.6);}
+  .level-tabs{display:flex;flex-wrap:wrap;gap:6px;padding:12px;}
+  .level-tab{flex:1;min-width:58px;padding:8px 4px;border-radius:8px;border:1.5px solid var(--cream-dark);background:var(--cream);font-size:0.78rem;font-weight:700;color:var(--text-mid);cursor:pointer;transition:all 0.2s;text-align:center;}
+  .level-tab:hover{border-color:var(--green-bright);color:var(--green-bright);}
+  .level-tab.aktif{background:var(--green-deep);color:var(--white);border-color:var(--green-deep);}
+  .halaman-list{flex:1;overflow-y:auto;padding:6px;}
+  .halaman-list::-webkit-scrollbar{width:4px;}
+  .halaman-list::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:2px;}
+  .hal-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;border:none;width:100%;text-align:left;background:transparent;transition:background 0.15s;}
+  .hal-item:hover{background:rgba(30,138,94,0.08);}
+  .hal-item.aktif{background:var(--green-deep);}
+  .hal-item.aktif .hi-num,.hal-item.aktif .hi-title,.hal-item.aktif .hi-sub{color:var(--white)!important;}
+  .hal-item.aktif .hi-num{background:rgba(255,255,255,0.15);}
+  .hi-num{width:30px;height:30px;flex-shrink:0;background:rgba(30,138,94,0.1);border-radius:6px;display:grid;place-items:center;font-size:0.72rem;font-weight:700;color:var(--green-bright);}
+  .hi-text{flex:1;min-width:0;}
+  .hi-title{font-size:0.83rem;font-weight:600;color:var(--text-dark);}
+  .hi-sub{font-size:0.68rem;color:var(--text-light);margin-top:1px;}
+  .hi-done{font-size:0.9rem;flex-shrink:0;}
+  .content{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+  .content-header{padding:14px 24px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .ch-left h3{font-family:'Amiri',serif;font-size:1.15rem;color:var(--white);}
+  .ch-left p{font-size:0.72rem;color:rgba(255,255,255,0.6);margin-top:2px;}
+  .ch-progress{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+  .progress-bar-wrap{width:90px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width 0.4s;}
+  .progress-text{font-size:0.7rem;color:rgba(255,255,255,0.65);white-space:nowrap;}
+  .huruf-area{flex:1;overflow-y:auto;padding:18px 22px;}
+  .huruf-area::-webkit-scrollbar{width:5px;}
+  .huruf-area::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:3px;}
+  .halaman-intro{background:var(--white);border-radius:12px;padding:14px 18px;margin-bottom:14px;border:1px solid var(--cream-dark);display:flex;align-items:flex-start;gap:12px;}
+  .intro-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px;}
+  .intro-text h4{font-size:0.88rem;font-weight:700;color:var(--green-deep);margin-bottom:3px;}
+  .intro-text p{font-size:0.76rem;color:var(--text-mid);line-height:1.6;}
+  .huruf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-bottom:18px;}
+  .huruf-card{background:var(--white);border-radius:12px;padding:14px 10px;text-align:center;border:2px solid var(--cream-dark);cursor:pointer;transition:all 0.2s;position:relative;user-select:none;}
+  .huruf-card:hover{border-color:var(--green-bright);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+  .huruf-card.playing{border-color:var(--gold);background:rgba(201,168,76,0.06);}
+  .hc-arab{font-family:'Amiri',serif;font-size:2rem;color:var(--green-deep);line-height:1.2;margin-bottom:5px;}
+  .hc-latin{font-size:0.7rem;font-weight:600;color:var(--text-mid);letter-spacing:0.03em;}
+  .hc-speaker{font-size:0.75rem;margin-top:6px;opacity:0.45;}
+  .latihan-section{margin-top:4px;}
+  .latihan-title{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-bright);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .latihan-title::after{content:'';flex:1;height:1px;background:var(--cream-dark);}
+  .latihan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+  .latihan-card{background:var(--white);border-radius:10px;padding:12px 10px;text-align:center;border:1.5px solid var(--cream-dark);cursor:pointer;transition:all 0.2s;}
+  .latihan-card:hover{border-color:var(--green-bright);box-shadow:0 3px 10px rgba(0,0,0,0.06);}
+  .latihan-card.playing{border-color:var(--gold);background:rgba(201,168,76,0.05);}
+  .lc-arab{font-family:'Amiri',serif;font-size:1.45rem;color:var(--text-dark);direction:rtl;margin-bottom:4px;line-height:1.5;}
+  .lc-latin{font-size:0.68rem;color:var(--text-light);font-style:italic;}
+  .bottom-nav{padding:10px 22px;border-top:1px solid var(--cream-dark);background:var(--white);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0;}
+  .nav-btn{padding:8px 18px;border-radius:8px;border:1.5px solid var(--cream-dark);background:var(--white);font-size:0.78rem;font-weight:600;color:var(--green-deep);cursor:pointer;transition:all 0.2s;}
+  .nav-btn:hover:not(:disabled){background:var(--green-deep);color:var(--white);border-color:var(--green-deep);}
+  .nav-btn:disabled{opacity:0.35;cursor:not-allowed;}
+  .btn-selesai{padding:8px 18px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border:none;font-size:0.78rem;font-weight:700;color:var(--green-deep);cursor:pointer;transition:all 0.2s;}
+  .btn-selesai:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(201,168,76,0.4);}
+  .btn-selesai.done{background:linear-gradient(135deg,var(--green-bright),var(--green-light));color:var(--white);}
+  .placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:40px;}
+  .placeholder h3{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-deep);}
+  .placeholder p{font-size:0.85rem;color:var(--text-light);line-height:1.7;max-width:340px;}
+  .level-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:0.68rem;font-weight:700;background:rgba(201,168,76,0.15);color:#8a6b1e;margin-top:6px;}
+  @media(max-width:768px){.sidebar{width:220px;}nav .nav-brand span{display:none;}.huruf-grid{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));}}
+  @media(max-width:520px){.main-layout{flex-direction:column;}.sidebar{width:100%;height:auto;border-right:none;border-bottom:1px solid var(--cream-dark);}.halaman-list{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:56px;}.hal-item{min-width:80px;flex-direction:column;align-items:center;gap:1px;}.hi-sub{display:none;}.huruf-area{padding:10px 12px;}.huruf-grid{grid-template-columns:repeat(auto-fill,minmax(68px,1fr));}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="musholla-baiturrahman.html" class="nav-brand"><img src="images/logo_nav.png" alt="Logo"><span>Musholla Baiturrahman</span></a>
+  <a href="musholla-baiturrahman.html" class="nav-back">← Kembali</a>
+</nav>
+<div class="main-layout">
+  <div class="sidebar">
+    <div class="sidebar-header"><h2>📚 Belajar Iqro</h2><p>Iqro 1–6 · 61 Halaman Latihan</p></div>
+    <div class="level-tabs" id="levelTabs"></div>
+    <div class="halaman-list" id="halamanList"></div>
+  </div>
+  <div class="content" id="mainContent">
+    <div class="placeholder">
+      <div style="font-size:3rem;opacity:0.35">📚</div>
+      <h3>Belajar Iqro</h3>
+      <p>61 halaman latihan dari Iqro 1 hingga 6. Mulai dari huruf dasar hingga ayat-ayat Al-Qur\'an.</p>
+      <div style="font-family:\'Amiri\',serif;font-size:2.2rem;color:var(--gold);margin-top:8px;direction:rtl;letter-spacing:0.1em;">ا ب ت ث ج ح</div>
+      <p style="font-size:0.75rem;color:var(--text-light);margin-top:4px;">🔊 Klik kartu huruf untuk mendengar pengucapan</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+var IQRO = {
+  1:{nama:'Iqro 1',icon:'🌱',desc:'Huruf Hijaiyah Dasar',halaman:[
+    {id:'1-1',judul:'Alif & Ba',sub:'Huruf 1–2',intro:'Mengenal dua huruf pertama hijaiyah. Alif tidak berbunyi sendiri, Ba berbunyi "ba".',
+     huruf:[{a:'أَ',l:'A'},{a:'بَ',l:'Ba'},{a:'أَ',l:'A'},{a:'بَ',l:'Ba'},{a:'أَ',l:'A'},{a:'بَ',l:'Ba'}],
+     lat:[{a:'أَ بَ',l:'a - ba'},{a:'بَ أَ',l:'ba - a'},{a:'أَ بَ أَ',l:'a - ba - a'},{a:'بَ أَ بَ',l:'ba - a - ba'}]},
+    {id:'1-2',judul:'Ta & Tsa',sub:'Huruf 3–4',intro:'Ta berbunyi "ta" seperti huruf T, Tsa berbunyi "tsa" seperti kata "this" dalam bahasa Inggris.',
+     huruf:[{a:'تَ',l:'Ta'},{a:'ثَ',l:'Tsa'},{a:'تَ',l:'Ta'},{a:'ثَ',l:'Tsa'},{a:'تَ',l:'Ta'},{a:'ثَ',l:'Tsa'}],
+     lat:[{a:'تَ ثَ',l:'ta - tsa'},{a:'ثَ تَ',l:'tsa - ta'},{a:'أَ تَ',l:'a - ta'},{a:'بَ ثَ',l:'ba - tsa'},{a:'تَ بَ',l:'ta - ba'}]},
+    {id:'1-3',judul:'Jim, Ha & Kha',sub:'Huruf 5–7',intro:'Jim berbunyi "ja", Ha berbunyi "ha" dari tenggorokan, Kha berbunyi "kha" seperti mendengkur pelan.',
+     huruf:[{a:'جَ',l:'Ja'},{a:'حَ',l:'Ha'},{a:'خَ',l:'Kha'},{a:'جَ',l:'Ja'},{a:'حَ',l:'Ha'},{a:'خَ',l:'Kha'}],
+     lat:[{a:'جَ حَ',l:'ja - ha'},{a:'حَ خَ',l:'ha - kha'},{a:'جَ خَ',l:'ja - kha'},{a:'بَ جَ',l:'ba - ja'},{a:'تَ حَ',l:'ta - ha'},{a:'ثَ خَ',l:'tsa - kha'}]},
+    {id:'1-4',judul:'Dal & Dzal',sub:'Huruf 8–9',intro:'Dal berbunyi "da", Dzal berbunyi "dza" seperti huruf "th" dalam "the".',
+     huruf:[{a:'دَ',l:'Da'},{a:'ذَ',l:'Dza'},{a:'دَ',l:'Da'},{a:'ذَ',l:'Dza'},{a:'دَ',l:'Da'},{a:'ذَ',l:'Dza'}],
+     lat:[{a:'دَ ذَ',l:'da - dza'},{a:'جَ دَ',l:'ja - da'},{a:'حَ ذَ',l:'ha - dza'},{a:'بَ دَ',l:'ba - da'},{a:'تَ ذَ',l:'ta - dza'},{a:'خَ دَ',l:'kha - da'}]},
+    {id:'1-5',judul:'Ra & Zai',sub:'Huruf 10–11',intro:'Ra berbunyi "ra" dengan lidah sedikit bergetar, Zai berbunyi "za" seperti huruf Z.',
+     huruf:[{a:'رَ',l:'Ra'},{a:'زَ',l:'Za'},{a:'رَ',l:'Ra'},{a:'زَ',l:'Za'},{a:'رَ',l:'Ra'},{a:'زَ',l:'Za'}],
+     lat:[{a:'رَ زَ',l:'ra - za'},{a:'دَ رَ',l:'da - ra'},{a:'ذَ زَ',l:'dza - za'},{a:'بَ رَ',l:'ba - ra'},{a:'جَ زَ',l:'ja - za'},{a:'رَ دَ',l:'ra - da'}]},
+    {id:'1-6',judul:'Sin & Syin',sub:'Huruf 12–13',intro:'Sin berbunyi "sa", Syin berbunyi "sya" seperti kata "shop" dalam bahasa Inggris.',
+     huruf:[{a:'سَ',l:'Sa'},{a:'شَ',l:'Sya'},{a:'سَ',l:'Sa'},{a:'شَ',l:'Sya'},{a:'سَ',l:'Sa'},{a:'شَ',l:'Sya'}],
+     lat:[{a:'سَ شَ',l:'sa - sya'},{a:'رَ سَ',l:'ra - sa'},{a:'زَ شَ',l:'za - sya'},{a:'بَ سَ',l:'ba - sa'},{a:'جَ شَ',l:'ja - sya'},{a:'سَ رَ',l:'sa - ra'}]},
+    {id:'1-7',judul:'Shad & Dhad',sub:'Huruf 14–15',intro:'Shad berbunyi "sha" — S tebal dari mulut bagian belakang. Dhad berbunyi "dha" — D tebal.',
+     huruf:[{a:'صَ',l:'Sha'},{a:'ضَ',l:'Dha'},{a:'صَ',l:'Sha'},{a:'ضَ',l:'Dha'},{a:'صَ',l:'Sha'},{a:'ضَ',l:'Dha'}],
+     lat:[{a:'صَ ضَ',l:'sha - dha'},{a:'سَ صَ',l:'sa - sha'},{a:'زَ ضَ',l:'za - dha'},{a:'بَ صَ',l:'ba - sha'},{a:'رَ ضَ',l:'ra - dha'},{a:'شَ صَ',l:'sya - sha'}]},
+    {id:'1-8',judul:'Tha & Zha',sub:'Huruf 16–17',intro:'Tha berbunyi "tha" — T tebal. Zha berbunyi "zha" — Z tebal dari mulut belakang.',
+     huruf:[{a:'طَ',l:'Tha'},{a:'ظَ',l:'Zha'},{a:'طَ',l:'Tha'},{a:'ظَ',l:'Zha'},{a:'طَ',l:'Tha'},{a:'ظَ',l:'Zha'}],
+     lat:[{a:'طَ ظَ',l:'tha - zha'},{a:'صَ طَ',l:'sha - tha'},{a:'ضَ ظَ',l:'dha - zha'},{a:'بَ طَ',l:'ba - tha'},{a:'رَ ظَ',l:'ra - zha'},{a:'طَ صَ',l:'tha - sha'}]},
+    {id:'1-9',judul:'Ain & Ghain',sub:'Huruf 18–19',intro:'Ain berbunyi seperti A dari tenggorokan dalam. Ghain berbunyi "gha" seperti berkumur.',
+     huruf:[{a:'عَ',l:"'A"},{a:'غَ',l:'Gha'},{a:'عَ',l:"'A"},{a:'غَ',l:'Gha'},{a:'عَ',l:"'A"},{a:'غَ',l:'Gha'}],
+     lat:[{a:'عَ غَ',l:"'a - gha"},{a:'طَ عَ',l:"tha - 'a"},{a:'ظَ غَ',l:'zha - gha'},{a:'بَ عَ',l:"ba - 'a"},{a:'رَ غَ',l:'ra - gha'},{a:'عَ بَ',l:"'a - ba"}]},
+    {id:'1-10',judul:'Fa, Qaf & Kaf',sub:'Huruf 20–22',intro:'Fa berbunyi "fa" seperti F. Qaf berbunyi "qa" dari pangkal tenggorokan. Kaf berbunyi "ka".',
+     huruf:[{a:'فَ',l:'Fa'},{a:'قَ',l:'Qa'},{a:'كَ',l:'Ka'},{a:'فَ',l:'Fa'},{a:'قَ',l:'Qa'},{a:'كَ',l:'Ka'}],
+     lat:[{a:'فَ قَ',l:'fa - qa'},{a:'قَ كَ',l:'qa - ka'},{a:'بَ فَ',l:'ba - fa'},{a:'رَ قَ',l:'ra - qa'},{a:'جَ كَ',l:'ja - ka'},{a:'فَ كَ',l:'fa - ka'}]},
+    {id:'1-11',judul:'Lam, Mim & Nun',sub:'Huruf 23–25',intro:'Lam berbunyi "la", Mim berbunyi "ma", Nun berbunyi "na". Ketiganya sangat sering muncul.',
+     huruf:[{a:'لَ',l:'La'},{a:'مَ',l:'Ma'},{a:'نَ',l:'Na'},{a:'لَ',l:'La'},{a:'مَ',l:'Ma'},{a:'نَ',l:'Na'}],
+     lat:[{a:'لَ مَ',l:'la - ma'},{a:'مَ نَ',l:'ma - na'},{a:'بَ لَ',l:'ba - la'},{a:'رَ مَ',l:'ra - ma'},{a:'كَ نَ',l:'ka - na'},{a:'لَ نَ',l:'la - na'}]},
+    {id:'1-12',judul:'Wau, Ha & Ya',sub:'Huruf 26–28',intro:'Wau berbunyi "wa", Ha berbunyi "ha" ringan, Ya berbunyi "ya". Ini tiga huruf terakhir hijaiyah.',
+     huruf:[{a:'وَ',l:'Wa'},{a:'هَ',l:'Ha'},{a:'يَ',l:'Ya'},{a:'وَ',l:'Wa'},{a:'هَ',l:'Ha'},{a:'يَ',l:'Ya'}],
+     lat:[{a:'وَ هَ',l:'wa - ha'},{a:'هَ يَ',l:'ha - ya'},{a:'بَ وَ',l:'ba - wa'},{a:'رَ هَ',l:'ra - ha'},{a:'كَ يَ',l:'ka - ya'},{a:'وَ يَ',l:'wa - ya'}]},
+    {id:'1-13',judul:'Ulangan Semua Huruf',sub:'Review 28 Huruf',intro:'Ulangan seluruh 28 huruf hijaiyah. Ini adalah kesempatan untuk memastikan semua huruf sudah diingat.',
+     huruf:[{a:'أَ',l:'A'},{a:'بَ',l:'Ba'},{a:'تَ',l:'Ta'},{a:'ثَ',l:'Tsa'},{a:'جَ',l:'Ja'},{a:'حَ',l:'Ha'},{a:'خَ',l:'Kha'},{a:'دَ',l:'Da'},{a:'ذَ',l:'Dza'},{a:'رَ',l:'Ra'},{a:'زَ',l:'Za'},{a:'سَ',l:'Sa'},{a:'شَ',l:'Sya'},{a:'صَ',l:'Sha'},{a:'ضَ',l:'Dha'},{a:'طَ',l:'Tha'},{a:'ظَ',l:'Zha'},{a:'عَ',l:"'A"},{a:'غَ',l:'Gha'},{a:'فَ',l:'Fa'},{a:'قَ',l:'Qa'},{a:'كَ',l:'Ka'},{a:'لَ',l:'La'},{a:'مَ',l:'Ma'},{a:'نَ',l:'Na'},{a:'وَ',l:'Wa'},{a:'هَ',l:'Ha'},{a:'يَ',l:'Ya'}],
+     lat:[{a:'أَ بَ تَ ثَ',l:'a-ba-ta-tsa'},{a:'جَ حَ خَ دَ',l:'ja-ha-kha-da'},{a:'رَ زَ سَ شَ',l:'ra-za-sa-sya'},{a:'صَ ضَ طَ ظَ',l:'sha-dha-tha-zha'},{a:'عَ غَ فَ قَ',l:"'a-gha-fa-qa"},{a:'كَ لَ مَ نَ',l:'ka-la-ma-na'},{a:'وَ هَ يَ',l:'wa-ha-ya'}]},
+  ]},
+
+  2:{nama:'Iqro 2',icon:'🌿',desc:'Harakat: Fathah, Kasrah, Dhammah',halaman:[
+    {id:'2-1',judul:'Fathah (A) — Ba hingga Dal',sub:'Harakat Atas bagian 1',intro:'Fathah adalah garis miring kecil di atas huruf. Dibaca "a" pendek. Contoh: بَ = "ba".',
+     huruf:[{a:'بَ',l:'ba'},{a:'تَ',l:'ta'},{a:'ثَ',l:'tsa'},{a:'جَ',l:'ja'},{a:'حَ',l:'ha'},{a:'خَ',l:'kha'},{a:'دَ',l:'da'},{a:'ذَ',l:'dza'}],
+     lat:[{a:'بَتَ',l:'ba-ta'},{a:'ثَجَ',l:'tsa-ja'},{a:'حَخَ',l:'ha-kha'},{a:'دَذَ',l:'da-dza'},{a:'بَجَ',l:'ba-ja'},{a:'تَحَ',l:'ta-ha'}]},
+    {id:'2-2',judul:'Fathah (A) — Ra hingga Kaf',sub:'Harakat Atas bagian 2',intro:'Melanjutkan latihan fathah dengan huruf-huruf Ra hingga Kaf.',
+     huruf:[{a:'رَ',l:'ra'},{a:'زَ',l:'za'},{a:'سَ',l:'sa'},{a:'شَ',l:'sya'},{a:'صَ',l:'sha'},{a:'ضَ',l:'dha'},{a:'طَ',l:'tha'},{a:'ظَ',l:'zha'},{a:'عَ',l:"'a"},{a:'غَ',l:'gha'},{a:'فَ',l:'fa'},{a:'قَ',l:'qa'},{a:'كَ',l:'ka'}],
+     lat:[{a:'رَزَ',l:'ra-za'},{a:'سَشَ',l:'sa-sya'},{a:'صَضَ',l:'sha-dha'},{a:'طَظَ',l:'tha-zha'},{a:'عَغَ',l:"'a-gha"},{a:'فَقَ',l:'fa-qa'},{a:'كَرَ',l:'ka-ra'}]},
+    {id:'2-3',judul:'Fathah (A) — Lam hingga Ya',sub:'Harakat Atas bagian 3',intro:'Menyelesaikan latihan fathah dengan huruf Lam, Mim, Nun, Wau, Ha, Ya.',
+     huruf:[{a:'لَ',l:'la'},{a:'مَ',l:'ma'},{a:'نَ',l:'na'},{a:'وَ',l:'wa'},{a:'هَ',l:'ha'},{a:'يَ',l:'ya'}],
+     lat:[{a:'لَمَ',l:'la-ma'},{a:'مَنَ',l:'ma-na'},{a:'نَوَ',l:'na-wa'},{a:'وَهَ',l:'wa-ha'},{a:'هَيَ',l:'ha-ya'},{a:'لَيَ',l:'la-ya'},{a:'مَوَ',l:'ma-wa'}]},
+    {id:'2-4',judul:'Kasrah (I) — Ba hingga Dal',sub:'Harakat Bawah bagian 1',intro:'Kasrah adalah garis miring kecil di bawah huruf. Dibaca "i" pendek. Contoh: بِ = "bi".',
+     huruf:[{a:'بِ',l:'bi'},{a:'تِ',l:'ti'},{a:'ثِ',l:'tsi'},{a:'جِ',l:'ji'},{a:'حِ',l:'hi'},{a:'خِ',l:'khi'},{a:'دِ',l:'di'},{a:'ذِ',l:'dzi'}],
+     lat:[{a:'بِتِ',l:'bi-ti'},{a:'ثِجِ',l:'tsi-ji'},{a:'حِخِ',l:'hi-khi'},{a:'دِذِ',l:'di-dzi'},{a:'بِجِ',l:'bi-ji'},{a:'تِحِ',l:'ti-hi'}]},
+    {id:'2-5',judul:'Kasrah (I) — Ra hingga Ya',sub:'Harakat Bawah bagian 2',intro:'Melanjutkan latihan kasrah dengan semua huruf yang tersisa.',
+     huruf:[{a:'رِ',l:'ri'},{a:'زِ',l:'zi'},{a:'سِ',l:'si'},{a:'شِ',l:'syi'},{a:'صِ',l:'shi'},{a:'ضِ',l:'dhi'},{a:'طِ',l:'thi'},{a:'ظِ',l:'zhi'},{a:'عِ',l:"'i"},{a:'غِ',l:'ghi'},{a:'فِ',l:'fi'},{a:'قِ',l:'qi'},{a:'كِ',l:'ki'},{a:'لِ',l:'li'},{a:'مِ',l:'mi'},{a:'نِ',l:'ni'},{a:'وِ',l:'wi'},{a:'هِ',l:'hi'},{a:'يِ',l:'yi'}],
+     lat:[{a:'رِزِ',l:'ri-zi'},{a:'سِشِ',l:'si-syi'},{a:'صِضِ',l:'shi-dhi'},{a:'عِغِ',l:"'i-ghi"},{a:'فِقِ',l:'fi-qi'},{a:'كِلِ',l:'ki-li'},{a:'مِنِ',l:'mi-ni'},{a:'هِيِ',l:'hi-yi'}]},
+    {id:'2-6',judul:'Dhammah (U) — Ba hingga Dal',sub:'Harakat Bulat bagian 1',intro:'Dhammah adalah tanda seperti wau kecil di atas huruf. Dibaca "u" pendek. Contoh: بُ = "bu".',
+     huruf:[{a:'بُ',l:'bu'},{a:'تُ',l:'tu'},{a:'ثُ',l:'tsu'},{a:'جُ',l:'ju'},{a:'حُ',l:'hu'},{a:'خُ',l:'khu'},{a:'دُ',l:'du'},{a:'ذُ',l:'dzu'}],
+     lat:[{a:'بُتُ',l:'bu-tu'},{a:'ثُجُ',l:'tsu-ju'},{a:'حُخُ',l:'hu-khu'},{a:'دُذُ',l:'du-dzu'},{a:'بُجُ',l:'bu-ju'},{a:'تُحُ',l:'tu-hu'}]},
+    {id:'2-7',judul:'Dhammah (U) — Ra hingga Ya',sub:'Harakat Bulat bagian 2',intro:'Melanjutkan latihan dhammah dengan huruf-huruf yang tersisa.',
+     huruf:[{a:'رُ',l:'ru'},{a:'زُ',l:'zu'},{a:'سُ',l:'su'},{a:'شُ',l:'syu'},{a:'صُ',l:'shu'},{a:'ضُ',l:'dhu'},{a:'طُ',l:'thu'},{a:'ظُ',l:'zhu'},{a:'عُ',l:"'u"},{a:'غُ',l:'ghu'},{a:'فُ',l:'fu'},{a:'قُ',l:'qu'},{a:'كُ',l:'ku'},{a:'لُ',l:'lu'},{a:'مُ',l:'mu'},{a:'نُ',l:'nu'},{a:'وُ',l:'wu'},{a:'هُ',l:'hu'},{a:'يُ',l:'yu'}],
+     lat:[{a:'رُزُ',l:'ru-zu'},{a:'سُشُ',l:'su-syu'},{a:'صُضُ',l:'shu-dhu'},{a:'عُغُ',l:"'u-ghu"},{a:'فُقُ',l:'fu-qu'},{a:'كُلُ',l:'ku-lu'},{a:'مُنُ',l:'mu-nu'},{a:'هُيُ',l:'hu-yu'}]},
+    {id:'2-8',judul:'Gabungan A-I-U (Bagian 1)',sub:'Ba hingga Jim',intro:'Berlatih membaca satu huruf dengan ketiga harakat: fathah (a), kasrah (i), dhammah (u) bergantian.',
+     huruf:[{a:'بَ',l:'ba'},{a:'بِ',l:'bi'},{a:'بُ',l:'bu'},{a:'تَ',l:'ta'},{a:'تِ',l:'ti'},{a:'تُ',l:'tu'},{a:'ثَ',l:'tsa'},{a:'ثِ',l:'tsi'},{a:'ثُ',l:'tsu'},{a:'جَ',l:'ja'},{a:'جِ',l:'ji'},{a:'جُ',l:'ju'}],
+     lat:[{a:'بَبِبُ',l:'ba-bi-bu'},{a:'تَتِتُ',l:'ta-ti-tu'},{a:'ثَثِثُ',l:'tsa-tsi-tsu'},{a:'جَجِجُ',l:'ja-ji-ju'},{a:'بَتِثُ',l:'ba-ti-tsu'},{a:'جَبِتُ',l:'ja-bi-tu'}]},
+    {id:'2-9',judul:'Gabungan A-I-U (Bagian 2)',sub:'Dal hingga Sin',intro:'Melanjutkan latihan gabungan tiga harakat dengan huruf Dal hingga Sin.',
+     huruf:[{a:'دَ',l:'da'},{a:'دِ',l:'di'},{a:'دُ',l:'du'},{a:'رَ',l:'ra'},{a:'رِ',l:'ri'},{a:'رُ',l:'ru'},{a:'زَ',l:'za'},{a:'زِ',l:'zi'},{a:'زُ',l:'zu'},{a:'سَ',l:'sa'},{a:'سِ',l:'si'},{a:'سُ',l:'su'}],
+     lat:[{a:'دَدِدُ',l:'da-di-du'},{a:'رَرِرُ',l:'ra-ri-ru'},{a:'زَزِزُ',l:'za-zi-zu'},{a:'سَسِسُ',l:'sa-si-su'},{a:'دَرِزُ',l:'da-ri-zu'},{a:'سَدِرُ',l:'sa-di-ru'}]},
+    {id:'2-10',judul:'Gabungan A-I-U (Bagian 3)',sub:'Kaf hingga Ya',intro:'Menyelesaikan latihan gabungan tiga harakat dengan huruf-huruf terakhir.',
+     huruf:[{a:'كَ',l:'ka'},{a:'كِ',l:'ki'},{a:'كُ',l:'ku'},{a:'لَ',l:'la'},{a:'لِ',l:'li'},{a:'لُ',l:'lu'},{a:'مَ',l:'ma'},{a:'مِ',l:'mi'},{a:'مُ',l:'mu'},{a:'نَ',l:'na'},{a:'نِ',l:'ni'},{a:'نُ',l:'nu'}],
+     lat:[{a:'كَكِكُ',l:'ka-ki-ku'},{a:'لَلِلُ',l:'la-li-lu'},{a:'مَمِمُ',l:'ma-mi-mu'},{a:'نَنِنُ',l:'na-ni-nu'},{a:'كَلِمُ',l:'ka-li-mu'},{a:'نَمِكُ',l:'na-mi-ku'}]},
+  ]},
+
+  3:{nama:'Iqro 3',icon:'🌳',desc:'Mad: Bacaan Panjang',halaman:[
+    {id:'3-1',judul:'Mad Alif (aa) — Bagian 1',sub:'Fathah + Alif (Ba–Dal)',intro:'Mad Alif: fathah diikuti Alif sukun dibaca "aa" panjang dua ketukan. بَا = "baa".',
+     huruf:[{a:'بَا',l:'baa'},{a:'تَا',l:'taa'},{a:'ثَا',l:'tsaa'},{a:'جَا',l:'jaa'},{a:'حَا',l:'haa'},{a:'خَا',l:'khaa'},{a:'دَا',l:'daa'},{a:'ذَا',l:'dzaa'}],
+     lat:[{a:'بَاتَا',l:'baa-taa'},{a:'ثَاجَا',l:'tsaa-jaa'},{a:'حَاخَا',l:'haa-khaa'},{a:'دَاذَا',l:'daa-dzaa'},{a:'بَادَا',l:'baa-daa'},{a:'جَاحَا',l:'jaa-haa'}]},
+    {id:'3-2',judul:'Mad Alif (aa) — Bagian 2',sub:'Fathah + Alif (Ra–Kaf)',intro:'Melanjutkan latihan Mad Alif dengan huruf Ra hingga Kaf.',
+     huruf:[{a:'رَا',l:'raa'},{a:'زَا',l:'zaa'},{a:'سَا',l:'saa'},{a:'شَا',l:'syaa'},{a:'صَا',l:'shaa'},{a:'ضَا',l:'dhaa'},{a:'طَا',l:'thaa'},{a:'ظَا',l:'zhaa'},{a:'عَا',l:"'aa"},{a:'غَا',l:'ghaa'},{a:'فَا',l:'faa'},{a:'قَا',l:'qaa'},{a:'كَا',l:'kaa'}],
+     lat:[{a:'رَازَا',l:'raa-zaa'},{a:'سَاشَا',l:'saa-syaa'},{a:'صَاضَا',l:'shaa-dhaa'},{a:'طَاظَا',l:'thaa-zhaa'},{a:'عَاغَا',l:"'aa-ghaa"},{a:'فَاقَا',l:'faa-qaa'},{a:'كَارَا',l:'kaa-raa'}]},
+    {id:'3-3',judul:'Mad Alif (aa) — Bagian 3',sub:'Fathah + Alif (Lam–Ya)',intro:'Menyelesaikan latihan Mad Alif dengan huruf Lam hingga Ya.',
+     huruf:[{a:'لَا',l:'laa'},{a:'مَا',l:'maa'},{a:'نَا',l:'naa'},{a:'وَا',l:'waa'},{a:'هَا',l:'haa'},{a:'يَا',l:'yaa'}],
+     lat:[{a:'لَامَا',l:'laa-maa'},{a:'مَانَا',l:'maa-naa'},{a:'نَاوَا',l:'naa-waa'},{a:'وَاهَا',l:'waa-haa'},{a:'هَايَا',l:'haa-yaa'},{a:'لَانَا',l:'laa-naa'},{a:'مَايَا',l:'maa-yaa'}]},
+    {id:'3-4',judul:'Mad Ya (ii) — Bagian 1',sub:'Kasrah + Ya (Ba–Dal)',intro:'Mad Ya: kasrah diikuti Ya sukun dibaca "ii" panjang dua ketukan. بِي = "bii".',
+     huruf:[{a:'بِي',l:'bii'},{a:'تِي',l:'tii'},{a:'ثِي',l:'tsii'},{a:'جِي',l:'jii'},{a:'حِي',l:'hii'},{a:'خِي',l:'khii'},{a:'دِي',l:'dii'},{a:'ذِي',l:'dzii'}],
+     lat:[{a:'بِيتِي',l:'bii-tii'},{a:'ثِيجِي',l:'tsii-jii'},{a:'حِيخِي',l:'hii-khii'},{a:'دِيذِي',l:'dii-dzii'},{a:'بِيدِي',l:'bii-dii'},{a:'جِيحِي',l:'jii-hii'}]},
+    {id:'3-5',judul:'Mad Ya (ii) — Bagian 2',sub:'Kasrah + Ya (Ra–Ya)',intro:'Melanjutkan latihan Mad Ya dengan semua huruf yang tersisa.',
+     huruf:[{a:'رِي',l:'rii'},{a:'زِي',l:'zii'},{a:'سِي',l:'sii'},{a:'شِي',l:'syii'},{a:'كِي',l:'kii'},{a:'لِي',l:'lii'},{a:'مِي',l:'mii'},{a:'نِي',l:'nii'},{a:'هِي',l:'hii'},{a:'يِي',l:'yii'}],
+     lat:[{a:'رِيزِي',l:'rii-zii'},{a:'سِيشِي',l:'sii-syii'},{a:'كِيلِي',l:'kii-lii'},{a:'مِينِي',l:'mii-nii'},{a:'هِيرِي',l:'hii-rii'},{a:'لِيمِي',l:'lii-mii'}]},
+    {id:'3-6',judul:'Mad Wau (uu) — Bagian 1',sub:'Dhammah + Wau (Ba–Dal)',intro:'Mad Wau: dhammah diikuti Wau sukun dibaca "uu" panjang dua ketukan. بُو = "buu".',
+     huruf:[{a:'بُو',l:'buu'},{a:'تُو',l:'tuu'},{a:'ثُو',l:'tsuu'},{a:'جُو',l:'juu'},{a:'حُو',l:'huu'},{a:'خُو',l:'khuu'},{a:'دُو',l:'duu'},{a:'ذُو',l:'dzuu'}],
+     lat:[{a:'بُوتُو',l:'buu-tuu'},{a:'ثُوجُو',l:'tsuu-juu'},{a:'حُوخُو',l:'huu-khuu'},{a:'دُوذُو',l:'duu-dzuu'},{a:'بُودُو',l:'buu-duu'},{a:'جُوحُو',l:'juu-huu'}]},
+    {id:'3-7',judul:'Mad Wau (uu) — Bagian 2',sub:'Dhammah + Wau (Ra–Ya)',intro:'Melanjutkan latihan Mad Wau dengan huruf-huruf yang tersisa.',
+     huruf:[{a:'رُو',l:'ruu'},{a:'زُو',l:'zuu'},{a:'سُو',l:'suu'},{a:'شُو',l:'syuu'},{a:'كُو',l:'kuu'},{a:'لُو',l:'luu'},{a:'مُو',l:'muu'},{a:'نُو',l:'nuu'},{a:'هُو',l:'huu'},{a:'يُو',l:'yuu'}],
+     lat:[{a:'رُوزُو',l:'ruu-zuu'},{a:'سُوشُو',l:'suu-syuu'},{a:'كُولُو',l:'kuu-luu'},{a:'مُونُو',l:'muu-nuu'},{a:'هُورُو',l:'huu-ruu'},{a:'لُومُو',l:'luu-muu'}]},
+    {id:'3-8',judul:'Gabungan Mad aa-ii-uu (Bagian 1)',sub:'Ba–Jim tiga Mad',intro:'Berlatih membaca satu huruf dengan ketiga mad secara bergantian.',
+     huruf:[{a:'بَا',l:'baa'},{a:'بِي',l:'bii'},{a:'بُو',l:'buu'},{a:'تَا',l:'taa'},{a:'تِي',l:'tii'},{a:'تُو',l:'tuu'},{a:'جَا',l:'jaa'},{a:'جِي',l:'jii'},{a:'جُو',l:'juu'}],
+     lat:[{a:'بَابِيبُو',l:'baa-bii-buu'},{a:'تَاتِيتُو',l:'taa-tii-tuu'},{a:'جَاجِيجُو',l:'jaa-jii-juu'},{a:'بَاتِيجُو',l:'baa-tii-juu'},{a:'تَابِيجُو',l:'taa-bii-juu'}]},
+    {id:'3-9',judul:'Gabungan Mad aa-ii-uu (Bagian 2)',sub:'Kaf–Ya tiga Mad',intro:'Melanjutkan latihan gabungan tiga mad dengan huruf-huruf terakhir.',
+     huruf:[{a:'كَا',l:'kaa'},{a:'كِي',l:'kii'},{a:'كُو',l:'kuu'},{a:'لَا',l:'laa'},{a:'لِي',l:'lii'},{a:'لُو',l:'luu'},{a:'مَا',l:'maa'},{a:'مِي',l:'mii'},{a:'مُو',l:'muu'},{a:'نَا',l:'naa'},{a:'نِي',l:'nii'},{a:'نُو',l:'nuu'}],
+     lat:[{a:'كَاكِيكُو',l:'kaa-kii-kuu'},{a:'لَالِيلُو',l:'laa-lii-luu'},{a:'مَامِيمُو',l:'maa-mii-muu'},{a:'نَانِينُو',l:'naa-nii-nuu'},{a:'كَالِيمُو',l:'kaa-lii-muu'},{a:'نَاكِيلُو',l:'naa-kii-luu'}]},
+    {id:'3-10',judul:'Mad Campuran & Kata',sub:'Latihan Gabungan',intro:'Berlatih membaca campuran huruf pendek dan panjang dalam satu kata.',
+     huruf:[{a:'كَانَ',l:'kaa-na'},{a:'بَارَ',l:'baa-ra'},{a:'رِيحٌ',l:'riih'},{a:'نُورٌ',l:'nuur'},{a:'دِينٌ',l:'diin'},{a:'مَاءٌ',l:'maa-un'}],
+     lat:[{a:'كَانَ بَارَ',l:'kaana baara'},{a:'رِيحٌ نُورٌ',l:'riihun nuurun'},{a:'دِينٌ مَاءٌ',l:'diinun maa-un'},{a:'كَانَ نُورٌ',l:'kaana nuurun'}]},
+  ]},
+
+  4:{nama:'Iqro 4',icon:'🌺',desc:'Tanwin, Sukun & Syaddah',halaman:[
+    {id:'4-1',judul:'Tanwin Fathah (an)',sub:'Fathatain ً',intro:'Tanwin fathah = dua fathah (ً) di akhir kata, dibaca "an". Contoh: كِتَابًا = "kitaaban".',
+     huruf:[{a:'بًا',l:'ban'},{a:'تًا',l:'tan'},{a:'جًا',l:'jan'},{a:'دًا',l:'dan'},{a:'رًا',l:'ran'},{a:'سًا',l:'san'},{a:'كًا',l:'kan'},{a:'مًا',l:'man'},{a:'نًا',l:'nan'},{a:'لًا',l:'lan'}],
+     lat:[{a:'بَيْتًا',l:'baytan'},{a:'كِتَابًا',l:'kitaaban'},{a:'رَجُلًا',l:'rajulan'},{a:'عِلْمًا',l:"'ilman"},{a:'نُورًا',l:'nuuran'},{a:'دِينًا',l:'diinan'}]},
+    {id:'4-2',judul:'Tanwin Kasrah (in)',sub:'Kasratain ٍ',intro:'Tanwin kasrah = dua kasrah (ٍ) di akhir kata, dibaca "in". Contoh: رَجُلٍ = "rajulin".',
+     huruf:[{a:'بٍ',l:'bin'},{a:'تٍ',l:'tin'},{a:'جٍ',l:'jin'},{a:'دٍ',l:'din'},{a:'رٍ',l:'rin'},{a:'سٍ',l:'sin'},{a:'كٍ',l:'kin'},{a:'مٍ',l:'min'},{a:'نٍ',l:'nin'},{a:'لٍ',l:'lin'}],
+     lat:[{a:'بَيْتٍ',l:'baytin'},{a:'كِتَابٍ',l:'kitaabin'},{a:'رَجُلٍ',l:'rajulin'},{a:'عِلْمٍ',l:"'ilmin"},{a:'نُورٍ',l:'nuurin'},{a:'دِينٍ',l:'diinin'}]},
+    {id:'4-3',judul:'Tanwin Dhammah (un)',sub:'Dhammatain ٌ',intro:'Tanwin dhammah = dua dhammah (ٌ) di akhir kata, dibaca "un". Contoh: كِتَابٌ = "kitaabun".',
+     huruf:[{a:'بٌ',l:'bun'},{a:'تٌ',l:'tun'},{a:'جٌ',l:'jun'},{a:'دٌ',l:'dun'},{a:'رٌ',l:'run'},{a:'سٌ',l:'sun'},{a:'كٌ',l:'kun'},{a:'مٌ',l:'mun'},{a:'نٌ',l:'nun'},{a:'لٌ',l:'lun'}],
+     lat:[{a:'بَيْتٌ',l:'baytun'},{a:'كِتَابٌ',l:'kitaabun'},{a:'رَجُلٌ',l:'rajulun'},{a:'عِلْمٌ',l:"'ilmun"},{a:'نُورٌ',l:'nuurun'},{a:'دِينٌ',l:'diinun'}]},
+    {id:'4-4',judul:'Gabungan Tiga Tanwin',sub:'an · in · un',intro:'Berlatih membaca kata yang sama dengan tiga bentuk tanwin berbeda.',
+     huruf:[{a:'كِتَابًا',l:'kitaaban'},{a:'كِتَابٍ',l:'kitaabin'},{a:'كِتَابٌ',l:'kitaabun'},{a:'رَجُلًا',l:'rajulan'},{a:'رَجُلٍ',l:'rajulin'},{a:'رَجُلٌ',l:'rajulun'}],
+     lat:[{a:'بَيْتًا بَيْتٍ بَيْتٌ',l:'baytan - baytin - baytun'},{a:'نُورًا نُورٍ نُورٌ',l:'nuuran - nuurin - nuurun'},{a:'دِينًا دِينٍ دِينٌ',l:'diinan - diinin - diinun'}]},
+    {id:'4-5',judul:'Sukun (Huruf Mati) — Bagian 1',sub:'Ba–Dal sukun',intro:'Sukun (ْ) = huruf mati tidak berbunyi vokal. Cara baca: huruf ditahan. Contoh: مِنْ = "min".',
+     huruf:[{a:'بْ',l:'-b'},{a:'تْ',l:'-t'},{a:'ثْ',l:'-ts'},{a:'جْ',l:'-j'},{a:'حْ',l:'-h'},{a:'خْ',l:'-kh'},{a:'دْ',l:'-d'},{a:'ذْ',l:'-dz'}],
+     lat:[{a:'اَبْ',l:'ab'},{a:'اِتْ',l:'it'},{a:'اُجْ',l:'uj'},{a:'اَدْ',l:'ad'},{a:'مِنْ',l:'min'},{a:'مَنْ',l:'man'},{a:'مُنْ',l:'mun'}]},
+    {id:'4-6',judul:'Sukun (Huruf Mati) — Bagian 2',sub:'Ra–Ya sukun',intro:'Melanjutkan latihan sukun dengan huruf-huruf Ra hingga Ya.',
+     huruf:[{a:'رْ',l:'-r'},{a:'زْ',l:'-z'},{a:'سْ',l:'-s'},{a:'شْ',l:'-sy'},{a:'كْ',l:'-k'},{a:'لْ',l:'-l'},{a:'مْ',l:'-m'},{a:'نْ',l:'-n'},{a:'وْ',l:'-w'},{a:'يْ',l:'-y'}],
+     lat:[{a:'اَرْ',l:'ar'},{a:'اِسْ',l:'is'},{a:'اُكْ',l:'uk'},{a:'اَلْ',l:'al'},{a:'اِمْ',l:'im'},{a:'اُنْ',l:'un'},{a:'بَرْ',l:'bar'},{a:'كَسْ',l:'kas'},{a:'مَلْ',l:'mal'}]},
+    {id:'4-7',judul:'Sukun di Tengah Kata',sub:'CVC Pattern',intro:'Latihan membaca sukun di tengah kata — pola KV+KVK (huruf-vokal + huruf-vokal-huruf mati).',
+     huruf:[{a:'بَرْكَ',l:'bar-ka'},{a:'كَتْبٌ',l:'kat-bun'},{a:'عِلْمٌ',l:"'il-mun"},{a:'صَبْرٌ',l:'shab-run'},{a:'شُكْرٌ',l:'syuk-run'},{a:'قَلْبٌ',l:'qal-bun'},{a:'حُكْمٌ',l:'huk-mun'},{a:'فَجْرٌ',l:'faj-run'}],
+     lat:[{a:'بَرْكَ كَتْبٌ',l:'barka - katbun'},{a:'عِلْمٌ صَبْرٌ',l:"'ilmun - shabrun"},{a:'شُكْرٌ قَلْبٌ',l:'syukrun - qalbun'},{a:'حُكْمٌ فَجْرٌ',l:'hukmun - fajrun'}]},
+    {id:'4-8',judul:'Syaddah (Dobel) — Bagian 1',sub:'Tasydid Ba–Sin',intro:'Syaddah (ّ) = huruf dibaca dobel/ditekan kuat. Huruf pertama sukun + huruf kedua berharakat.',
+     huruf:[{a:'بَّ',l:'bba'},{a:'تَّ',l:'tta'},{a:'ثَّ',l:'ttsa'},{a:'جَّ',l:'jja'},{a:'حَّ',l:'hha'},{a:'خَّ',l:'kkha'},{a:'دَّ',l:'dda'},{a:'رَّ',l:'rra'},{a:'سَّ',l:'ssa'}],
+     lat:[{a:'بَبَّ',l:'ba-bba'},{a:'تَتَّ',l:'ta-tta'},{a:'رَرَّ',l:'ra-rra'},{a:'سَسَّ',l:'sa-ssa'},{a:'دَدَّ',l:'da-dda'},{a:'جَجَّ',l:'ja-jja'}]},
+    {id:'4-9',judul:'Syaddah (Dobel) — Bagian 2',sub:'Tasydid Kaf–Ya',intro:'Melanjutkan latihan syaddah dengan huruf Kaf, Lam, Mim, Nun, dan lainnya.',
+     huruf:[{a:'كَّ',l:'kka'},{a:'لَّ',l:'lla'},{a:'مَّ',l:'mma'},{a:'نَّ',l:'nna'},{a:'وَّ',l:'wwa'},{a:'هَّ',l:'hha'},{a:'يَّ',l:'yya'}],
+     lat:[{a:'كَكَّ',l:'ka-kka'},{a:'لَلَّ',l:'la-lla'},{a:'مَمَّ',l:'ma-mma'},{a:'نَنَّ',l:'na-nna'},{a:'يَيَّ',l:'ya-yya'},{a:'إِنَّ',l:'inna'},{a:'أَنَّ',l:'anna'}]},
+    {id:'4-10',judul:'Syaddah dengan Tiga Harakat',sub:'Tasydid A-I-U',intro:'Syaddah bisa dikombinasikan dengan fathah, kasrah, atau dhammah.',
+     huruf:[{a:'إِنَّ',l:'inna'},{a:'أَنَّ',l:'anna'},{a:'لَكِنَّ',l:'lakinna'},{a:'رَبِّ',l:'rabbi'},{a:'الْحَجِّ',l:"al-hajji"},{a:'الْبِرِّ',l:"al-birri"},{a:'كُلٌّ',l:'kullun'},{a:'حَقٌّ',l:'haqqun'}],
+     lat:[{a:'إِنَّ أَنَّ',l:'inna - anna'},{a:'رَبِّ الْحَجِّ',l:'rabbi - al-hajji'},{a:'كُلٌّ حَقٌّ',l:'kullun - haqqun'},{a:'لَكِنَّ رَبِّ',l:'lakinna rabbi'}]},
+  ]},
+
+  5:{nama:'Iqro 5',icon:'🌸',desc:'Kata, Kalimat & Waqaf',halaman:[
+    {id:'5-1',judul:'Kata Benda (Isim)',sub:'Nama Benda Umum',intro:'Isim adalah kata benda dalam bahasa Arab. Berlatih membaca nama-nama benda umum.',
+     huruf:[{a:'بَيْتٌ',l:'baytun (rumah)'},{a:'كِتَابٌ',l:'kitaabun (buku)'},{a:'بَابٌ',l:'baabun (pintu)'},{a:'مَاءٌ',l:'maa-un (air)'},{a:'نُورٌ',l:'nuurun (cahaya)'},{a:'أَرْضٌ',l:"ardhun (bumi)"},{a:'سَمَاءٌ',l:'samaa-un (langit)'},{a:'شَجَرَةٌ',l:'syajaratun (pohon)'}],
+     lat:[{a:'بَيْتٌ كِتَابٌ',l:'baytun - kitaabun'},{a:'بَابٌ مَاءٌ',l:'baabun - maa-un'},{a:'نُورٌ أَرْضٌ',l:"nuurun - ardhun"},{a:'سَمَاءٌ شَجَرَةٌ',l:'samaa-un - syajaratun'}]},
+    {id:'5-2',judul:'Kata Kerja (Fi\'il)',sub:'Kegiatan Sehari-hari',intro:'Fi\'il adalah kata kerja. Berlatih membaca kata kerja Arab yang umum digunakan.',
+     huruf:[{a:'كَتَبَ',l:'kataba (menulis)'},{a:'قَرَأَ',l:"qara-a (membaca)"},{a:'جَلَسَ',l:'jalasa (duduk)'},{a:'ذَهَبَ',l:'dzahaba (pergi)'},{a:'رَجَعَ',l:"raja'a (kembali)"},{a:'سَمِعَ',l:"sami'a (mendengar)"},{a:'نَظَرَ',l:'nazhara (melihat)'},{a:'أَكَلَ',l:"akala (makan)"}],
+     lat:[{a:'كَتَبَ قَرَأَ',l:"kataba - qara-a"},{a:'جَلَسَ ذَهَبَ',l:'jalasa - dzahaba'},{a:'سَمِعَ نَظَرَ',l:"sami'a - nazhara"},{a:'رَجَعَ أَكَلَ',l:"raja'a - akala"}]},
+    {id:'5-3',judul:'Kata dengan Al (الـ)',sub:'Kata Berimbuhan Al',intro:'Al (الـ) adalah artikel penentu dalam bahasa Arab seperti "the" dalam bahasa Inggris.',
+     huruf:[{a:'الْبَيْتُ',l:'al-baytu'},{a:'الْكِتَابُ',l:'al-kitaabu'},{a:'الْبَابُ',l:'al-baabu'},{a:'الْمَاءُ',l:'al-maa-u'},{a:'الْنُّورُ',l:'an-nuuru'},{a:'الرَّجُلُ',l:'ar-rajulu'},{a:'الْعِلْمُ',l:"al-'ilmu"},{a:'الْإِسْلَامُ',l:'al-islaamu'}],
+     lat:[{a:'الْبَيْتُ الْكِتَابُ',l:'al-baytu - al-kitaabu'},{a:'الْبَابُ الْمَاءُ',l:'al-baabu - al-maa-u'},{a:'الرَّجُلُ الْعِلْمُ',l:"ar-rajulu - al-'ilmu"},{a:'الْإِسْلَامُ الدِّينُ',l:'al-islaamu - ad-diinu'}]},
+    {id:'5-4',judul:'Kalimat Pendek (Jumlah)',sub:'Subjek + Predikat',intro:'Jumlah adalah kalimat sederhana dalam bahasa Arab. Berlatih membaca kalimat-kalimat pendek.',
+     huruf:[{a:'الْبَيْتُ كَبِيرٌ',l:'al-baytu kabiir (rumah besar)'},{a:'الْكِتَابُ جَدِيدٌ',l:'al-kitaabu jadiid (buku baru)'},{a:'الْوَلَدُ صَغِيرٌ',l:'al-waladu shaghiir (anak kecil)'},{a:'الْعِلْمُ نُورٌ',l:"al-'ilmu nuur (ilmu itu cahaya)"},{a:'اللَّهُ أَكْبَرُ',l:'allaahu akbar (Allah Maha Besar)'},{a:'مُحَمَّدٌ رَسُولُ اللَّهِ',l:'muhammadun rasuulullahi'}],
+     lat:[{a:'الْبَيْتُ كَبِيرٌ',l:'al-baytu kabiir'},{a:'الْكِتَابُ جَدِيدٌ',l:'al-kitaabu jadiid'},{a:'الْعِلْمُ نُورٌ',l:"al-'ilmu nuur"},{a:'اللَّهُ أَكْبَرُ',l:'allaahu akbar'}]},
+    {id:'5-5',judul:'Lam Syamsiyah & Qamariyah',sub:'Huruf Matahari & Bulan',intro:'Lam Syamsiyah: Al diikuti huruf syamsiyah — lam tidak dibaca. Lam Qamariyah: Al dibaca jelas.',
+     huruf:[{a:'الشَّمْسُ',l:'asy-syamsu'},{a:'النُّورُ',l:'an-nuuru'},{a:'الرَّحْمَنُ',l:'ar-rahmaanu'},{a:'الْقَمَرُ',l:'al-qamaru'},{a:'الْكِتَابُ',l:'al-kitaabu'},{a:'الدِّينُ',l:'ad-diinu'},{a:'الْبَيْتُ',l:'al-baytu'},{a:'السَّلَامُ',l:'as-salaamu'}],
+     lat:[{a:'الشَّمْسُ النُّورُ',l:'asy-syamsu an-nuuru'},{a:'الْقَمَرُ الْكِتَابُ',l:'al-qamaru al-kitaabu'},{a:'الدِّينُ السَّلَامُ',l:'ad-diinu as-salaamu'},{a:'الرَّحْمَنُ الْبَيْتُ',l:'ar-rahmaanu al-baytu'}]},
+    {id:'5-6',judul:'Waqaf (Berhenti)',sub:'Akhir Ayat',intro:'Waqaf = berhenti di akhir bacaan. Saat waqaf, harakat akhir dibuang dan huruf dibaca mati/sukun.',
+     huruf:[{a:'الرَّحِيمُ →الرَّحِيم',l:'ar-rahiimu → ar-rahiim'},{a:'الْعَالَمِينَ →الْعَالَمِين',l:"al-'aalamiin"},{a:'الْمُسْتَقِيمَ →الْمُسْتَقِيم',l:'al-mustaqiim'},{a:'الضَّالِّينَ →الضَّالِّين',l:'adh-dhaaliin'},{a:'نَسْتَعِينُ →نَسْتَعِين',l:"nasta'iin"},{a:'الدِّينِ →الدِّين',l:'ad-diin'}],
+     lat:[{a:'الرَّحِيمُ ۞',l:'ar-rahiim (waqaf)'},{a:'الْعَالَمِينَ ۞',l:"al-'aalamiin (waqaf)"},{a:'الضَّالِّينَ ۞',l:'adh-dhaaliin (waqaf)'},{a:'نَسْتَعِينُ ۞',l:"nasta'iin (waqaf)"}]},
+    {id:'5-7',judul:'Nun Mati & Mim Mati',sub:'Hukum Nun Sukun',intro:'Nun mati (نْ) dan mim mati (مْ) memiliki hukum bacaan khusus: Idzhar, Idgham, Ikhfa, dan Iqlab.',
+     huruf:[{a:'مِنْ بَعْدِ',l:'min ba\'di (Iqlab)'},{a:'مَنْ يَعْمَلْ',l:'man ya\'mal (Idgham)'},{a:'أَنْبِيَاءُ',l:'anbiyaa-u (Iqlab)'},{a:'إِنْ كُنْتُمْ',l:'in kuntum (Ikhfa)'},{a:'عَنْهُمْ',l:"'anhum (Idzhar)"},{a:'مِنَ النَّاسِ',l:'minan naas (Idgham)'}],
+     lat:[{a:'مِنْ بَعْدِ',l:'min ba\'di'},{a:'مَنْ يَعْمَلْ',l:'man ya\'mal'},{a:'إِنْ كُنْتُمْ',l:'in kuntum'},{a:'مِنَ النَّاسِ',l:'minan naas'}]},
+    {id:'5-8',judul:'Mad Lazim & Mad Jaiz',sub:'Panjang Wajib & Boleh',intro:'Mad Lazim dibaca 6 harakat (wajib). Mad Jaiz dibaca 2-4 harakat. Berlaku pada huruf-huruf di awal surat.',
+     huruf:[{a:'الٓمٓ',l:'Alif Lam Miim (6 ketukan)'},{a:'الٓرٰ',l:'Alif Lam Ra (6 ketukan)'},{a:'حٰمٓ',l:'Ha Miim (6 ketukan)'},{a:'يٰسٓ',l:'Ya Siin (6 ketukan)'},{a:'طٰهٰ',l:'Tha Ha (6 ketukan)'},{a:'كٰهيعٓصٓ',l:'Kaf Ha Ya Ain Shad'}],
+     lat:[{a:'الٓمٓ ۞',l:'alif laam miim (berhenti)'},{a:'الٓرٰ ۞',l:'alif laam raa (berhenti)'},{a:'يٰسٓ ۞',l:'yaa siin (berhenti)'},{a:'طٰهٰ ۞',l:'thaa haa (berhenti)'}]},
+  ]},
+
+  6:{nama:'Iqro 6',icon:'⭐',desc:'Ayat-Ayat Al-Qur\'an',halaman:[
+    {id:'6-1',judul:'Al-Fatihah',sub:'Surat ke-1 (7 Ayat)',intro:'Surat Al-Fatihah wajib dibaca di setiap rakaat sholat. Artinya "Pembuka".',
+     huruf:[{a:'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ',l:'Bismillaahir rahmaanir rahiim'},{a:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',l:"Alhamdulillaahi rabbil 'aalamiin"},{a:'الرَّحْمَنِ الرَّحِيمِ',l:'Ar-rahmaanir rahiim'},{a:'مَالِكِ يَوْمِ الدِّينِ',l:'Maaliki yawmid diin'},{a:'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ',l:"Iyyaaka na'budu wa iyyaaka nasta'iin"},{a:'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',l:'Ihdinash shiraathal mustaqiim'},{a:'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',l:"Shiraathal ladziina an'amta 'alayhim ghayril maghdhuubi 'alayhim wa ladh dhaallin"}],
+     lat:[{a:'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ',l:'Bismillaahir rahmaanir rahiim'},{a:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',l:"Alhamdulillaahi rabbil 'aalamiin"},{a:'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ',l:"Iyyaaka na'budu wa iyyaaka nasta'iin"},{a:'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',l:'Ihdinash shiraathal mustaqiim'}]},
+    {id:'6-2',judul:'Al-Ikhlas',sub:'Surat ke-112 (4 Ayat)',intro:'Al-Ikhlas berisi tentang keesaan Allah. Nilainya setara sepertiga Al-Qur\'an.',
+     huruf:[{a:'قُلْ هُوَ اللَّهُ أَحَدٌ',l:'Qul huwallahu ahad'},{a:'اللَّهُ الصَّمَدُ',l:'Allaahush shamad'},{a:'لَمْ يَلِدْ وَلَمْ يُولَدْ',l:'Lam yalid wa lam yuulad'},{a:'وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ',l:'Wa lam yakul lahu kufuwan ahad'}],
+     lat:[{a:'قُلْ هُوَ اللَّهُ أَحَدٌ',l:'Qul huwallahu ahad'},{a:'اللَّهُ الصَّمَدُ',l:'Allaahush shamad'},{a:'لَمْ يَلِدْ وَلَمْ يُولَدْ',l:'Lam yalid wa lam yuulad'},{a:'وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ',l:'Wa lam yakul lahu kufuwan ahad'}]},
+    {id:'6-3',judul:'Al-Falaq',sub:'Surat ke-113 (5 Ayat)',intro:'Al-Falaq memohon perlindungan dari segala keburukan makhluk. Dibaca setiap pagi.',
+     huruf:[{a:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',l:"Qul a'uudzu birabbil falaq"},{a:'مِنْ شَرِّ مَا خَلَقَ',l:'Min syarri maa khalaq'},{a:'وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ',l:'Wa min syarri ghaasiqin idzaa waqab'},{a:'وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ',l:"Wa min syarrin naffaatsaati fil 'uqad"},{a:'وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ',l:'Wa min syarri haasidin idzaa hasad'}],
+     lat:[{a:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ',l:"Qul a'uudzu birabbil falaq"},{a:'مِنْ شَرِّ مَا خَلَقَ',l:'Min syarri maa khalaq'},{a:'وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ',l:'Wa min syarri haasidin idzaa hasad'}]},
+    {id:'6-4',judul:'An-Nas',sub:'Surat ke-114 (6 Ayat)',intro:'An-Nas memohon perlindungan dari godaan setan yang bersembunyi. Dibaca setiap pagi.',
+     huruf:[{a:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',l:"Qul a'uudzu birabbin naas"},{a:'مَلِكِ النَّاسِ',l:'Malikin naas'},{a:'إِلَهِ النَّاسِ',l:'Ilaahin naas'},{a:'مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ',l:'Min syarril waswasil khannaas'},{a:'الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ',l:'Alladzii yuwaswisu fii shuduurin naas'},{a:'مِنَ الْجِنَّةِ وَالنَّاسِ',l:'Minal jinnati wan naas'}],
+     lat:[{a:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',l:"Qul a'uudzu birabbin naas"},{a:'مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ',l:'Min syarril waswasil khannaas'},{a:'مِنَ الْجِنَّةِ وَالنَّاسِ',l:'Minal jinnati wan naas'}]},
+    {id:'6-5',judul:'Al-Kafirun',sub:'Surat ke-109 (6 Ayat)',intro:'Al-Kafirun tentang ketegasan Islam. Dianjurkan dibaca setelah sholat Maghrib.',
+     huruf:[{a:'قُلْ يَا أَيُّهَا الْكَافِرُونَ',l:'Qul yaa ayyuhal kaafiroon'},{a:'لَا أَعْبُدُ مَا تَعْبُدُونَ',l:"Laa a'budu maa ta'buduun"},{a:'وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ',l:"Wa laa antum 'aabiduuna maa a'bud"},{a:'وَلَا أَنَا عَابِدٌ مَا عَبَدْتُمْ',l:"Wa laa anaa 'aabidun maa 'abadtum"},{a:'وَلَا أَنْتُمْ عَابِدُونَ مَا أَعْبُدُ',l:"Wa laa antum 'aabiduuna maa a'bud"},{a:'لَكُمْ دِينُكُمْ وَلِيَ دِينِ',l:'Lakum diinukum wa liya diin'}],
+     lat:[{a:'قُلْ يَا أَيُّهَا الْكَافِرُونَ',l:'Qul yaa ayyuhal kaafiroon'},{a:'لَا أَعْبُدُ مَا تَعْبُدُونَ',l:"Laa a'budu maa ta'buduun"},{a:'لَكُمْ دِينُكُمْ وَلِيَ دِينِ',l:'Lakum diinukum wa liya diin'}]},
+    {id:'6-6',judul:'An-Nashr',sub:'Surat ke-110 (3 Ayat)',intro:'An-Nashr tentang pertolongan Allah. Merupakan salah satu surat terakhir yang diturunkan.',
+     huruf:[{a:'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',l:'Idzaa jaa-a nashrulaahi wal fath'},{a:'وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا',l:'Wa ra-aytan naasa yadkhuluuna fii diinillaahi afwaajaa'},{a:'فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ إِنَّهُ كَانَ تَوَّابًا',l:'Fasabbih bihamdi rabbika wastaghfirh, innahu kaana tawwaabaa'}],
+     lat:[{a:'إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ',l:'Idzaa jaa-a nashrulaahi wal fath'},{a:'وَرَأَيْتَ النَّاسَ يَدْخُلُونَ',l:'Wa ra-aytan naasa yadkhuluuna'},{a:'فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ',l:'Fasabbih bihamdi rabbika wastaghfirh'}]},
+    {id:'6-7',judul:'Al-Lahab',sub:'Surat ke-111 (5 Ayat)',intro:'Al-Lahab tentang azab orang yang menentang dakwah Nabi. Nama lainnya Al-Masad.',
+     huruf:[{a:'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ',l:"Tabbat yadaa abi lahabin wa tabb"},{a:'مَا أَغْنَى عَنْهُ مَالُهُ وَمَا كَسَبَ',l:"Maa aghna 'anhu maaluhu wa maa kasab"},{a:'سَيَصْلَى نَارًا ذَاتَ لَهَبٍ',l:'Sayashla naaran dzaata lahab'},{a:'وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ',l:'Wamra-atuhu hammaalatal hatab'},{a:'فِي جِيدِهَا حَبْلٌ مِنْ مَسَدٍ',l:'Fii jiidihaa hablun mim masad'}],
+     lat:[{a:'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ',l:"Tabbat yadaa abi lahabin wa tabb"},{a:'سَيَصْلَى نَارًا ذَاتَ لَهَبٍ',l:'Sayashla naaran dzaata lahab'},{a:'فِي جِيدِهَا حَبْلٌ مِنْ مَسَدٍ',l:'Fii jiidihaa hablun mim masad'}]},
+    {id:'6-8',judul:'Al-Kautsar',sub:'Surat ke-108 (3 Ayat)',intro:'Al-Kautsar adalah surat terpendek dalam Al-Qur\'an. Berisi nikmat Allah yang berlimpah.',
+     huruf:[{a:'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',l:"Innaa a'thaynakal kawtsar"},{a:'فَصَلِّ لِرَبِّكَ وَانْحَرْ',l:'Fasholli lirabbika wanhar'},{a:'إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ',l:"Inna syaani-aka huwal abtar"}],
+     lat:[{a:'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ',l:"Innaa a'thaynakal kawtsar"},{a:'فَصَلِّ لِرَبِّكَ وَانْحَرْ',l:'Fasholli lirabbika wanhar'},{a:'إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ',l:"Inna syaani-aka huwal abtar"}]},
+    {id:'6-9',judul:'Al-Maun',sub:'Surat ke-107 (7 Ayat)',intro:'Al-Maun tentang orang yang mendustakan agama dan melalaikan sholat.',
+     huruf:[{a:'أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ',l:'Ara-aytal ladzii yukadzdzibu bid-diin'},{a:'فَذَلِكَ الَّذِي يَدُعُّ الْيَتِيمَ',l:"Fadzaalikal ladzii yadu''ul yatiim"},{a:'وَلَا يَحُضُّ عَلَى طَعَامِ الْمِسْكِينِ',l:"Wa laa yahudhdhu 'alaa tha'aamil miskiin"},{a:'فَوَيْلٌ لِلْمُصَلِّينَ',l:'Fa waylul lil musallin'},{a:'الَّذِينَ هُمْ عَنْ صَلَاتِهِمْ سَاهُونَ',l:"Alladziina hum 'an shalaatihim saahuun"},{a:'الَّذِينَ هُمْ يُرَاءُونَ',l:'Alladziina hum yuraa-uun'},{a:'وَيَمْنَعُونَ الْمَاعُونَ',l:'Wa yamna'uunal maa'uun'}],
+     lat:[{a:'أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ',l:'Ara-aytal ladzii yukadzdzibu bid-diin'},{a:'فَوَيْلٌ لِلْمُصَلِّينَ',l:'Fa waylul lil musallin'},{a:'وَيَمْنَعُونَ الْمَاعُونَ',l:"Wa yamna'uunal maa'uun"}]},
+    {id:'6-10',judul:'Al-Ashr & Al-Humazah',sub:'Surat ke-103 & 104',intro:'Al-Ashr tentang manusia yang merugi. Al-Humazah tentang orang yang suka mengumpat.',
+     huruf:[{a:'وَالْعَصْرِ',l:"Wal 'ashr"},{a:'إِنَّ الْإِنْسَانَ لَفِي خُسْرٍ',l:"Innal insaana lafii khusr"},{a:'إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ',l:'Illal ladziina aamanuu wa 'amilush shoolihaat'},{a:'وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ',l:'Wa tawaashaw bil haqqi wa tawaashaw bish shabr'},{a:'وَيْلٌ لِكُلِّ هُمَزَةٍ لُمَزَةٍ',l:'Waylul likulli humazatil lumazah'},{a:'الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ',l:"Alladzii jama'a maalaan wa 'addadah"}],
+     lat:[{a:'وَالْعَصْرِ إِنَّ الْإِنْسَانَ لَفِي خُسْرٍ',l:"Wal 'ashr - innal insaana lafii khusr"},{a:'إِلَّا الَّذِينَ آمَنُوا',l:'Illal ladziina aamanuu'},{a:'وَيْلٌ لِكُلِّ هُمَزَةٍ لُمَزَةٍ',l:'Waylul likulli humazatil lumazah'}]},
+  ]},
+};
+
+var curLevel=1,curHalIdx=0;
+var hapal={};
+try{hapal=JSON.parse(localStorage.getItem('iqro_hapal_v2')||'{}');}catch(e){}
+var synth=window.speechSynthesis;
+
+/* INIT */
+var tabs=document.getElementById('levelTabs');
+[1,2,3,4,5,6].forEach(function(l){
+  var b=document.createElement('button');
+  b.className='level-tab'+(l===1?' aktif':'');
+  b.id='ltab-'+l;
+  b.textContent='Iqro '+l;
+  b.onclick=function(){setLevel(l);};
+  tabs.appendChild(b);
+});
+setLevel(1);
+
+function setLevel(l){
+  curLevel=l;curHalIdx=0;
+  [1,2,3,4,5,6].forEach(function(x){
+    var t=document.getElementById('ltab-'+x);
+    if(t)t.classList.toggle('aktif',x===l);
+  });
+  renderList();renderPage(0);
+}
+
+function renderList(){
+  var el=document.getElementById('halamanList');
+  var pages=IQRO[curLevel].halaman;
+  var doneCount=pages.filter(function(h){return hapal[h.id];}).length;
+  el.innerHTML='<div style="padding:6px 10px 2px;font-size:0.65rem;color:var(--text-light);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">'+
+    IQRO[curLevel].desc+' · '+doneCount+'/'+pages.length+' selesai</div>'+
+  pages.map(function(h,i){
+    var done=hapal[h.id]?'✅':'';
+    return '<button class="hal-item'+(i===curHalIdx?' aktif':'')+'" id="hi-'+h.id+'" onclick="gotoHal('+i+')">'+
+      '<div class="hi-num">'+(i+1)+'</div>'+
+      '<div class="hi-text"><div class="hi-title">'+h.judul+'</div><div class="hi-sub">'+h.sub+'</div></div>'+
+      '<div class="hi-done">'+done+'</div>'+
+      '</button>';
+  }).join('');
+}
+
+window.gotoHal=function(idx){curHalIdx=idx;renderList();renderPage(idx);};
+
+function renderPage(idx){
+  var lv=IQRO[curLevel],hal=lv.halaman[idx],total=lv.halaman.length;
+  var done=hapal[hal.id];
+  var doneCount=lv.halaman.filter(function(h){return hapal[h.id];}).length;
+  var pct=Math.round(doneCount/total*100);
+
+  var html=
+    '<div class="content-header">'+
+      '<div class="ch-left"><h3>'+lv.icon+' '+lv.nama+' — '+hal.judul+'</h3>'+
+      '<p>'+hal.sub+' · Hal. '+(idx+1)+'/'+total+' · '+lv.desc+'</p></div>'+
+      '<div class="ch-progress">'+
+        '<div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:'+pct+'%"></div></div>'+
+        '<span class="progress-text">'+doneCount+'/'+total+'</span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="huruf-area">'+
+      '<div class="halaman-intro">'+
+        '<div class="intro-icon">'+lv.icon+'</div>'+
+        '<div class="intro-text"><h4>'+hal.judul+'</h4>'+
+        '<p>'+hal.intro+' <em>🔊 Klik kartu untuk mendengar pengucapan.</em></p>'+
+        '<span class="level-badge">'+lv.nama+' · Hal '+(idx+1)+'</span></div>'+
+      '</div>'+
+      '<div class="huruf-grid">';
+
+  hal.huruf.forEach(function(h,i){
+    html+=
+      '<div class="huruf-card" id="hc-'+hal.id+'-'+i+'" onclick="bunyiHuruf('+JSON.stringify(h.a)+',\''+hal.id+'\','+i+')">'+
+        '<div class="hc-arab">'+h.a+'</div>'+
+        '<div class="hc-latin">'+h.l+'</div>'+
+        '<div class="hc-speaker">🔊</div>'+
+      '</div>';
+  });
+
+  html+='</div>';
+
+  if(hal.lat&&hal.lat.length){
+    html+='<div class="latihan-section"><div class="latihan-title">✏️ Latihan Baca</div><div class="latihan-grid">';
+    hal.lat.forEach(function(lt){
+      html+=
+        '<div class="latihan-card" onclick="bunyiLatihan('+JSON.stringify(lt.a)+',this)">'+
+          '<div class="lc-arab">'+lt.a+'</div>'+
+          '<div class="lc-latin">'+lt.l+'</div>'+
+        '</div>';
+    });
+    html+='</div></div>';
+  }
+
+  html+='</div>'+
+    '<div class="bottom-nav">'+
+      '<button class="nav-btn" onclick="gotoHal('+(idx-1)+')" '+(idx<=0?'disabled':'')+'>← Sebelumnya</button>'+
+      '<button class="btn-selesai'+(done?' done':'')+'" onclick="tandaiSelesai(\''+hal.id+'\')">'+
+        (done?'✅ Selesai':'✓ Tandai Selesai')+
+      '</button>'+
+      '<button class="nav-btn" onclick="gotoHal('+(idx+1)+')" '+(idx>=total-1?'disabled':'')+'>Berikutnya →</button>'+
+    '</div>';
+
+  document.getElementById('mainContent').innerHTML=html;
+  var btn=document.getElementById('hi-'+hal.id);
+  if(btn)btn.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+
+function ucapkan(teks){
+  if(!synth)return;
+  synth.cancel();
+  var u=new SpeechSynthesisUtterance(teks);
+  u.lang='ar-SA';u.rate=0.65;u.pitch=1;
+  synth.speak(u);
+}
+
+window.bunyiHuruf=function(arab,halId,idx){
+  var c=document.getElementById('hc-'+halId+'-'+idx);
+  if(c){c.classList.add('playing');setTimeout(function(){c.classList.remove('playing');},1200);}
+  ucapkan(arab);
+};
+
+window.bunyiLatihan=function(arab,el){
+  el.classList.add('playing');
+  setTimeout(function(){el.classList.remove('playing');},1600);
+  ucapkan(arab);
+};
+
+window.tandaiSelesai=function(halId){
+  hapal[halId]=!hapal[halId];
+  try{localStorage.setItem('iqro_hapal_v2',JSON.stringify(hapal));}catch(e){}
+  renderList();renderPage(curHalIdx);
+};
+
+})();
+</script>
+</body>
+</html>
