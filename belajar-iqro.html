@@ -338,7 +338,16 @@ function setLevel(l){
 
 function renderList(){
   var el=document.getElementById('halamanList');
+  if(!el) {
+    console.error('Elemen #halamanList tidak ditemukan');
+    return;
+  }
   var pages=IQRO[curLevel].halaman;
+  if(!pages || !pages.length) {
+    console.warn('Tidak ada halaman untuk level ini');
+    el.innerHTML = '<div style="padding:10px; color:red;">Tidak ada data halaman</div>';
+    return;
+  }
   var doneCount=pages.filter(function(h){return hapal[h.id];}).length;
   el.innerHTML='<div style="padding:6px 10px 2px;font-size:0.65rem;color:var(--text-light);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">'+
     IQRO[curLevel].desc+' · '+doneCount+'/'+pages.length+' selesai</div>'+
